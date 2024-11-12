@@ -17,10 +17,11 @@ public class LevelOne extends LevelParent {
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
+		} else if (userHasReachedKillTarget()) {
+			goToNextLevel("com.example.demo.WinScreen");
 		}
-		else if (userHasReachedKillTarget())
-			goToNextLevel(NEXT_LEVEL);
 	}
+
 
 	@Override
 	protected void initializeFriendlyUnits() {

@@ -16,7 +16,7 @@ public class Main extends Application {
 	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		stage.setTitle(TITLE);
-		stage.setResizable(false);
+		stage.setResizable(false); //not resizable(if its put to true we gotta figure out how to resize all elemnts)
 		stage.setHeight(SCREEN_HEIGHT);
 		stage.setWidth(SCREEN_WIDTH);
 		myController = new Controller(stage);

@@ -26,6 +26,14 @@ public class LevelTwo extends LevelParent {
 			winGame();
 		}
 	}
+//		@Override
+//		protected void checkIfGameOver() {
+//			if (userIsDestroyed()) {
+//				loseGame();
+//			} else if (boss.isDestroyed()) {
+//				goToNextLevel("com.example.demo.WinScreen");
+//			}
+//		}
 
 	@Override
 	protected void spawnEnemyUnits() {

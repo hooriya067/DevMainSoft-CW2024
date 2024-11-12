@@ -16,15 +16,15 @@ public abstract class LevelParent extends Observable {
 	private static final int MILLISECOND_DELAY = 50;
 	private final double screenHeight;
 	private final double screenWidth;
-	private final double enemyMaximumYPosition;
+	private final double enemyMaximumYPosition;//A maximum Y value for enemy placement, derived from screen height with an adjustment.
 
-	private final Group root;
+	private final Group root;//root contains all graphical elements of the level, and scene is a Scene created using root
 	private final Timeline timeline;
 	private final UserPlane user;
 	private final Scene scene;
 	private final ImageView background;
 
-	private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();
+	private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();//friendly units??
 	private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
 	private final List<ActiveActorDestructible> userProjectiles = new ArrayList<>();
 	private final List<ActiveActorDestructible> enemyProjectiles = new ArrayList<>();
@@ -34,8 +34,8 @@ public abstract class LevelParent extends Observable {
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
-		this.scene = new Scene(root, screenWidth, screenHeight);
-		this.timeline = new Timeline();
+		this.scene = new Scene(root, screenWidth, screenHeight);//setting up the scene
+		this.timeline = new Timeline();  //a new timeline
 		this.user = new UserPlane(playerInitialHealth);
 
 		this.background = new ImageView(new Image(getClass().getResource(backgroundImageName).toExternalForm()));
@@ -45,17 +45,18 @@ public abstract class LevelParent extends Observable {
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
 
-		initializeTimeline();
+		initializeTimeline();//adds user to list of friendly units
 		friendlyUnits.add(user);
 	}
 
-	protected abstract void initializeFriendlyUnits();
+	protected abstract void initializeFriendlyUnits();// by subclasses to define which friendly units are available at start of level
 
-	protected abstract void checkIfGameOver();
+	protected abstract void checkIfGameOver();//if the game is over, take the appropriate actions.
 
-	protected abstract void spawnEnemyUnits();
 
-	protected abstract LevelView instantiateLevelView();
+	protected abstract void spawnEnemyUnits();//Spawns/releases enemy units during gameplay
+
+	protected abstract LevelView instantiateLevelView();//Used to create the LevelView object for managing Ui
 
 	public Scene initializeScene() {
 		initializeBackground();
@@ -64,12 +65,12 @@ public abstract class LevelParent extends Observable {
 		return scene;
 	}
 
-	public void startGame() {
+	public void startGame() {//starts timeline
 		background.requestFocus();
 		timeline.play();
 	}
 
-	public void goToNextLevel(String levelName) {
+	public void goToNextLevel(String levelName) {// the next level loaded by setting the changed state and passing level name
 		setChanged();
 		notifyObservers(levelName);
 	}
@@ -92,7 +93,7 @@ public abstract class LevelParent extends Observable {
 	private void initializeTimeline() {
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
-		timeline.getKeyFrames().add(gameLoop);
+		timeline.getKeyFrames().add(gameLoop);//Sets timeline to run indefinitely and adds KeyFrame that calls updateScene() every MILLISECOND_DELAY
 	}
 
 	private void initializeBackground() {
@@ -182,10 +183,10 @@ public abstract class LevelParent extends Observable {
 		}
 	}
 
-	private void handleEnemyPenetration() {
+	private void handleEnemyPenetration() { //Handles cases where enemies move out of bounds(indicating they penetrated the user's defenses)
 		for (ActiveActorDestructible enemy : enemyUnits) {
 			if (enemyHasPenetratedDefenses(enemy)) {
-				user.takeDamage();
+				//user.takeDamage();
 				enemy.destroy();
 			}
 		}
