@@ -3,7 +3,7 @@ package com.example.demo;
 public class LevelOne extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
-	private static final String NEXT_LEVEL = "com.example.demo.LevelTwo";
+	private static final String LEVEL_TWO = "com.example.demo.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 10;
 	private static final double ENEMY_SPAWN_PROBABILITY = .20;
@@ -13,16 +13,16 @@ public class LevelOne extends LevelParent {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
 	}
 
-	@Override
-	protected void checkIfGameOver() {
-		if (userIsDestroyed()) {
-			loseGame();
-		}
-		else if (userHasReachedKillTarget()) {
-			stopLevel();
-			goToNextLevel(NEXT_LEVEL);
-		}
-	}
+//	@Override
+//	protected void checkIfGameOver() {
+//		if (userIsDestroyed()) {
+//			loseGame();
+//		}
+//		else if (userHasReachedKillTarget()) {
+//			stopLevel();
+//			goToNextLevel(LEVEL_TWO);
+//		}
+//	}
 
 	@Override
 	protected void initializeFriendlyUnits() {
@@ -46,7 +46,7 @@ public class LevelOne extends LevelParent {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH);
 	}
 
-	private boolean userHasReachedKillTarget() {
+	protected boolean userHasReachedKillTarget() {
 		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
 	}
 

@@ -27,14 +27,18 @@ public class LevelTwo extends LevelParent {
 		getRoot().getChildren().add(getUser());
 	}
 
-	@Override
-	protected void checkIfGameOver() {
-		if (userIsDestroyed()) {
-			loseGame();
-		}
-		else if (boss.isDestroyed()) {
-			winGame();
-		}
+//	@Override
+//	protected void checkIfGameOver() {
+//		if (userIsDestroyed()) {
+//			loseGame();
+//		}
+//		else if (userHasReachedKillTarget()) {
+//			winGame();
+//
+//		}
+//	}
+	protected boolean userHasReachedKillTarget() {//to make check if game over functionality centralised
+		return boss.isDestroyed();
 	}
 
 	@Override

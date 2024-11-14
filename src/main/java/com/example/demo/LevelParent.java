@@ -58,7 +58,20 @@ public abstract class LevelParent {
 
 	protected abstract void initializeFriendlyUnits();
 
-	protected abstract void checkIfGameOver();
+	protected void checkIfGameOver() {
+		if (userIsDestroyed()) {
+			loseGame();
+		} else if (userHasReachedKillTarget()) {
+//			timeline.stop();
+//			setChanged();
+//			notifyObservers("NEXT"); // Notify Controller to proceed to next level
+			timeline.stop(); // Stop the game timeline
+			if (myobserver != null) {
+				myobserver.onLevelWin("NEXT");}
+		}
+	}
+
+	protected abstract boolean userHasReachedKillTarget();
 
 	protected abstract void spawnEnemyUnits();
 
