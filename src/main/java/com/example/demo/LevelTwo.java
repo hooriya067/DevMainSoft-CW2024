@@ -1,3 +1,13 @@
+
+//		@Override
+//		protected void checkIfGameOver() {
+//			if (userIsDestroyed()) {
+//				loseGame();
+//			} else if (boss.isDestroyed()) {
+//				goToNextLevel("com.example.demo.WinScreen");
+//			}
+//		}
+
 package com.example.demo;
 
 public class LevelTwo extends LevelParent {
@@ -26,14 +36,6 @@ public class LevelTwo extends LevelParent {
 			winGame();
 		}
 	}
-//		@Override
-//		protected void checkIfGameOver() {
-//			if (userIsDestroyed()) {
-//				loseGame();
-//			} else if (boss.isDestroyed()) {
-//				goToNextLevel("com.example.demo.WinScreen");
-//			}
-//		}
 
 	@Override
 	protected void spawnEnemyUnits() {
@@ -48,4 +50,17 @@ public class LevelTwo extends LevelParent {
 		return levelView;
 	}
 
+	private void updateShieldImage() {
+		if (boss.getIsShielded()) {
+			levelView.showShield();
+		} else {
+			levelView.hideShield();
+		}
+	}
+
+	@Override
+	protected void misc() {
+		updateShieldImage();
+	}
 }
+

@@ -18,7 +18,7 @@ public class Boss extends FighterPlane {
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
 	private static final int Y_POSITION_UPPER_BOUND = -100;
 	private static final int Y_POSITION_LOWER_BOUND = 475;
-	private static final int MAX_FRAMES_WITH_SHIELD = 500;
+	private static final int MAX_FRAMES_WITH_SHIELD = 500;//150
 	private final List<Integer> movePattern;
 	private boolean isShielded;
 	private int consecutiveMovesInSameDirection;
@@ -35,6 +35,10 @@ public class Boss extends FighterPlane {
 		initializeMovePattern();
 	}
 
+	public boolean getIsShielded() {
+		return isShielded;
+	}
+
 	@Override
 	public void updatePosition() {
 		double initialTranslateY = getTranslateY();
@@ -44,7 +48,7 @@ public class Boss extends FighterPlane {
 			setTranslateY(initialTranslateY);
 		}
 	}
-	
+
 	@Override
 	public void updateActor() {
 		updatePosition();
@@ -59,16 +63,9 @@ public class Boss extends FighterPlane {
 	@Override
 	public void takeDamage() {
 		if (!isShielded) {
-			super.takeDamage(); // Assuming super class `takeDamage()` decreases health by some amount
+			super.takeDamage();
 		}
 	}
-
-	public boolean isDestroyed() {
-		return getHealth() <= 0;
-	}
-
-
-
 
 	private void initializeMovePattern() {
 		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
@@ -81,7 +78,7 @@ public class Boss extends FighterPlane {
 
 	private void updateShield() {
 		if (isShielded) framesWithShieldActivated++;
-		else if (shieldShouldBeActivated()) activateShield();	
+		else if (shieldShouldBeActivated()) activateShield();
 		if (shieldExhausted()) deactivateShield();
 	}
 

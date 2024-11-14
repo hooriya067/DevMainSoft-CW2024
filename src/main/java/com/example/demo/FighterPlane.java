@@ -10,7 +10,7 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	}
 
 	public abstract ActiveActorDestructible fireProjectile();
-	
+
 	@Override
 	public void takeDamage() {
 		health--;
@@ -28,11 +28,11 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	}
 
 	private boolean healthAtZero() {
-		return health <= 0;//== 0 ->  <=0
+		return health == 0;
 	}
 
 	public int getHealth() {
 		return health;
 	}
-		
+
 }
