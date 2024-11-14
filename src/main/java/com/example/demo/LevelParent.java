@@ -209,7 +209,7 @@ public abstract class LevelParent {
 	private void handleEnemyPenetration() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
 			if (enemyHasPenetratedDefenses(enemy)) {
-				user.takeDamage();
+				//user.takeDamage();
 				enemy.destroy();
 			}
 		}
@@ -267,7 +267,9 @@ public abstract class LevelParent {
 	protected double getScreenWidth() {
 		return screenWidth;
 	}
-
+	public double getScreenHeight() {
+		return screenHeight;
+	}
 	protected boolean userIsDestroyed() {
 		return user.isDestroyed();
 	}
