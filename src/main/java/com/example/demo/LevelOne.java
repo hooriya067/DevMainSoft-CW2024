@@ -18,7 +18,7 @@ public class LevelOne extends LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		} else if (userHasReachedKillTarget()) {
-			goToNextLevel("com.example.demo.WinScreen");
+			winGame();
 		}
 	}
 

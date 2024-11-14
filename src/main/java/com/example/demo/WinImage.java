@@ -11,14 +11,15 @@ public class WinImage extends ImageView {
 
 	public WinImage(double xPosition, double yPosition) {
 		this.setImage(new Image(getClass().getResource(IMAGE_NAME).toExternalForm()));
-		this.setVisible(false);
 		this.setFitHeight(HEIGHT);
 		this.setFitWidth(WIDTH);
 		this.setLayoutX(xPosition);
 		this.setLayoutY(yPosition);
+		this.setFocusTraversable(true); // Allow WinImage to be focusable
 	}
 
 	public void showWinImage() {
 		this.setVisible(true);
+		this.requestFocus(); // Request focus to allow key events to be captured
 	}
 }
