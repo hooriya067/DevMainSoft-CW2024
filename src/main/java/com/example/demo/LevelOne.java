@@ -6,7 +6,7 @@ public class LevelOne extends LevelParent {
 	private static final String LEVEL_TWO = "com.example.demo.LevelTwo";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 10;
-	private static final double ENEMY_SPAWN_PROBABILITY = .20;
+	//private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 
 	public LevelOne(double screenHeight, double screenWidth) {
@@ -31,24 +31,28 @@ public class LevelOne extends LevelParent {
 
 	@Override
 	protected void spawnEnemyUnits() {
-		int currentNumberOfEnemies = getCurrentNumberOfEnemies();
-		for (int i = 0; i < TOTAL_ENEMIES - currentNumberOfEnemies; i++) {
-			if (Math.random() < ENEMY_SPAWN_PROBABILITY) {
-				double newEnemyInitialYPosition = Math.random() * getEnemyMaximumYPosition();
-				ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), newEnemyInitialYPosition);
-				addEnemyUnit(newEnemy);
-			}
+		double spawnProbability = 0.1; // 10% chance to spawn an enemy each update cycle
+
+		if (Math.random() < spawnProbability && getCurrentNumberOfEnemies() < TOTAL_ENEMIES) {
+			double randomYPosition = Math.random() * getEnemyMaximumYPosition();
+			ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), randomYPosition);
+			addEnemyUnit(newEnemy);
 		}
 	}
+
 
 	@Override
 	protected LevelView instantiateLevelView() {
 		return new LevelView(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight());
 	}
 
+//	protected boolean userHasReachedKillTarget() {
+//		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+//	}
 	protected boolean userHasReachedKillTarget() {
-		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
+		return getNumberOfKills() >= KILLS_TO_ADVANCE;  // Now using LevelParent's numberOfKills
 	}
+
 
 	@Override
 	protected void misc() {

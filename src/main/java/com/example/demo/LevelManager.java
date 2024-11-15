@@ -81,6 +81,32 @@ public class LevelManager {
         Scene winScene = new Scene(winScreenRoot, stage.getWidth(), stage.getHeight());
         stage.setScene(winScene); // Set the scene to the stage
     }
+//    private void showFinalWinScreen() {
+//        // Use WinImage to create the final win scene
+//        WinImage winImage = new WinImage(stage.getWidth() / 2 - 300, stage.getHeight() / 2 - 250);
+//        winImage.showWinImage(); // Make the WinImage visible
+//
+//        // Create an image icon for finishing the game
+//        Image finishIconImage = new Image(Objects.requireNonNull(getClass().getResource("/com/example/demo/images/finish_icon.png")).toExternalForm());
+//        ImageView finishIcon = new ImageView(finishIconImage);
+//
+//        // Set the dimensions and position for the finish icon
+//        finishIcon.setFitWidth(100);  // Set the width of the icon
+//        finishIcon.setFitHeight(100); // Set the height of the icon
+//        finishIcon.setLayoutX(stage.getWidth() / 2 - 50);
+//        finishIcon.setLayoutY(stage.getHeight() / 2 + 300);
+//
+//        // Add an event handler to handle click events for the finish icon
+//        finishIcon.setOnMouseClicked(e -> {
+//            stage.close(); // Close the game window or restart, if needed
+//        });
+//
+//        // Create a group containing the win image and the finish icon
+//        Group winScreenRoot = new Group(winImage, finishIcon);
+//        Scene winScene = new Scene(winScreenRoot, stage.getWidth(), stage.getHeight());
+//        stage.setScene(winScene); // Set the scene to the stage
+//    }
+
 
     private void showErrorAlert(Exception e) {
         System.out.println("Error: " + e.getMessage());

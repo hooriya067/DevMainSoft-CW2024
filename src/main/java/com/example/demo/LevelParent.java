@@ -24,6 +24,7 @@ public abstract class LevelParent {
 	private final UserPlane user;
 	private final Scene scene;
 	private final ImageView background;
+	private int numberOfKills;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
@@ -112,9 +113,10 @@ public abstract class LevelParent {
 		handlePlaneCollisions();
 		removeAllDestroyedActors();
 		updateKillCount();
+		//System.out.println("Current kill count: " + getNumberOfKills());  // Log kill count after each scene update
 		updateLevelView();
 		checkIfGameOver();
-		misc();
+		//misc();
 	}
 
 	private void initializeTimeline() {
@@ -194,17 +196,32 @@ public abstract class LevelParent {
 		handleCollisions(enemyProjectiles, friendlyUnits);
 	}
 
-	private void handleCollisions(List<ActiveActorDestructible> actors1,
-								  List<ActiveActorDestructible> actors2) {
-		for (ActiveActorDestructible actor : actors2) {
-			for (ActiveActorDestructible otherActor : actors1) {
-				if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
-					actor.takeDamage();
-					otherActor.takeDamage();
+//		private void handleCollisions(List<ActiveActorDestructible> actors1,
+//									  List<ActiveActorDestructible> actors2) {
+//			for (ActiveActorDestructible actor : actors2) {
+//				for (ActiveActorDestructible otherActor : actors1) {
+//					if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
+//						actor.takeDamage();
+//						otherActor.takeDamage();
+//					}
+//				}
+//			}
+//		}
+//actors2 should always be the enemy units list (enemyUnits).
+//actors1 should be the user projectiles list (userProjectiles)
+private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
+	for (ActiveActorDestructible actor : actors2) {
+		for (ActiveActorDestructible otherActor : actors1) {
+			if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
+				actor.takeDamage();
+				otherActor.takeDamage();
+				if (actor.isDestroyed()) {
+					incrementKillCount(); // Ensure kill count is incremented after destruction
 				}
 			}
 		}
 	}
+}
 
 	private void handleEnemyPenetration() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
@@ -219,11 +236,23 @@ public abstract class LevelParent {
 		levelView.removeHearts(user.getHealth());
 	}
 
-	private void updateKillCount() {
-		for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
-			user.incrementKillCount();
+//	private void updateKillCount() {
+//		for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
+//			user.incrementKillCount();
+//		}
+//	}
+private void updateKillCount() {
+	List<ActiveActorDestructible> destroyedEnemies = new ArrayList<>();
+
+	for (ActiveActorDestructible enemy : enemyUnits) {
+		if (enemy.isDestroyed()) {
+			incrementKillCount();  // Increment kill count directly in LevelParent
+			destroyedEnemies.add(enemy);
 		}
 	}
+
+	enemyUnits.removeAll(destroyedEnemies);
+}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
@@ -277,5 +306,15 @@ public abstract class LevelParent {
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies = enemyUnits.size();
 	}
+//new
 
+
+	public int getNumberOfKills() {
+		return numberOfKills;
+	}
+
+	public void incrementKillCount() {
+		numberOfKills++;
+	}
 }
+
