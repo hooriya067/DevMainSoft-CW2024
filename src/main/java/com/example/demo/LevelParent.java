@@ -7,6 +7,7 @@ import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
@@ -25,6 +26,7 @@ public abstract class LevelParent {
 	private final Scene scene;
 	private final ImageView background;
 	private int numberOfKills;
+	private Label killsLabel;
 
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
@@ -58,6 +60,8 @@ public abstract class LevelParent {
 	}
 
 	protected abstract void initializeFriendlyUnits();
+	protected abstract void initializeWinningParameter();
+	protected abstract void updateWinningParameter();
 
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
@@ -112,11 +116,12 @@ public abstract class LevelParent {
 		handleEnemyProjectileCollisions();
 		handlePlaneCollisions();
 		removeAllDestroyedActors();
-		updateKillCount();
+		updateWinningParameter();//new
 		//System.out.println("Current kill count: " + getNumberOfKills());  // Log kill count after each scene update
 		updateLevelView();
 		checkIfGameOver();
 		misc();
+		updateWinningParameter();
 	}
 
 	private void initializeTimeline() {
@@ -236,23 +241,26 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 		levelView.removeHearts(user.getHealth());
 	}
 
-//	private void updateKillCount() {
-//		for (int i = 0; i < currentNumberOfEnemies - enemyUnits.size(); i++) {
-//			user.incrementKillCount();
-//		}
+//	protected void setKillCounterLabel(Label killsLabel) {
+//		this.killsLabel = killsLabel;
 //	}
-private void updateKillCount() {
-	List<ActiveActorDestructible> destroyedEnemies = new ArrayList<>();
-
-	for (ActiveActorDestructible enemy : enemyUnits) {
-		if (enemy.isDestroyed()) {
-			incrementKillCount();  // Increment kill count directly in LevelParent
-			destroyedEnemies.add(enemy);
-		}
-	}
-
-	enemyUnits.removeAll(destroyedEnemies);
-}
+//
+//
+//	protected void updateKillCount() {
+//		List<ActiveActorDestructible> destroyedEnemies = new ArrayList<>();
+//
+//		for (ActiveActorDestructible enemy : enemyUnits) {
+//			if (enemy.isDestroyed()) {
+//				incrementKillCount();  // Increment kill count directly in LevelParent
+//				destroyedEnemies.add(enemy);
+//			}
+//		}
+//
+//		enemyUnits.removeAll(destroyedEnemies);
+//
+//		// Update the kill counter label in LevelView
+//		levelView.updateKillCounter(getNumberOfKills());
+//	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
