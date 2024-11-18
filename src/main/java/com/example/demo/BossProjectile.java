@@ -8,20 +8,10 @@ public class BossProjectile extends Projectile {
 	private static final int INITIAL_X_POSITION = 950;
 
 	public BossProjectile(double initialYPos) {
-		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, initialYPos);
+		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, initialYPos, HORIZONTAL_VELOCITY);
 	}
-
-	@Override
-	public void updatePosition() {
-		moveHorizontally(HORIZONTAL_VELOCITY);
-	}
-
-	@Override
-	public void updateActor() {
-		updatePosition();
-	}
-
 }
+
 //ADDITIONS:-
 //
 //		- `updatePosition()`: Moves the projectile horizontally by a constant velocity (`HORIZONTAL_VELOCITY`), effectively updating its X position.
