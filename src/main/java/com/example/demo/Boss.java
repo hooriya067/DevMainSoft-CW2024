@@ -9,24 +9,25 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
 	private static final double BOSS_FIRE_RATE = .04;
-	private static final double BOSS_SHIELD_PROBABILITY = 0.5;//.002
+	private static final double BOSS_SHIELD_PROBABILITY = 0.002; //.002
 	private static final int IMAGE_HEIGHT = 50;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HEALTH = 10;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int Y_POSITION_UPPER_BOUND = -100;
-	private static final int Y_POSITION_LOWER_BOUND = 475;
-	private static final int MAX_FRAMES_WITH_SHIELD = 500;//150
+	private static final int MAX_FRAMES_WITH_SHIELD = 500; //150
+
+	private final int screenHeight;
 	private final List<Integer> movePattern;
 	private boolean isShielded;
 	private int consecutiveMovesInSameDirection;
 	private int indexOfCurrentMove;
 	private int framesWithShieldActivated;
 
-	public Boss() {
+	public Boss(int screenHeight) {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, HEALTH);
+		this.screenHeight = screenHeight;
 		movePattern = new ArrayList<>();
 		consecutiveMovesInSameDirection = 0;
 		indexOfCurrentMove = 0;
@@ -44,8 +45,8 @@ public class Boss extends FighterPlane {
 		double initialTranslateY = getTranslateY();
 		moveVertically(getNextMove());
 		double currentPosition = getLayoutY() + getTranslateY();
-		if (currentPosition < Y_POSITION_UPPER_BOUND || currentPosition > Y_POSITION_LOWER_BOUND) {
-			setTranslateY(initialTranslateY);
+		if (currentPosition < getUpperBound() || currentPosition > getLowerBound()) {
+			setTranslateY(initialTranslateY); // Reset to previous position if out of bounds
 		}
 	}
 
@@ -77,9 +78,12 @@ public class Boss extends FighterPlane {
 	}
 
 	private void updateShield() {
-		if (isShielded) framesWithShieldActivated++;
-		else if (shieldShouldBeActivated()) activateShield();
-		if (shieldExhausted()) deactivateShield();
+		if (isShielded) {
+			framesWithShieldActivated++;
+			if (shieldExhausted()) deactivateShield();
+		} else if (shieldShouldBeActivated()) {
+			activateShield();
+		}
 	}
 
 	private int getNextMove() {
@@ -121,8 +125,13 @@ public class Boss extends FighterPlane {
 	private void deactivateShield() {
 		isShielded = false;
 		System.out.println("Shield Deactivated");
-
 	}
 
+	private int getUpperBound() {
+		return 0; // Top of the screen
+	}
 
+	private int getLowerBound() {
+		return screenHeight - IMAGE_HEIGHT; // Bottom of the screen accounting for Boss height
+	}
 }
