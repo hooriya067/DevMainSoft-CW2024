@@ -21,11 +21,18 @@ public class LevelViewLevelTwo extends LevelView {
 	}
 
 	public void showShield() {
+		System.out.println("LevelViewLevelTwo: Showing Shield");
 		shieldImage.showShield();
 	}
 
 	public void hideShield() {
+		System.out.println("LevelViewLevelTwo: Hiding Shield");
 		shieldImage.hideShield();
 	}
+	public void updateShieldPosition(double x, double y) {
+		shieldImage.updatePosition(x, y);
+	}
+
+
 
 }

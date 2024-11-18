@@ -9,7 +9,7 @@ public class Boss extends FighterPlane {
 	private static final double INITIAL_Y_POSITION = 400;
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
 	private static final double BOSS_FIRE_RATE = .04;
-	private static final double BOSS_SHIELD_PROBABILITY = .002;
+	private static final double BOSS_SHIELD_PROBABILITY = 0.5;//.002
 	private static final int IMAGE_HEIGHT = 50;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HEALTH = 10;
@@ -114,11 +114,15 @@ public class Boss extends FighterPlane {
 
 	private void activateShield() {
 		isShielded = true;
+		framesWithShieldActivated = 0;
+		System.out.println("Shield Activated");
 	}
 
 	private void deactivateShield() {
 		isShielded = false;
-		framesWithShieldActivated = 0;
+		System.out.println("Shield Deactivated");
+
 	}
+
 
 }

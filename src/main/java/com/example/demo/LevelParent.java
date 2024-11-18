@@ -116,7 +116,7 @@ public abstract class LevelParent {
 		//System.out.println("Current kill count: " + getNumberOfKills());  // Log kill count after each scene update
 		updateLevelView();
 		checkIfGameOver();
-		//misc();
+		misc();
 	}
 
 	private void initializeTimeline() {

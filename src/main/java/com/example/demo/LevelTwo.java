@@ -54,8 +54,15 @@ public class LevelTwo extends LevelParent {
 		return levelView;
 	}
 
-
 	private void updateShieldImage() {
+		if (levelView == null || boss == null) {
+			return; // Ensure no null references
+		}
+
+		double bossX = boss.getLayoutX() + boss.getTranslateX();
+		double bossY = boss.getLayoutY() + boss.getTranslateY();
+		levelView.updateShieldPosition(bossX, bossY);
+
 		if (boss.getIsShielded()) {
 			levelView.showShield();
 		} else {
@@ -63,8 +70,8 @@ public class LevelTwo extends LevelParent {
 		}
 	}
 
-	@Override
 	protected void misc() {
+		System.out.println("misc method called");
 		updateShieldImage();
 	}
 }

@@ -8,7 +8,7 @@ import java.util.Objects;
 public class ShieldImage extends ImageView {
 
 	private static final String IMAGE_NAME = "/com/example/demo/images/shield.png";
-	private static final int SHIELD_SIZE = 200;
+	private static final int SHIELD_SIZE = 50;
 
 	public ShieldImage(double xPosition, double yPosition) {
 		this.setImage(new Image(Objects.requireNonNull(getClass().getResource(IMAGE_NAME)).toExternalForm()));
@@ -21,11 +21,18 @@ public class ShieldImage extends ImageView {
 
 	public void showShield() {
 		this.setVisible(true);
-		toFront();
+		this.toFront(); // Ensure the shield is rendered above other elements
 	}
-
 	public void hideShield() {
 		this.setVisible(false);
+	}
+
+	public void updatePosition(double xPosition, double yPosition) {
+		this.setLayoutX(xPosition);
+		this.setLayoutY(yPosition);
+	}
+	public static int getShieldSize() {
+		return SHIELD_SIZE;
 	}
 
 }
