@@ -17,6 +17,8 @@ public class Boss extends FighterPlane {
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
 	private static final int MAX_FRAMES_WITH_SHIELD = 500; //150
+	private static final int TOOLBAR_HEIGHT = 70;
+	private static final int BOTTOM_BUFFER = 70;  // Buffer to ensure boss stays within bounds
 
 	private final int screenHeight;
 	private final List<Integer> movePattern;
@@ -128,10 +130,10 @@ public class Boss extends FighterPlane {
 	}
 
 	private int getUpperBound() {
-		return 0; // Top of the screen
+		return TOOLBAR_HEIGHT; // Top of the screen plus the height of the toolbar
 	}
 
+
 	private int getLowerBound() {
-		return screenHeight - IMAGE_HEIGHT; // Bottom of the screen accounting for Boss height
-	}
-}
+		return screenHeight - IMAGE_HEIGHT - BOTTOM_BUFFER; // Bottom of the screen accounting for Boss height and a buffer
+	}}

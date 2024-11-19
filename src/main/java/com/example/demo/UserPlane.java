@@ -11,6 +11,7 @@ public class UserPlane extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
+	private static final double TOOLBAR_HEIGHT = 70;
 	private int velocityMultiplier;
 	//private int numberOfKills;
 
@@ -18,18 +19,22 @@ public class UserPlane extends FighterPlane {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, INITIAL_Y_POSITION, initialHealth);
 		velocityMultiplier = 0;
 	}
-
 	@Override
 	public void updatePosition() {
 		if (isMoving()) {
 			double initialTranslateY = getTranslateY();
 			this.moveVertically(VERTICAL_VELOCITY * velocityMultiplier);
 			double newPosition = getLayoutY() + getTranslateY();
-			if (newPosition < Y_UPPER_BOUND || newPosition > Y_LOWER_BOUND) {
+
+			// Ensure the new position respects the toolbar boundary at the top
+			double adjustedUpperBound = TOOLBAR_HEIGHT; // New upper bound considering the toolbar
+
+			if (newPosition < adjustedUpperBound || newPosition > Y_LOWER_BOUND) {
 				this.setTranslateY(initialTranslateY);
 			}
 		}
 	}
+
 
 	@Override
 	public void updateActor() {

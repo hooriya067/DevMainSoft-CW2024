@@ -11,7 +11,7 @@ public class LevelOne extends LevelParent {
 	private static final int KILLS_TO_ADVANCE = 10;
 	//private static final double ENEMY_SPAWN_PROBABILITY = .20;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
-
+	private static final double TOOLBAR_HEIGHT = 70;
 	private Label killsLabel;
 
 	public LevelOne(double screenHeight, double screenWidth) {
@@ -50,12 +50,12 @@ public class LevelOne extends LevelParent {
 	protected void initializeFriendlyUnits() {
 		getRoot().getChildren().add(getUser());
 	}
-	@Override
+
 	protected void spawnEnemyUnits() {
-		double spawnProbability = 0.1; // 10% chance to spawn an enemy each update cycle
+		double spawnProbability = 0.1; // Example: 10% chance to spawn an enemy each update cycle
 
 		if (Math.random() < spawnProbability && getCurrentNumberOfEnemies() < TOTAL_ENEMIES) {
-			double randomYPosition = Math.random() * getEnemyMaximumYPosition();
+			double randomYPosition = TOOLBAR_HEIGHT + (Math.random() * (getEnemyMaximumYPosition() - TOOLBAR_HEIGHT));
 			ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), randomYPosition);
 			addEnemyUnit(newEnemy);
 		}

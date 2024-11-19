@@ -20,6 +20,8 @@ public abstract class LevelParent {
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
 
+
+
 	private final Group root;
 	private final Timeline timeline;
 	private final UserPlane user;
@@ -83,11 +85,11 @@ public abstract class LevelParent {
 	protected abstract LevelView instantiateLevelView();
 
 	protected abstract void misc();
-
 	public Scene initializeScene() {
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
+		levelView.showPauseButton();  // Adding this to show the pause button in LevelView
 		return scene;
 	}
 
@@ -241,26 +243,6 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 		levelView.removeHearts(user.getHealth());
 	}
 
-//	protected void setKillCounterLabel(Label killsLabel) {
-//		this.killsLabel = killsLabel;
-//	}
-//
-//
-//	protected void updateKillCount() {
-//		List<ActiveActorDestructible> destroyedEnemies = new ArrayList<>();
-//
-//		for (ActiveActorDestructible enemy : enemyUnits) {
-//			if (enemy.isDestroyed()) {
-//				incrementKillCount();  // Increment kill count directly in LevelParent
-//				destroyedEnemies.add(enemy);
-//			}
-//		}
-//
-//		enemyUnits.removeAll(destroyedEnemies);
-//
-//		// Update the kill counter label in LevelView
-//		levelView.updateKillCounter(getNumberOfKills());
-//	}
 
 	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
