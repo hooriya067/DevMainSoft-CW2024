@@ -16,7 +16,7 @@ public class Boss extends FighterPlane {
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int ZERO = 0;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int MAX_FRAMES_WITH_SHIELD = 500; //150
+	private static final int MAX_FRAMES_WITH_SHIELD = 150; //500 for testing
 	private static final int TOOLBAR_HEIGHT = 70;
 	private static final int BOTTOM_BUFFER = 70;  // Buffer to ensure boss stays within bounds
 
