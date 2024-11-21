@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
 	private static final String TITLE = "Sky Battle";
-
+ 
 	@Override
 	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
 			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {

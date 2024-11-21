@@ -22,7 +22,7 @@ public class LevelManager {
         // Add levels to the sequence
         levelSequence.add("LEVEL_ONE");
         levelSequence.add("LEVEL_TWO");
-        // Add more levels as needed
+        levelSequence.add("LEVEL_THREE");
     }
 
     // Method to start the first level
@@ -52,6 +52,9 @@ public class LevelManager {
                     break;
                 case "LEVEL_TWO":
                     currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
+                    break;
+                case "LEVEL_THREE":
+                    currentLevel = new LevelThree(stage.getHeight(), stage.getWidth());
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown level: " + levelName);

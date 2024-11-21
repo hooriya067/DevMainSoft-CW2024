@@ -2,14 +2,14 @@ package com.example.demo;
 import com.example.demo.controller.Controller;
 
 
-public abstract class Projectile extends ActiveActorDestructible {
+public class Projectile extends ActiveActorDestructible {
+	private final double horizontalVelocity;  // Change from int to double
 
-	private final int horizontalVelocity;
-
-	public Projectile(String imageName, int imageHeight, double initialXPos, double initialYPos, int horizontalVelocity) {
+	public Projectile(String imageName, int imageHeight, double initialXPos, double initialYPos, double horizontalVelocity) {  // Change the parameter type to double
 		super(imageName, imageHeight, initialXPos, initialYPos);
 		this.horizontalVelocity = horizontalVelocity;
 	}
+
 
 	@Override
 	public void takeDamage() {

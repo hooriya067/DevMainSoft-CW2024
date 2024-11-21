@@ -3,10 +3,21 @@ package com.example.demo;
 public abstract class FighterPlane extends ActiveActorDestructible {
 
 	private int health;
+	private double horizontalVelocity; // Add horizontal velocity property
 
 	public FighterPlane(String imageName, int imageHeight, double initialXPos, double initialYPos, int health) {
 		super(imageName, imageHeight, initialXPos, initialYPos);
 		this.health = health;
+	}
+
+	// Getter method for horizontal velocity
+	public double getHorizontalVelocity() {
+		return horizontalVelocity;
+	}
+
+	// Setter method for horizontal velocity
+	public void setHorizontalVelocity(double horizontalVelocity) {
+		this.horizontalVelocity = horizontalVelocity;
 	}
 
 	public abstract ActiveActorDestructible fireProjectile();
@@ -34,5 +45,4 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 	public int getHealth() {
 		return health;
 	}
-
 }

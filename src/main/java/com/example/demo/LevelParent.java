@@ -24,12 +24,11 @@ public abstract class LevelParent {
 
 	private final Group root;
 	private final Timeline timeline;
-	private final UserPlane user;
+	protected final UserPlane user;
 	private final Scene scene;
-	private final ImageView background;
+	protected final ImageView background;
 	private int numberOfKills;
-	private Label killsLabel;
-
+	protected ActiveActorDestructible userPlane;
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
@@ -132,7 +131,7 @@ public abstract class LevelParent {
 		timeline.getKeyFrames().add(gameLoop);
 	}
 
-	private void initializeBackground() {
+	protected void initializeBackground() {
 		background.setFocusTraversable(true);
 		background.setFitHeight(screenHeight);
 		background.setFitWidth(screenWidth);
@@ -158,14 +157,14 @@ public abstract class LevelParent {
 				}
 
 				KeyCode kc = e.getCode();
-				if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stop();
+				if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stopVerticalMovement();
 			}
 		});
 
 		root.getChildren().add(background);
 	}
 
-	private void fireProjectile() {
+	protected void fireProjectile() {
 		ActiveActorDestructible projectile = user.fireProjectile();
 		root.getChildren().add(projectile);
 		userProjectiles.add(projectile);
@@ -309,5 +308,8 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 	}
 
 
+	protected void setUser(ActiveActorDestructible userPlane) {
+		this.userPlane = userPlane;
+	}
 }
 
