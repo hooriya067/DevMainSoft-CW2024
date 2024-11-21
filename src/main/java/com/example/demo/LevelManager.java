@@ -14,6 +14,7 @@ public class LevelManager {
     private final Stage stage;
     private final List<String> levelSequence = new ArrayList<>();
     private int currentLevelIndex = 0;
+    private LevelParent currentLevel;  // Reference to the current level being played
 
     public LevelManager(Stage stage) {
         this.stage = stage;
@@ -24,12 +25,14 @@ public class LevelManager {
         // Add more levels as needed
     }
 
+    // Method to start the first level
     public void startFirstLevel() {
         if (!levelSequence.isEmpty()) {
             goToLevel(levelSequence.get(currentLevelIndex));
         }
     }
 
+    // Method to proceed to the next level
     public void goToNextLevel() {
         currentLevelIndex++;
         if (currentLevelIndex < levelSequence.size()) {
@@ -39,10 +42,9 @@ public class LevelManager {
         }
     }
 
+    // Method to transition to a specific level
     private void goToLevel(String levelName) {
         try {
-            LevelParent currentLevel;
-
             // Instantiate the appropriate level based on the level name
             switch (levelName) {
                 case "LEVEL_ONE":
@@ -55,6 +57,7 @@ public class LevelManager {
                     throw new IllegalArgumentException("Unknown level: " + levelName);
             }
 
+            // Set the observer for the current level
             currentLevel.setmyobserver((Controller) stage.getUserData());
             Scene scene = currentLevel.initializeScene();
             stage.setScene(scene);
@@ -64,6 +67,8 @@ public class LevelManager {
         }
     }
 
+
+    // Method to show the final win screen after all levels are complete
     private void showFinalWinScreen() {
         // Use WinImage to create the final win scene
         WinImage winImage = new WinImage(stage.getWidth() / 2 - 300, stage.getHeight() / 2 - 250);
@@ -81,34 +86,12 @@ public class LevelManager {
         Scene winScene = new Scene(winScreenRoot, stage.getWidth(), stage.getHeight());
         stage.setScene(winScene); // Set the scene to the stage
     }
-//    private void showFinalWinScreen() {
-//        // Use WinImage to create the final win scene
-//        WinImage winImage = new WinImage(stage.getWidth() / 2 - 300, stage.getHeight() / 2 - 250);
-//        winImage.showWinImage(); // Make the WinImage visible
-//
-//        // Create an image icon for finishing the game
-//        Image finishIconImage = new Image(Objects.requireNonNull(getClass().getResource("/com/example/demo/images/finish_icon.png")).toExternalForm());
-//        ImageView finishIcon = new ImageView(finishIconImage);
-//
-//        // Set the dimensions and position for the finish icon
-//        finishIcon.setFitWidth(100);  // Set the width of the icon
-//        finishIcon.setFitHeight(100); // Set the height of the icon
-//        finishIcon.setLayoutX(stage.getWidth() / 2 - 50);
-//        finishIcon.setLayoutY(stage.getHeight() / 2 + 300);
-//
-//        // Add an event handler to handle click events for the finish icon
-//        finishIcon.setOnMouseClicked(e -> {
-//            stage.close(); // Close the game window or restart, if needed
-//        });
-//
-//        // Create a group containing the win image and the finish icon
-//        Group winScreenRoot = new Group(winImage, finishIcon);
-//        Scene winScene = new Scene(winScreenRoot, stage.getWidth(), stage.getHeight());
-//        stage.setScene(winScene); // Set the scene to the stage
-//    }
 
 
+    // Method to display an error alert
     private void showErrorAlert(Exception e) {
         System.out.println("Error: " + e.getMessage());
+
     }
+
 }

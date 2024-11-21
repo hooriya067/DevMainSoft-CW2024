@@ -25,7 +25,7 @@ public class MainMenu {
         // Set the VBox for the main menu
         VBox menuBox = new VBox(40);  // Increased spacing to make it visually balanced on larger screen
         menuBox.setAlignment(Pos.CENTER);  // Align elements to the center
-        menuBox.setStyle("-fx-background-color: rgba(50, 50, 100, 0.7); -fx-padding: 20;");  // Semi-transparent background
+        menuBox.setStyle("-fx-background-color: rgba(50, 50, 50, 0.7); -fx-padding: 20;");  // Semi-transparent background
         menuBox.setMaxWidth(600);  // Adjusted width for larger screen
 
         // Add the components
@@ -50,7 +50,7 @@ public class MainMenu {
         SoundButton soundButton = new SoundButton();
         Pane soundIconPane = new Pane();
         soundIconPane.getChildren().add(soundButton.getSoundButtonImage());
-        soundButton.getSoundButtonImage().setLayoutX(GameConfig.SCREEN_WIDTH - 100); // Move it slightly left to keep it within the screen
+        soundButton.getSoundButtonImage().setLayoutX(GameConfig.SCREEN_WIDTH - 120); // Move it slightly left to keep it within the screen
         soundButton.getSoundButtonImage().setLayoutY(20);
         rootLayout.getChildren().add(soundIconPane);
 

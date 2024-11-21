@@ -2,7 +2,9 @@ package com.example.demo;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 import java.util.Objects;
 
@@ -28,11 +30,26 @@ public class PauseButtonDisplay {
             pauseButton.setFitHeight(PAUSE_BUTTON_SIZE);
             pauseButton.setFitWidth(PAUSE_BUTTON_SIZE);
             pauseButton.setVisible(true);
-            System.out.println("Pause button image loaded successfully.");
             container.getChildren().add(pauseButton);  // Add pause button to container
+
+            // Pause button clicked opens the pause menu and pauses the game.
+            pauseButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+                System.out.println("Pause button clicked, pausing game and opening pause menu...");
+                GameStateManager.getInstance().pauseGame();
+                Stage stage = (Stage) container.getScene().getWindow();
+                openPauseMenu(stage);
+            });
+
         } catch (Exception e) {
             System.out.println("Error loading pause button image: " + e.getMessage());
         }
+    }
+
+    // Method to overlay the pause menu without changing the scene
+    private void openPauseMenu(Stage stage) {
+        PauseMenu pauseMenu = new PauseMenu(stage);
+        System.out.println("Displaying pause menu...");
+        pauseMenu.displayOverlay();
     }
 
     public HBox getContainer() {

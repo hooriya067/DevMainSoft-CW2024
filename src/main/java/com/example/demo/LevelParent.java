@@ -136,20 +136,32 @@ public abstract class LevelParent {
 		background.setFocusTraversable(true);
 		background.setFitHeight(screenHeight);
 		background.setFitWidth(screenWidth);
+
+		// Ensure the background only responds when not paused
 		background.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
+				if (GameStateManager.getInstance().isGamePaused()) {
+					return; // Do nothing if the game is paused
+				}
+
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP) user.moveUp();
 				if (kc == KeyCode.DOWN) user.moveDown();
 				if (kc == KeyCode.SPACE) fireProjectile();
 			}
 		});
+
 		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent e) {
+				if (GameStateManager.getInstance().isGamePaused()) {
+					return; // Do nothing if the game is paused
+				}
+
 				KeyCode kc = e.getCode();
 				if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stop();
 			}
 		});
+
 		root.getChildren().add(background);
 	}
 
@@ -170,7 +182,7 @@ public abstract class LevelParent {
 		}
 	}
 
-	private void updateActors() {
+	public void updateActors() {
 		friendlyUnits.forEach(plane -> plane.updateActor());
 		enemyUnits.forEach(enemy -> enemy.updateActor());
 		userProjectiles.forEach(projectile -> projectile.updateActor());
@@ -203,17 +215,6 @@ public abstract class LevelParent {
 		handleCollisions(enemyProjectiles, friendlyUnits);
 	}
 
-//		private void handleCollisions(List<ActiveActorDestructible> actors1,
-//									  List<ActiveActorDestructible> actors2) {
-//			for (ActiveActorDestructible actor : actors2) {
-//				for (ActiveActorDestructible otherActor : actors1) {
-//					if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
-//						actor.takeDamage();
-//						otherActor.takeDamage();
-//					}
-//				}
-//			}
-//		}
 //actors2 should always be the enemy units list (enemyUnits).
 //actors1 should be the user projectiles list (userProjectiles)
 private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
@@ -306,5 +307,7 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 	public void incrementKillCount() {
 		numberOfKills++;
 	}
+
+
 }
 

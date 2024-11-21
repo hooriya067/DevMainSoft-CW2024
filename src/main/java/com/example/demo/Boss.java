@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.controller.Controller;
+
 import java.util.*;
 
 public class Boss extends FighterPlane {
@@ -44,6 +46,9 @@ public class Boss extends FighterPlane {
 
 	@Override
 	public void updatePosition() {
+		if (GameStateManager.isPaused) {
+			return;  // Skip updating position if paused
+		}
 		double initialTranslateY = getTranslateY();
 		moveVertically(getNextMove());
 		double currentPosition = getLayoutY() + getTranslateY();

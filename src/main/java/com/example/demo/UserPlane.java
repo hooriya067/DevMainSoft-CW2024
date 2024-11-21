@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.controller.Controller;
+
 public class UserPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "userplane1.png";
@@ -21,6 +23,9 @@ public class UserPlane extends FighterPlane {
 	}
 	@Override
 	public void updatePosition() {
+//		if (GameStateManager.isPaused) {
+//			return;  // Skip updating position if paused
+//		}
 		if (isMoving()) {
 			double initialTranslateY = getTranslateY();
 			this.moveVertically(VERTICAL_VELOCITY * velocityMultiplier);

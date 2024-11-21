@@ -42,7 +42,7 @@ public class LevelOne extends LevelParent {
 		Platform.runLater(() -> {
 			killsLabel.setText("Kills: " + getNumberOfKills());
 			killsLabel.toFront();
-			System.out.println("Kill counter label updated: " + getNumberOfKills());
+//			System.out.println("Kill counter label updated: " + getNumberOfKills());
 		});
 	}
 

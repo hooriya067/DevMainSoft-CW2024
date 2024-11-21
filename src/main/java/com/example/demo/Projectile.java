@@ -1,4 +1,6 @@
 package com.example.demo;
+import com.example.demo.controller.Controller;
+
 
 public abstract class Projectile extends ActiveActorDestructible {
 
@@ -15,6 +17,9 @@ public abstract class Projectile extends ActiveActorDestructible {
 	}
 
 	public void updatePosition() {
+		if (GameStateManager.isPaused) {
+			return;  // Skip updating position if paused
+		}
 		moveHorizontally(horizontalVelocity);
 	}
 
