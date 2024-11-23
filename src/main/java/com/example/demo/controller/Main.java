@@ -6,7 +6,7 @@ import com.example.demo.MainMenu;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+public class  Main extends Application {
 
 	private static final String TITLE = "Sky Battle";
  

@@ -22,6 +22,12 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 
 	public abstract ActiveActorDestructible fireProjectile();
 
+//		if (GameStateManager.isPaused) {
+//			return;
+//		}
+
+
+
 	@Override
 	public void takeDamage() {
 		health--;

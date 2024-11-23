@@ -33,7 +33,7 @@ public class LevelOne extends LevelParent {
 			);
 
 			getRoot().getChildren().add(killsLabel);
-			killsLabel.toFront();
+			//killsLabel.toFront();
 			System.out.println("Kill counter label initialized and added to root.");
 		}
 

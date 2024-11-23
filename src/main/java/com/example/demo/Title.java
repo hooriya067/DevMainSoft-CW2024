@@ -12,7 +12,7 @@ public class Title {
         // Load the title image
         Image image = new Image(Objects.requireNonNull(getClass().getResource("/com/example/demo/images/title1.png")).toExternalForm());
         titleImage = new ImageView(image);
-        titleImage.setFitWidth(500);
+        titleImage.setFitWidth(650);
         titleImage.setPreserveRatio(true);
     }
 

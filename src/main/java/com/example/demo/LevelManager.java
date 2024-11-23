@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.controller.Controller;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
@@ -21,8 +22,9 @@ public class LevelManager {
 
         // Add levels to the sequence
         levelSequence.add("LEVEL_ONE");
-        levelSequence.add("LEVEL_TWO");
-        levelSequence.add("LEVEL_THREE");
+//        levelSequence.add("LEVEL_TWO");
+//        levelSequence.add("LEVEL_THREE");
+//        levelSequence.add("LEVEL_FOUR");
     }
 
     // Method to start the first level
@@ -49,13 +51,18 @@ public class LevelManager {
             switch (levelName) {
                 case "LEVEL_ONE":
                     currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+                //   currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
                     break;
-                case "LEVEL_TWO":
-                    currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
-                    break;
-                case "LEVEL_THREE":
-                    currentLevel = new LevelThree(stage.getHeight(), stage.getWidth());
-                    break;
+//                case "LEVEL_TWO":
+//                    currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
+//                    break;
+//                case "LEVEL_THREE":
+//                    currentLevel = new LevelThree(stage.getHeight(), stage.getWidth());
+//                    break;
+//                case "LEVEL_FOUR":
+//                    currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
+//                   // currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+//                    break;
                 default:
                     throw new IllegalArgumentException("Unknown level: " + levelName);
             }
@@ -77,16 +84,11 @@ public class LevelManager {
         WinImage winImage = new WinImage(stage.getWidth() / 2 - 300, stage.getHeight() / 2 - 250);
         winImage.showWinImage(); // Make the WinImage visible
 
-        Button nextButton = new Button("Finish Game");
-        nextButton.setLayoutX(stage.getWidth() / 2 - 50);
-        nextButton.setLayoutY(stage.getHeight() / 2 + 300);
-        nextButton.setOnAction(e -> {
-            stage.close(); // Close the game window or restart, if needed
-        });
 
-        // Create a group containing the win image and the button
-        Group winScreenRoot = new Group(winImage, nextButton);
-        Scene winScene = new Scene(winScreenRoot, stage.getWidth(), stage.getHeight());
+
+
+        Group winScreenRoot = new Group(winImage);
+       Scene winScene = new Scene(winScreenRoot, stage.getWidth(), stage.getHeight());
         stage.setScene(winScene); // Set the scene to the stage
     }
 

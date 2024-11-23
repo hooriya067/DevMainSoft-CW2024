@@ -17,7 +17,7 @@ public class EnemyPlaneTypeB extends FighterPlane {
 
     @Override
     public ActiveActorDestructible fireProjectile() {
-        double probability = 0.001;
+        double probability = 0.0009;
         UserPlane userPlane = levelParent.getUser();  // Access the user plane
         return (Math.random() < probability) ? new HomingMissile(getProjectileXPosition(0), getProjectileYPosition(20), userPlane) : null;
     }

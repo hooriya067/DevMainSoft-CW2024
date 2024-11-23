@@ -28,16 +28,16 @@ public class GameOverImage extends Pane {
 		gameOverImage.setFitWidth(IMAGE_WIDTH);
 		gameOverImage.setPreserveRatio(true);
 
-		// Adjusted position of Game Over image (move further up)
+
 		double gameOverX = (screenWidth - IMAGE_WIDTH) / 2;
-		double gameOverY = screenHeight / 15; // Reduced Y value to move it higher
+		double gameOverY = screenHeight / 15;
 		gameOverImage.setLayoutX(gameOverX);
 		gameOverImage.setLayoutY(gameOverY);
 
 		// Create Play Again Button
 		PlayAgainButton playAgainButton = new PlayAgainButton(
-				(screenWidth / 2) - 600, // Adjusted spacing for left alignment
-				(screenHeight / 2) + 170 // Shifted further down
+				(screenWidth / 2) - 600,
+				(screenHeight / 2) + 170
 		);
 
 	// Set action for Play Again button

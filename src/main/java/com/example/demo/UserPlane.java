@@ -62,6 +62,7 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
+
 		double currentXPosition = getLayoutX() + getTranslateX() + getFitWidth() +120 ;
 		double currentYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 		return new UserProjectile(currentXPosition, currentYPosition);

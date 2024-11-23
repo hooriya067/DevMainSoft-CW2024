@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.controller.Controller;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

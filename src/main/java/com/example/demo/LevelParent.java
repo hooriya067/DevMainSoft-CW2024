@@ -32,7 +32,7 @@ public abstract class LevelParent {
 	private final List<ActiveActorDestructible> friendlyUnits;
 	private final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
-	private final List<ActiveActorDestructible> enemyProjectiles;
+	protected final List<ActiveActorDestructible> enemyProjectiles;
 
 	private final LevelView levelView;
 
@@ -107,7 +107,7 @@ public abstract class LevelParent {
 		this.myobserver = myobserver;
 	}
 
-	private void updateScene() {
+	protected void updateScene() {
 		spawnEnemyUnits();
 		updateActors();
 		generateEnemyFire();
@@ -239,6 +239,8 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 		}
 	}
 
+
+
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
 	}
@@ -248,10 +250,10 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 		return Math.abs(enemy.getTranslateX()) > screenWidth;
 	}
 
-	protected void winGame() {
-		timeline.stop();
-		levelView.showWinImage();
-	}
+//	protected void winGame() {
+//		timeline.stop();
+//		levelView.showWinImage();
+//	}
 
 	protected void loseGame() {
 		timeline.stop();
@@ -278,7 +280,13 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 		enemyUnits.add(enemy);
 		root.getChildren().add(enemy);
 	}
+	protected void addProjectileToLevel(ActiveActorDestructible projectile) {
+		if (projectile != null) {
 
+			enemyProjectiles.add(projectile); // Adding as part of enemy projectiles
+			root.getChildren().add(projectile);
+		}
+	}
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
 	}

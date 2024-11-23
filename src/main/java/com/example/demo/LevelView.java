@@ -44,10 +44,10 @@ public class LevelView {
 		heartDisplay.getContainer().toFront();
 	}
 
-	public void showWinImage() {
-		root.getChildren().add(winImage);
-		winImage.showWinImage();
-	}
+//	public void showWinImage() {
+//		root.getChildren().add(winImage);
+//		winImage.showWinImage();
+//	}
 
 	public void showGameOverImage() {
 		root.getChildren().add(gameOverImage);
