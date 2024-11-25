@@ -10,7 +10,7 @@ public class EnemyPlaneTypeB extends FighterPlane {
     private final LevelParent levelParent;
 
     public EnemyPlaneTypeB(double initialX, double initialY, LevelParent levelParent) {
-        super(IMAGE_NAME, IMAGE_HEIGHT, initialX, initialY, 5);
+        super(IMAGE_NAME, IMAGE_HEIGHT, initialX, initialY, 3);
         setHorizontalVelocity(INITIAL_VELOCITY);
         this.levelParent = levelParent;
     }
