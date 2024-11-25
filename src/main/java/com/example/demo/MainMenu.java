@@ -17,7 +17,7 @@ public class MainMenu {
 
     public MainMenu(Stage primaryStage) {
         // Load the background image
-        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResource("/com/example/demo/images/background0.jpg")).toExternalForm());
+        Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResource("/com/example/demo/images/background0.png")).toExternalForm());
         ImageView backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitWidth(MENU_WIDTH);
         backgroundImageView.setFitHeight(MENU_HEIGHT);

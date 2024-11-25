@@ -22,9 +22,9 @@ public class LevelManager {
 
         // Add levels to the sequence
         levelSequence.add("LEVEL_ONE");
-//        levelSequence.add("LEVEL_TWO");
-//        levelSequence.add("LEVEL_THREE");
-//        levelSequence.add("LEVEL_FOUR");
+        levelSequence.add("LEVEL_TWO");
+        levelSequence.add("LEVEL_THREE");
+        levelSequence.add("LEVEL_FOUR");
     }
 
     // Method to start the first level
@@ -53,16 +53,16 @@ public class LevelManager {
                     currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
                 //   currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
                     break;
-//                case "LEVEL_TWO":
-//                    currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
-//                    break;
-//                case "LEVEL_THREE":
-//                    currentLevel = new LevelThree(stage.getHeight(), stage.getWidth());
-//                    break;
-//                case "LEVEL_FOUR":
-//                    currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
-//                   // currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
-//                    break;
+                case "LEVEL_TWO":
+                    currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
+                    break;
+                case "LEVEL_THREE":
+                    currentLevel = new LevelThree(stage.getHeight(), stage.getWidth());
+                    break;
+                case "LEVEL_FOUR":
+                    currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
+                   // currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+                    break;
                 default:
                     throw new IllegalArgumentException("Unknown level: " + levelName);
             }
@@ -76,23 +76,40 @@ public class LevelManager {
             showErrorAlert(e);
         }
     }
-
-
-    // Method to show the final win screen after all levels are complete
     private void showFinalWinScreen() {
-        // Use WinImage to create the final win scene
-        WinImage winImage = new WinImage(stage.getWidth() / 2 - 300, stage.getHeight() / 2 - 250);
-        winImage.showWinImage(); // Make the WinImage visible
+        // Debugging: Print stage dimensions
+        System.out.println("Stage dimensions: " + stage.getWidth() + "x" + stage.getHeight());
 
+        // Create a dim background overlay
+        javafx.scene.shape.Rectangle dimBackground = new javafx.scene.shape.Rectangle(stage.getWidth(), stage.getHeight());
+        dimBackground.setFill(javafx.scene.paint.Color.BLACK);
+        dimBackground.setOpacity(0.5); // Semi-transparent black overlay
 
+        // Create the WinImage overlay
+        WinImage winImage = new WinImage(stage.getWidth(), stage.getHeight());
+        winImage.setVisible(true); // Ensure WinImage is visible
 
+        // Group all elements together
+        Group winScreenRoot = new Group(dimBackground, winImage);
 
-        Group winScreenRoot = new Group(winImage);
-       Scene winScene = new Scene(winScreenRoot, stage.getWidth(), stage.getHeight());
-        stage.setScene(winScene); // Set the scene to the stage
+        // Get the existing root of the scene
+        Scene currentScene = stage.getScene();
+
+        if (currentScene.getRoot() instanceof Group) {
+            // If the root is a Group, add the WinScreenRoot directly
+            Group root = (Group) currentScene.getRoot();
+            root.getChildren().add(winScreenRoot);
+        } else {
+            // If the root is not a Group, wrap it in a new Group and set it as the root
+            Group newRoot = new Group();
+            newRoot.getChildren().add(currentScene.getRoot()); // Preserve the current root as a child
+            newRoot.getChildren().add(winScreenRoot);
+            currentScene.setRoot(newRoot);
+        }
+
+        // Ensure the overlay comes to the front
+        winScreenRoot.toFront();
     }
-
-
     // Method to display an error alert
     private void showErrorAlert(Exception e) {
         System.out.println("Error: " + e.getMessage());
