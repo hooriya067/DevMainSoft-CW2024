@@ -44,14 +44,25 @@ public class LevelManager {
         }
     }
 
-    // Method to transition to a specific level
     private void goToLevel(String levelName) {
+        try {
+            // Create a LevelIntroScreen instance before starting the actual level
+            LevelIntroScreen levelIntroScreen = new LevelIntroScreen( levelName, this);
+            Scene introScene = levelIntroScreen.getScene();
+            stage.setScene(introScene);
+
+        } catch (IllegalArgumentException e) {
+            showErrorAlert(e);
+        }
+    }
+
+    // Method to proceed to the level after introduction
+    public void proceedToLevel(String levelName) {
         try {
             // Instantiate the appropriate level based on the level name
             switch (levelName) {
                 case "LEVEL_ONE":
                     currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
-                //   currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_TWO":
                     currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
@@ -61,7 +72,6 @@ public class LevelManager {
                     break;
                 case "LEVEL_FOUR":
                     currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
-                   // currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown level: " + levelName);
@@ -72,6 +82,7 @@ public class LevelManager {
             Scene scene = currentLevel.initializeScene();
             stage.setScene(scene);
             currentLevel.startGame();
+
         } catch (IllegalArgumentException e) {
             showErrorAlert(e);
         }

@@ -7,7 +7,6 @@ import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
 import javafx.util.Duration;
@@ -68,9 +67,6 @@ public abstract class LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		} else if (userHasReachedKillTarget()) {
-//			timeline.stop();
-//			setChanged();
-//			notifyObservers("NEXT"); // Notify Controller to proceed to next level
 			timeline.stop(); // Stop the game timeline
 			if (myobserver != null) {
 				myobserver.onLevelWin("NEXT");}

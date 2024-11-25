@@ -2,7 +2,6 @@ package com.example.demo;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
 public class StealthEnemyPlane extends FighterPlane {

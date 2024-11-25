@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.controller.Controller;
-
 public class UserPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "userplane1.png";
