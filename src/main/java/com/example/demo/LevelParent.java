@@ -113,8 +113,7 @@ public abstract class LevelParent {
 		handleEnemyProjectileCollisions();
 		handlePlaneCollisions();
 		removeAllDestroyedActors();
-		updateWinningParameter();//new
-		//System.out.println("Current kill count: " + getNumberOfKills());  // Log kill count after each scene update
+		updateWinningParameter();
 		updateLevelView();
 		checkIfGameOver();
 		misc();

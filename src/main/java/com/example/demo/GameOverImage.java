@@ -1,7 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.controller.Controller;
-import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -28,23 +27,22 @@ public class GameOverImage extends Pane {
 		gameOverImage.setFitWidth(IMAGE_WIDTH);
 		gameOverImage.setPreserveRatio(true);
 
-
 		double gameOverX = (screenWidth - IMAGE_WIDTH) / 2;
 		double gameOverY = screenHeight / 15;
 		gameOverImage.setLayoutX(gameOverX);
 		gameOverImage.setLayoutY(gameOverY);
 
 		// Create Play Again Button
-		PlayAgainButton playAgainButton = new PlayAgainButton(
-				(screenWidth / 2) - 600,
-				(screenHeight / 2) + 170
-		);
+		PlayAgainButton playAgainButton = new PlayAgainButton();
+		playAgainButton.getButton().setLayoutX((screenWidth / 2) - 600); // Set X position
+		playAgainButton.getButton().setLayoutY((screenHeight / 2) + 170); // Set Y position
 
-	// Set action for Play Again button
+		// Set action for Play Again button
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
 				// Restart the game using Controller logic
-				Controller gameController = new Controller((Stage) this.getScene().getWindow());
+				Stage stage = (Stage) this.getScene().getWindow();
+				Controller gameController = new Controller(stage);
 				gameController.launchGame(); // Launch the game from Level 1
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -53,23 +51,17 @@ public class GameOverImage extends Pane {
 
 		// Add Quit Button
 		QuitButton quitButton = new QuitButton();
-		ImageView quitButtonImage = quitButton.getQuitButtonImage();
+		quitButton.getButton().setLayoutX((screenWidth / 2) + 300); // Set X position
+		quitButton.getButton().setLayoutY((screenHeight / 2) + 170); // Set Y position
 
-		// Adjust Quit Button position
-		double quitX = (screenWidth / 2) + 300; // Adjusted spacing for right alignment
-		double quitY = (screenHeight / 2) + 170; // Same vertical position as Play Again button
-
-		quitButtonImage.setLayoutX(quitX);
-		quitButtonImage.setLayoutY(quitY);
-
-		// Dynamically get the Stage from the Scene
-		quitButtonImage.setOnMouseClicked(event -> {
-			Stage stage = (Stage) this.getScene().getWindow(); // Retrieve the Stage
-			stage.close(); // Close the application
+		// Set action for Quit button
+		quitButton.setOnClick(() -> {
+			Stage stage = (Stage) this.getScene().getWindow(); // Dynamically retrieve the Stage
+			stage.close(); // Exit the application
 		});
 
 		// Add all elements to the Pane in the correct order
-		this.getChildren().addAll(dimBackground, gameOverImage, playAgainButton, quitButtonImage);
+		this.getChildren().addAll(dimBackground, gameOverImage, playAgainButton.getButton(), quitButton.getButton());
 
 		// Bring Game Over image to the front
 		gameOverImage.toFront();

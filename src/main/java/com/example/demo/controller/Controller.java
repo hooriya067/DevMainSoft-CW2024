@@ -1,5 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.GameConfig;
+import com.example.demo.StageManager;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.example.demo.MyObserver;
 import com.example.demo.LevelManager;
@@ -16,7 +20,11 @@ public class Controller implements MyObserver { // Implementing MyObserver to ge
 	}
 
 	public void launchGame() {
-		stage.show();
+		Group root = new Group();
+		Stage stage = StageManager.getStage(); // Get the Stage from the StageManager
+		Scene scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+		stage.setScene(scene); // Attach the Scene to the Stage
+		stage.show(); // Show the Stage
 		levelManager.startFirstLevel();
 	}
 

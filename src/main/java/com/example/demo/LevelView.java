@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import com.example.demo.controller.Controller;
 import javafx.scene.Group;
+import javafx.stage.Stage;
 
 public class LevelView {
 
@@ -22,23 +24,30 @@ public class LevelView {
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
 		this.gameOverImage = new GameOverImage(sceneWidth, sceneHeight);
-		this.pauseButtonDisplay = new PauseButtonDisplay(PAUSE_BUTTON_X_POSITION, PAUSE_BUTTON_Y_POSITION);
+		this.pauseButtonDisplay = new PauseButtonDisplay();
+		this.pauseButtonDisplay.setPosition(PAUSE_BUTTON_X_POSITION, PAUSE_BUTTON_Y_POSITION);
 
 		addUIElementsToRoot();
 	}
 
 
 	private void addUIElementsToRoot() {
-		root.getChildren().addAll(heartDisplay.getContainer(), pauseButtonDisplay.getContainer());
-		System.out.println("Pause button added to root at X=" + pauseButtonDisplay.getContainer().getLayoutX() +
-				" Y=" + pauseButtonDisplay.getContainer().getLayoutY());
-		pauseButtonDisplay.getContainer().toFront(); // Bring to front to avoid being covered
+		root.getChildren().addAll(heartDisplay.getContainer(), pauseButtonDisplay.getButton());
 	}
 
 
 	public void showPauseButton() {
-		pauseButtonDisplay.getContainer().toFront();
+		pauseButtonDisplay.getButton().toFront();
+
+		pauseButtonDisplay.setOnPause(() -> {
+			Stage stage = StageManager.getStage();
+			PauseMenu pauseMenu = new PauseMenu(stage);
+			System.out.println("Pause button clicked!"); // Debug
+			pauseMenu.displayOverlay();
+		});
 	}
+
+
 
 	public void showHeartDisplay() {
 		heartDisplay.getContainer().toFront();

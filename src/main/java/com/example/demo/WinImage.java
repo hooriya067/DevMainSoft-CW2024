@@ -23,32 +23,21 @@ public class WinImage extends Pane {
 		winImage.setFitHeight(IMAGE_HEIGHT);
 		winImage.setPreserveRatio(true);
 
-		// Shift Win Image upwards
+		// Position the Win Image
 		double winImageX = (screenWidth - IMAGE_WIDTH) / 2;
-		double winImageY = screenHeight / 15; // Move further up
+		double winImageY = screenHeight / 15;
 		winImage.setLayoutX(winImageX);
 		winImage.setLayoutY(winImageY);
 
-		// Create Play Again Button
-		PlayAgainButton playAgainButton = new PlayAgainButton(
-//				(screenWidth / 2) - 400, // Left position
-//				(screenHeight / 2) + 150 // Downward shift
-				(screenWidth / 2) - 600,
-				(screenHeight / 2) + 170
-		);
+		// Create and position Play Again Button
+		PlayAgainButton playAgainButton = new PlayAgainButton();
+		playAgainButton.getButton().setLayoutX((screenWidth / 2) - 600); // Set X position
+		playAgainButton.getButton().setLayoutY((screenHeight / 2) + 170); // Set Y position
 
-		// Create Quit Button
+		// Create and position Quit Button
 		QuitButton quitButton = new QuitButton();
-		ImageView quitButtonImage = quitButton.getQuitButtonImage();
-
-		// Adjust Quit Button position (right of Play Again button)
-//		double quitX = (screenWidth / 2) + 100; // Right position
-//		double quitY = (screenHeight / 2) + 150; // Same vertical position as Play Again button
-		double quitX = (screenWidth / 2) + 300; // Adjusted spacing for right alignment
-		double quitY = (screenHeight / 2) + 170; // Same vertical position as Play Again button
-
-		quitButtonImage.setLayoutX(quitX);
-		quitButtonImage.setLayoutY(quitY);
+		quitButton.getButton().setLayoutX((screenWidth / 2) + 300);
+		quitButton.getButton().setLayoutY((screenHeight / 2) + 170);
 
 		// Add functionality to buttons
 		playAgainButton.setOnPlayAgain(() -> {
@@ -61,13 +50,13 @@ public class WinImage extends Pane {
 			}
 		});
 
-		quitButtonImage.setOnMouseClicked(event -> {
+		quitButton.setOnClick(() -> {
 			Stage stage = (Stage) this.getScene().getWindow(); // Dynamically retrieve the Stage
 			stage.close(); // Exit the application
 		});
 
 		// Add all elements to the Pane
-		this.getChildren().addAll(winImage, playAgainButton, quitButtonImage);
+		getChildren().addAll(winImage, playAgainButton.getButton(), quitButton.getButton());
 
 		// Bring the Win Image to the front
 		winImage.toFront();

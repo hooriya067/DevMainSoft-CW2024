@@ -10,19 +10,30 @@ import javafx.stage.Stage;
 public class PauseMenu {
     private final Stage stage;
     private StackPane overlayLayout;
+    private boolean overlayActive = false;
 
-    // Constructor to initialize stage reference
     public PauseMenu(Stage stage) {
+        if (stage == null) {
+            throw new IllegalArgumentException("Stage cannot be null in PauseMenu.");
+        }
         this.stage = stage;
     }
 
     public void displayOverlay() {
+        System.out.println("Pause button clicked! now we in displayyyyylayover"); // Debug
 
+        if (overlayActive) {
+            System.err.println("Pause menu is already active! overlayActive = true");
+            return;
+        }
 
-        // Notify the GameStateManager to pause the game
+        overlayActive = true;
+        System.out.println("overlayActive set to true.");
+
         GameStateManager.getInstance().pauseGame();
+        System.out.println("Game paused!");
 
-        // Create overlay UI (Translucent background and menu box)
+        // Create overlay
         Pane overlayBackground = new Pane();
         overlayBackground.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
         overlayBackground.setPrefSize(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
@@ -33,58 +44,60 @@ public class PauseMenu {
         menuBox.setMaxWidth(400);
         menuBox.setMaxHeight(300);
 
-        // Main Menu, Resume, and Quit Buttons
         MainMenuButton mainMenuButton = new MainMenuButton();
         mainMenuButton.setOnMainMenu(() -> {
-          //  removeOverlay();  // Remove the pause menu
-            stage.setHeight(GameConfig.SCREEN_HEIGHT);
-            stage.setWidth(GameConfig.SCREEN_WIDTH);
-
+            System.out.println("Main menu button clicked!");
+            removeOverlay();
             new MainMenu(stage);
-
         });
 
-        System.out.println("debug: adding a resume button...");
         ResumeButton resumeButton = new ResumeButton();
-        resumeButton.setOnResume(this);  // Pass this PauseMenu instance to ResumeButton for removal
+        resumeButton.setOnResume(() -> {
+            System.out.println("Resume button clicked!");
+            removeOverlay();
+            GameStateManager.getInstance().resumeGame();
+        });
 
         QuitButton quitButton = new QuitButton();
-        quitButton.setOnQuit(stage);
+        quitButton.setOnClick(() -> {
+            System.out.println("Quit button clicked!");
+            stage.close();
+        });
 
-        menuBox.getChildren().addAll(mainMenuButton.getMainMenuButtonImage(), resumeButton.getResumeButtonImage(), quitButton.getQuitButtonImage());
+        menuBox.getChildren().addAll(mainMenuButton.getButton(), resumeButton.getButton(), quitButton.getButton());
 
-        // Create the overlay layout that includes the background and menu box
         overlayLayout = new StackPane();
         overlayLayout.getChildren().addAll(overlayBackground, menuBox);
         StackPane.setAlignment(menuBox, Pos.CENTER);
 
-        // Add the overlay to the root
-        if (stage.getScene().getRoot() instanceof StackPane) {
-            StackPane currentRoot = (StackPane) stage.getScene().getRoot();
-            currentRoot.getChildren().add(overlayLayout);
-        } else if (stage.getScene().getRoot() instanceof Group) {
+        if (stage.getScene().getRoot() instanceof Group) {
+            System.out.println("Root is a Group. Adding overlay directly.");
             Group currentRoot = (Group) stage.getScene().getRoot();
-            currentRoot.getChildren().add(overlayLayout); // Add to group without changing the root
+            if (!currentRoot.getChildren().contains(overlayLayout)) {
+                currentRoot.getChildren().add(overlayLayout);
+                System.out.println("Overlay added to Group.");
+            } else {
+                System.err.println("Overlay is already in the Group.");
+            }
         } else {
-            // If the root is neither StackPane nor Group, wrap the existing root in a new StackPane
-            System.out.println("Wrapping root in a new StackPane");
-            Pane oldRoot = (Pane) stage.getScene().getRoot();
-            StackPane newRoot = new StackPane();
-            newRoot.getChildren().add(oldRoot);
-            newRoot.getChildren().add(overlayLayout);
-            stage.getScene().setRoot(newRoot);
+            System.err.println("Unexpected root type: " + stage.getScene().getRoot().getClass().getName());
         }
     }
-
     public void removeOverlay() {
-        if (overlayLayout != null && overlayLayout.getParent() instanceof StackPane) {
-            StackPane currentRoot = (StackPane) overlayLayout.getParent();
-            // Option 1: Remove the entire overlay layout (background + menu)
-            currentRoot.getChildren().removeAll(overlayLayout);
-            // currentRoot.getChildren().remove(menuBox);  // This will remove just the menu box
+        if (overlayLayout == null) {
+            System.err.println("Cannot remove overlay: overlayLayout is null!");
+            return;
+        }
 
-            System.out.println("Pause menu overlay removed.");
+        if (overlayLayout.getParent() instanceof Group) {
+            Group currentRoot = (Group) overlayLayout.getParent();
+            currentRoot.getChildren().remove(overlayLayout);
+            overlayActive = false;
+            System.out.println("Overlay removed from Group. overlayActive set to false.");
+        } else {
+            System.err.println("Cannot remove overlay: Unexpected parent type: " + overlayLayout.getParent());
         }
     }
+
 
 }
