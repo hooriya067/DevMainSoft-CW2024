@@ -142,15 +142,16 @@ public class LevelIntroScreen {
                         "BOSS'S SHIELD PROTECTS HIM!!";
             case "LEVEL_THREE":
                 return "Two types of enemies are attacking you.\n" +
-                        "HOMING MISSILES FOLLOW & KILL YOU AS THEY TOUCH." +
-                        "Kill 10 Enemies before a homing missile finds you!" +
-                        "Move LEFT RIGHT also";
+                        "One comes in groups, and other comes with homing missiles\n" +
+                        "HOMING MISSILES FOLLOW & KILL YOU AS THEY TOUCH.\n" +
+                        "Kill 10 Enemies before a homing missile finds you!\n" +
+                        "LEFT RIGHT movement is allowed from this level";
             case "LEVEL_FOUR":
                 return "DARK NIGHT HAS FALLEN!!" +
-                        "Enemies are hidden under their sheaths!!" +
-                        "But don't worry, Flare Power-ups coming " +
-                        "from the sky can help you see them." +
-                        "But BEWARE the flare you catch might" +
+                        "Enemies are hidden under their sheaths!!\n" +
+                        "But don't worry, Flare Power-ups coming\n " +
+                        "from the sky can help you see them.\n" +
+                        "But BEWARE the flare you catch might\n" +
                         " just be a bomb!";
             default:
                 return "Objective: Unknown level.";
