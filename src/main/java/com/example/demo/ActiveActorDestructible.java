@@ -30,5 +30,6 @@ public abstract class ActiveActorDestructible extends ActiveActor implements Des
 		return isDestroyed;
 	}
 
+
 }
 

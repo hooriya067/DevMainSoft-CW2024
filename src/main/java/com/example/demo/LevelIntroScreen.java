@@ -153,6 +153,12 @@ public class LevelIntroScreen {
                         "from the sky can help you see them.\n" +
                         "But BEWARE the flare you catch might\n" +
                         " just be a bomb!";
+            case "LEVEL_FIVE":
+                return "SHOWDOWNNNNNNNN\n" +
+                        "ALL Enemies are attacking youuu\n" +
+                        "Meteors are coming downnn\n" +
+                        "BEWARE\n";
+
             default:
                 return "Objective: Unknown level.";
         }

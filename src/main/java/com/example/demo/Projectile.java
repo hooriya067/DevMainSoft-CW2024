@@ -26,4 +26,6 @@ public class Projectile extends ActiveActorDestructible {
 	public void updateActor() {
 		updatePosition();
 	}
+
 }
+

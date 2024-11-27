@@ -25,6 +25,7 @@ public class LevelManager {
         levelSequence.add("LEVEL_TWO");
         levelSequence.add("LEVEL_THREE");
         levelSequence.add("LEVEL_FOUR");
+        levelSequence.add("LEVEL_FIVE");
     }
 
     // Method to start the first level
@@ -62,7 +63,7 @@ public class LevelManager {
             // Instantiate the appropriate level based on the level name
             switch (levelName) {
                 case "LEVEL_ONE":
-                    currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+                   currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_TWO":
                     currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
@@ -72,6 +73,9 @@ public class LevelManager {
                     break;
                 case "LEVEL_FOUR":
                     currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
+                    break;
+                case "LEVEL_FIVE":
+                   currentLevel = new LevelFive(stage.getHeight(), stage.getWidth());
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown level: " + levelName);

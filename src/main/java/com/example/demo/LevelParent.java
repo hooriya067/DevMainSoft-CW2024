@@ -29,7 +29,7 @@ public abstract class LevelParent {
 	private int numberOfKills;
 	protected ActiveActorDestructible userPlane;
 	private final List<ActiveActorDestructible> friendlyUnits;
-	private final List<ActiveActorDestructible> enemyUnits;
+	protected final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	protected final List<ActiveActorDestructible> enemyProjectiles;
 
@@ -169,7 +169,7 @@ public abstract class LevelParent {
 		enemyUnits.forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
 	}
 
-	private void spawnEnemyProjectile(ActiveActorDestructible projectile) {
+	protected void spawnEnemyProjectile(ActiveActorDestructible projectile) {
 		if (projectile != null) {
 			root.getChildren().add(projectile);
 			enemyProjectiles.add(projectile);
@@ -277,11 +277,12 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 	}
 	protected void addProjectileToLevel(ActiveActorDestructible projectile) {
 		if (projectile != null) {
-
-			enemyProjectiles.add(projectile); // Adding as part of enemy projectiles
-			root.getChildren().add(projectile);
+			enemyProjectiles.add(projectile); // Add to enemy projectiles
+			getRoot().getChildren().add(projectile);
+			System.out.println("Projectile added to level at X: " + projectile.getTranslateX() + ", Y: " + projectile.getTranslateY());
 		}
 	}
+
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
 	}
