@@ -52,6 +52,7 @@ public class MainMenu {
         // Add event handler for start button
         startButton.setOnStartGame(() -> {
             try {
+                GameStateManager.getInstance().resumeGame();
                 Controller gameController = new Controller(primaryStage);
                 gameController.launchGame();
             } catch (Exception e) {

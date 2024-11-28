@@ -76,6 +76,9 @@ public class LevelFour extends LevelParent {
     }
 
     private void spawnBombs() {
+        if (GameStateManager.isPaused) {
+            return;
+        }
         double spawnProbability = 0.01; // Adjust this value for bomb frequency
         if (Math.random() < spawnProbability) {
             double randomXPosition = Math.random() * getScreenWidth();
@@ -84,6 +87,9 @@ public class LevelFour extends LevelParent {
         }
     }
     private void spawnFlarePowerUp() {
+        if (GameStateManager.isPaused) {
+            return;
+        }
         double spawnProbability = 0.03; // Adjust this value to change the frequency of flare power-ups
         if (Math.random() < spawnProbability) {
             double randomXPosition = Math.random() * getScreenWidth(); // Random X position for the flare

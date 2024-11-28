@@ -16,6 +16,7 @@ public abstract class LevelParent {
 
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
+	private static final int TOOLBAR_HEIGHT = 80;
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
@@ -176,6 +177,9 @@ public abstract class LevelParent {
 	}
 
 	protected void fireProjectile() {
+		if (GameStateManager.isPaused) {
+			return;  // Skip updating position if paused
+		}
 		ActiveActorDestructible projectile = user.fireProjectile();
 		root.getChildren().add(projectile);
 		userProjectiles.add(projectile);
@@ -194,14 +198,15 @@ public abstract class LevelParent {
 	private final List<Coin> coins = new ArrayList<>();
 
 	private void spawnCoins() {
-		double spawnProbability = 0.01; // frequency
+		double spawnProbability = 0.01; // Adjust spawn frequency
 		if (Math.random() < spawnProbability) {
-			double randomYPosition = Math.random() * getScreenHeight(); // Random Y position
+			// Ensure coins are not spawned in the toolbar area
+			double randomYPosition = TOOLBAR_HEIGHT + Math.random() * (getScreenHeight() - TOOLBAR_HEIGHT);
 			Coin coin = new Coin(getScreenWidth(), randomYPosition, this); // Spawn coin
-			coins.add(coin); // Add to coin list
-			root.getChildren().add(coin);
+			root.getChildren().add(coin); // Add coin to the scene
 		}
 	}
+
 	public void updateActors() {
 		friendlyUnits.forEach(plane -> plane.updateActor());
 		enemyUnits.forEach(enemy -> enemy.updateActor());

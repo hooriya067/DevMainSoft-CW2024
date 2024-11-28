@@ -15,6 +15,9 @@ public class EnemyPlaneTypeA extends FighterPlane {
     }
     @Override
     public ActiveActorDestructible fireProjectile() {
+        if (GameStateManager.isPaused) {
+            return null;
+        }
         double probability = 0.01;
         return (Math.random() < probability) ? new EnemyProjectileLevelThree(getProjectileXPosition(0), getProjectileYPosition(20)) : null;
     }

@@ -1,10 +1,14 @@
 package com.example.demo;
 
 //import com.example.demo.controller.Controller;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -33,6 +37,7 @@ public class LevelView {
 	private final HeartDisplay heartDisplay;
 	private final PauseButtonDisplay pauseButtonDisplay;
 
+
 	public LevelView(Group root, int heartsToDisplay, double sceneWidth, double sceneHeight) {
 		this.root = root;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
@@ -59,7 +64,7 @@ public class LevelView {
 
 		addUIElementsToRoot();
 	}
-
+	Stage stage = StageManager.getStage();
 
 	private void addUIElementsToRoot() {
 		root.getChildren().addAll(heartDisplay.getContainer(), pauseButtonDisplay.getButton(),powerUpButton.getButton(),coinCountLabel );
@@ -80,7 +85,7 @@ public class LevelView {
 	public void showPowerUpButton() {
 		powerUpButton.getButton().toFront();
 		powerUpButton.setOnPowerUp(() -> {
-			Stage stage = StageManager.getStage();
+			//Stage stage = StageManager.getStage();
 			PowerUpMenu powerupMenu = new PowerUpMenu(stage);
 			System.out.println("Powerup button clicked!"); // Debug
 			powerupMenu.displayOverlay();
@@ -91,7 +96,7 @@ public class LevelView {
 		pauseButtonDisplay.getButton().toFront();
 
 		pauseButtonDisplay.setOnPause(() -> {
-			Stage stage = StageManager.getStage();
+		//	Stage stage = StageManager.getStage();
 			PauseMenu pauseMenu = new PauseMenu(stage);
 			System.out.println("Pause button clicked!"); // Debug
 			pauseMenu.displayOverlay();

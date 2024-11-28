@@ -27,13 +27,18 @@ public class PowerUpManager {
 
 
     public boolean purchaseShield() {
-        if (levelParent != null && CoinSystem.getInstance().subtractCoins(2)) {
-            levelParent.activateShieldForUser();
-            levelParent.getLevelView().startShieldTimer(20); // Add timer display for 20 seconds
-            return true;
+        if (levelParent != null) {
+            if (levelParent.isShieldActive()) {
+                return false;
+            } else if (CoinSystem.getInstance().subtractCoins(2)) {
+                levelParent.activateShieldForUser();
+                levelParent.getLevelView().startShieldTimer(20);
+                return true;
+            }
         }
         return false;
     }
+
 
 
 }

@@ -114,7 +114,7 @@ public class PowerUpMenu {
             if (PowerUpManager.getInstance().purchaseShield()) {
                 System.out.println("Shield purchased!");
             } else {
-                showAlert("Not enough coins for Shield!");
+                showAlert("Not enough coins for Shield OR its already active!!");
             }
             removeOverlay();
             GameStateManager.getInstance().resumeGame();
@@ -164,7 +164,7 @@ public class PowerUpMenu {
     }
     private void showAlert(String message) {
         Text alertText = new Text(message);
-        alertText.setFont(Font.font("Roboto", 18));
+        alertText.setFont(Font.font("Roboto", 22));
         alertText.setFill(Color.RED);
         alertText.setStyle("-fx-font-weight: bold;");
 
