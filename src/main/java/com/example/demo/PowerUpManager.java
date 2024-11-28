@@ -27,12 +27,13 @@ public class PowerUpManager {
 
 
     public boolean purchaseShield() {
-        int cost = 5; // Cost of the shield power-up
-        if (levelParent != null && CoinSystem.getInstance().subtractCoins(cost)) {
+        if (levelParent != null && CoinSystem.getInstance().subtractCoins(2)) {
             levelParent.activateShieldForUser();
+            levelParent.getLevelView().startShieldTimer(20); // Add timer display for 20 seconds
             return true;
         }
         return false;
     }
+
 
 }

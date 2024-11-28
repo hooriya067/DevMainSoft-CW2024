@@ -1,9 +1,12 @@
 package com.example.demo;
 
 //import com.example.demo.controller.Controller;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class LevelView {
 
@@ -21,6 +24,10 @@ public class LevelView {
 	private final Group root;
 	private final Label coinCountLabel;
 	private final PowerUpButton powerUpButton;
+	private Label shieldTimerLabel;
+	private Timeline shieldTimer;
+	private static final double TIMER_X_POSITION = 580;
+	private static final double TIMER_Y_POSITION = 100;
 	private final WinImage winImage;
 	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
@@ -42,7 +49,13 @@ public class LevelView {
 		this.powerUpButton = new PowerUpButton();
 		this.powerUpButton.setPosition(POWER_UP_BUTTON_X_POSITION, POWER_UP_BUTTON_Y_POSITION);
 
-
+		// Initialize shield timer label
+		shieldTimerLabel = new Label("");
+		shieldTimerLabel.setLayoutX(TIMER_X_POSITION);
+		shieldTimerLabel.setLayoutY(TIMER_Y_POSITION);
+		shieldTimerLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: cyan;");
+		shieldTimerLabel.setVisible(false); // Initially hidden
+		root.getChildren().add(shieldTimerLabel);
 
 		addUIElementsToRoot();
 	}
@@ -109,5 +122,36 @@ public class LevelView {
 		for (int i = 0; i < currentNumberOfHearts - heartsRemaining; i++) {
 			heartDisplay.removeHeart();
 		}
+	}
+
+	public void startShieldTimer(int durationInSeconds) {
+
+		shieldTimerLabel.setVisible(true);
+		shieldTimerLabel.toFront();
+		shieldTimerLabel.setText("Shield: " + durationInSeconds + "s");
+
+		if (shieldTimer != null) {
+			shieldTimer.stop();
+		}
+
+		shieldTimer = new Timeline(
+				new KeyFrame(Duration.seconds(1), event -> {
+					int remainingTime = Integer.parseInt(shieldTimerLabel.getText().replaceAll("[^0-9]", ""));
+					if (remainingTime > 1) {
+						shieldTimerLabel.setText("Shield: " + (remainingTime - 1) + "s");
+					} else {
+						stopShieldTimer();
+					}
+				})
+		);
+		shieldTimer.setCycleCount(durationInSeconds);
+		shieldTimer.play();
+	}
+
+	public void stopShieldTimer() {
+		if (shieldTimer != null) {
+			shieldTimer.stop();
+		}
+		shieldTimerLabel.setVisible(false);
 	}
 }

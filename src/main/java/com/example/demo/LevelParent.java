@@ -284,18 +284,23 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 	for (ActiveActorDestructible actor : actors2) {
 		for (ActiveActorDestructible otherActor : actors1) {
 			if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
-
-				// Case 1: Friendly unit (like UserPlane) with shield
-				if (actor instanceof UserPlane && isShieldActive) {
-					System.out.println("Shield absorbed collision! No damage to user.");
-					otherActor.takeDamage(); // Enemy or projectile still takes damage
+				// Case 1: UserPlane with Shield
+				if ((actor instanceof UserPlane && isShieldActive) || (otherActor instanceof UserPlane && isShieldActive)) {
+					System.out.println("Shield absorbed collision! No damage to user.--levelparent handlecollisions");
+					// Damage the non-UserPlane entity
+					if (!(actor instanceof UserPlane)) {
+						actor.takeDamage();
+					}
+					if (!(otherActor instanceof UserPlane)) {
+						otherActor.takeDamage();
+					}
 				}
 				// Case 2: Regular collision (no shield or non-UserPlane actor)
 				else {
 					actor.takeDamage();
 					otherActor.takeDamage();
 
-					// Count kills if enemy is destroyed
+					// Count kills if an enemy is destroyed
 					if (actor.isDestroyed()) {
 						incrementKillCount();
 					}
@@ -304,7 +309,6 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 		}
 	}
 }
-
 	private void handleCoinCollisions() {
 		List<ActiveActorDestructible> coinsToRemove = new ArrayList<>();
 		for (Node node : getRoot().getChildren()) {
@@ -406,6 +410,9 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 		numberOfKills++;
 	}
 
+	public LevelView getLevelView() {
+		return levelView;
+	}
 
 	protected void setUser(ActiveActorDestructible userPlane) {
 		this.userPlane = userPlane;

@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import javafx.animation.FadeTransition;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import javafx.scene.Group;
 import javafx.scene.text.Font;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PowerUpMenu {
     private final Stage stage;
@@ -81,7 +83,7 @@ public class PowerUpMenu {
             if (PowerUpManager.getInstance().purchaseExtraLife()) {
                 System.out.println("Extra life purchased!");
             } else {
-                System.out.println("Not enough coins!");
+                showAlert("Not enough coins for Extra Life!");
             }
             removeOverlay();
             GameStateManager.getInstance().resumeGame();
@@ -112,7 +114,7 @@ public class PowerUpMenu {
             if (PowerUpManager.getInstance().purchaseShield()) {
                 System.out.println("Shield purchased!");
             } else {
-                System.out.println("Not enough coins for Shield!");
+                showAlert("Not enough coins for Shield!");
             }
             removeOverlay();
             GameStateManager.getInstance().resumeGame();
@@ -158,6 +160,26 @@ public class PowerUpMenu {
             overlayActive = false;
         } else {
             System.err.println("Cannot remove overlay: Unexpected parent type: " + overlayLayout.getParent());
+        }
+    }
+    private void showAlert(String message) {
+        Text alertText = new Text(message);
+        alertText.setFont(Font.font("Roboto", 18));
+        alertText.setFill(Color.RED);
+        alertText.setStyle("-fx-font-weight: bold;");
+
+        alertText.setLayoutX(GameConfig.SCREEN_WIDTH / 2 - 100);
+        alertText.setLayoutY(GameConfig.SCREEN_HEIGHT / 2 - 100);
+
+        if (stage.getScene().getRoot() instanceof Group) {
+            Group root = (Group) stage.getScene().getRoot();
+            root.getChildren().add(alertText);
+
+            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), alertText);
+            fadeOut.setFromValue(1.0);
+            fadeOut.setToValue(0.0);
+            fadeOut.setOnFinished(e -> root.getChildren().remove(alertText));
+            fadeOut.play();
         }
     }
 }
