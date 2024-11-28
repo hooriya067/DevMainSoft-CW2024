@@ -1,7 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.controller.Controller;
+//import com.example.demo.controller.Controller;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 public class LevelView {
@@ -12,8 +13,14 @@ public class LevelView {
 	private static final int WIN_IMAGE_Y_POSITION = 175;
 	private static final double PAUSE_BUTTON_X_POSITION =1200; // Adjusted position for easier visibility
 	private static final double PAUSE_BUTTON_Y_POSITION = 20;
+	private static final double COIN_DISPLAY_X_POSITION = 1200;
+	private static final double COIN_DISPLAY_Y_POSITION = 80;
+	private static final double POWER_UP_BUTTON_X_POSITION = 1140;
+	private static final double POWER_UP_BUTTON_Y_POSITION = 20;
 
 	private final Group root;
+	private final Label coinCountLabel;
+	private final PowerUpButton powerUpButton;
 	private final WinImage winImage;
 	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
@@ -26,15 +33,46 @@ public class LevelView {
 		this.gameOverImage = new GameOverImage(sceneWidth, sceneHeight);
 		this.pauseButtonDisplay = new PauseButtonDisplay();
 		this.pauseButtonDisplay.setPosition(PAUSE_BUTTON_X_POSITION, PAUSE_BUTTON_Y_POSITION);
+		// Coin counter label
+		this.coinCountLabel = new Label("Coins: 0");
+		this.coinCountLabel.setLayoutX(COIN_DISPLAY_X_POSITION);
+		this.coinCountLabel.setLayoutY(COIN_DISPLAY_Y_POSITION); // Move down by 20
+		this.coinCountLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: yellow;");
+
+		this.powerUpButton = new PowerUpButton();
+		this.powerUpButton.setPosition(POWER_UP_BUTTON_X_POSITION, POWER_UP_BUTTON_Y_POSITION);
+
+
 
 		addUIElementsToRoot();
 	}
 
 
 	private void addUIElementsToRoot() {
-		root.getChildren().addAll(heartDisplay.getContainer(), pauseButtonDisplay.getButton());
+		root.getChildren().addAll(heartDisplay.getContainer(), pauseButtonDisplay.getButton(),powerUpButton.getButton(),coinCountLabel );
+	}
+	public void updateCoinCount(int newCoinCount) {
+
+		coinCountLabel.setText("Coins: " + newCoinCount);
 	}
 
+	private void showPowerUpMenu() {
+		System.out.println("Power-Up Menu opened!");
+		// Logic for opening the power-up menu will be added later
+	}
+	public void showCoinDisplay() {
+		coinCountLabel.toFront();
+	}
+
+	public void showPowerUpButton() {
+		powerUpButton.getButton().toFront();
+		powerUpButton.setOnPowerUp(() -> {
+			Stage stage = StageManager.getStage();
+			PowerUpMenu powerupMenu = new PowerUpMenu(stage);
+			System.out.println("Powerup button clicked!"); // Debug
+			powerupMenu.displayOverlay();
+		});
+	}
 
 	public void showPauseButton() {
 		pauseButtonDisplay.getButton().toFront();
@@ -60,6 +98,10 @@ public class LevelView {
 
 	public void showGameOverImage() {
 		root.getChildren().add(gameOverImage);
+	}
+
+	public void addHeart() {
+		heartDisplay.addHeart(); // Assuming HeartDisplay has an addHeart() method
 	}
 
 	public void removeHearts(int heartsRemaining) {

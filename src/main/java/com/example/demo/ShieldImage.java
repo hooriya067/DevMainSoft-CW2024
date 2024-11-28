@@ -31,8 +31,8 @@ public class ShieldImage extends ImageView {
 		this.setLayoutX(xPosition);
 		this.setLayoutY(yPosition);
 	}
-	public static int getShieldSize() {
-		return SHIELD_SIZE;
-	}
+//	public static int getShieldSize() {
+//		return SHIELD_SIZE;
+//	}
 
 }

@@ -11,7 +11,7 @@ public class UserPlane extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HORIZONTAL_VELOCITY = 8; // Velocity for left and right movement
 	private static final double TOOLBAR_HEIGHT = 70;
-	//private static final int PROJECTILE_X_POSITION = 110;
+	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
 
 	private int velocityMultiplier; // For vertical movement
@@ -96,6 +96,12 @@ public class UserPlane extends FighterPlane {
 	private boolean isMoving() {
 		return velocityMultiplier != 0 || horizontalVelocityMultiplier != 0;
 	}
+
+	public void addHealth(int amount) {
+		health += amount;
+		System.out.println("Health increased! Current health: " + health);
+	}
+
 
 
 //

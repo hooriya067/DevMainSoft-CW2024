@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
@@ -32,6 +33,9 @@ public abstract class LevelParent {
 	protected final List<ActiveActorDestructible> enemyUnits;
 	private final List<ActiveActorDestructible> userProjectiles;
 	protected final List<ActiveActorDestructible> enemyProjectiles;
+	private ShieldImage userShield;
+	private Timeline shieldTimer; // Timer for shield duration
+
 
 	private final LevelView levelView;
 
@@ -57,6 +61,9 @@ public abstract class LevelParent {
 		this.currentNumberOfEnemies = 0;
 		initializeTimeline();
 		friendlyUnits.add(user);
+		this.userShield = new ShieldImage(0, 0); // Initial position; will follow the user
+		root.getChildren().add(userShield); // Add shield image to the sce
+		PowerUpManager.getInstance().setLevelParent(this);
 	}
 
 	protected abstract void initializeFriendlyUnits();
@@ -81,10 +88,14 @@ public abstract class LevelParent {
 
 	protected abstract void misc();
 	public Scene initializeScene() {
+		CoinSystem.getInstance().addListener(levelView::updateCoinCount);
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.showHeartDisplay();
-		levelView.showPauseButton();  // Adding this to show the pause button in LevelView
+		levelView.showPauseButton();
+		levelView.showCoinDisplay();
+		levelView.showPowerUpButton();
+		levelView.updateCoinCount(CoinSystem.getInstance().getCoins());
 		return scene;
 	}
 
@@ -105,9 +116,12 @@ public abstract class LevelParent {
 
 	protected void updateScene() {
 		spawnEnemyUnits();
+		spawnCoins();
 		updateActors();
+		handleCoinCollisions();
 		generateEnemyFire();
 		updateNumberOfEnemies();
+		updateUserShieldPosition();//ONLY FOR POWER UPS
 		handleEnemyPenetration();
 		handleUserProjectileCollisions();
 		handleEnemyProjectileCollisions();
@@ -117,8 +131,10 @@ public abstract class LevelParent {
 		updateLevelView();
 		checkIfGameOver();
 		misc();
-		updateWinningParameter();
+
 	}
+
+
 
 	private void initializeTimeline() {
 		timeline.setCycleCount(Timeline.INDEFINITE);
@@ -175,19 +191,35 @@ public abstract class LevelParent {
 			enemyProjectiles.add(projectile);
 		}
 	}
+	private final List<Coin> coins = new ArrayList<>();
 
+	private void spawnCoins() {
+		double spawnProbability = 0.01; // frequency
+		if (Math.random() < spawnProbability) {
+			double randomYPosition = Math.random() * getScreenHeight(); // Random Y position
+			Coin coin = new Coin(getScreenWidth(), randomYPosition, this); // Spawn coin
+			coins.add(coin); // Add to coin list
+			root.getChildren().add(coin);
+		}
+	}
 	public void updateActors() {
 		friendlyUnits.forEach(plane -> plane.updateActor());
 		enemyUnits.forEach(enemy -> enemy.updateActor());
 		userProjectiles.forEach(projectile -> projectile.updateActor());
 		enemyProjectiles.forEach(projectile -> projectile.updateActor());
+		root.getChildren().stream()
+				.filter(node -> node instanceof Coin)
+				.map(node -> (Coin) node)
+				.forEach(Coin::updateActor); // Ensure coins are updated
 	}
+
 
 	private void removeAllDestroyedActors() {
 		removeDestroyedActors(friendlyUnits);
 		removeDestroyedActors(enemyUnits);
 		removeDestroyedActors(userProjectiles);
 		removeDestroyedActors(enemyProjectiles);
+		coins.removeIf(Coin::isDestroyed); // Clean up destroyed coins
 	}
 
 	private void removeDestroyedActors(List<ActiveActorDestructible> actors) {
@@ -196,6 +228,42 @@ public abstract class LevelParent {
 		root.getChildren().removeAll(destroyedActors);
 		actors.removeAll(destroyedActors);
 	}
+	public void grantExtraLife() {
+		System.out.println("Health before adding: " + user.getHealth());
+		user.addHealth(1); // Increase user's health
+		System.out.println("Health after adding: " + user.getHealth());
+
+		levelView.addHeart(); // Add the heart to the UI
+		System.out.println("Extra life granted! Remaining coins: " + CoinSystem.getInstance().getCoins());
+	}
+	public void activateShieldForUser() {
+		System.out.println("Shield activated for the user!");
+
+		userShield.showShield(); // Show the shield visually
+		shieldTimer = new Timeline(
+				new KeyFrame(Duration.seconds(20), event -> deactivateShieldForUser()) // Deactivate after 20 seconds
+		);
+		shieldTimer.setCycleCount(1);
+		shieldTimer.play();
+	}
+	public void deactivateShieldForUser() {
+		System.out.println("Shield deactivated!");
+		userShield.hideShield(); // Hide the shield visually
+		if (shieldTimer != null) {
+			shieldTimer.stop(); // Stop the timer if running
+			shieldTimer = null;
+		}
+	}
+
+	public boolean isShieldActive() {
+		return userShield != null && userShield.isVisible();
+	}
+	private void updateUserShieldPosition() {
+		if (userShield.isVisible()) {
+			userShield.updatePosition(user.getLayoutX() + user.getTranslateX(), user.getLayoutY() + user.getTranslateY());
+		}
+	}
+
 
 	private void handlePlaneCollisions() {
 		handleCollisions(friendlyUnits, enemyUnits);
@@ -212,18 +280,45 @@ public abstract class LevelParent {
 //actors2 should always be the enemy units list (enemyUnits).
 //actors1 should be the user projectiles list (userProjectiles)
 private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
+	boolean isShieldActive = isShieldActive(); // Check if shield is active
 	for (ActiveActorDestructible actor : actors2) {
 		for (ActiveActorDestructible otherActor : actors1) {
 			if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
-				actor.takeDamage();
-				otherActor.takeDamage();
-				if (actor.isDestroyed()) {
-					incrementKillCount(); // Ensure kill count is incremented after destruction
+
+				// Case 1: Friendly unit (like UserPlane) with shield
+				if (actor instanceof UserPlane && isShieldActive) {
+					System.out.println("Shield absorbed collision! No damage to user.");
+					otherActor.takeDamage(); // Enemy or projectile still takes damage
+				}
+				// Case 2: Regular collision (no shield or non-UserPlane actor)
+				else {
+					actor.takeDamage();
+					otherActor.takeDamage();
+
+					// Count kills if enemy is destroyed
+					if (actor.isDestroyed()) {
+						incrementKillCount();
+					}
 				}
 			}
 		}
 	}
 }
+
+	private void handleCoinCollisions() {
+		List<ActiveActorDestructible> coinsToRemove = new ArrayList<>();
+		for (Node node : getRoot().getChildren()) {
+			if (node instanceof Coin) {
+				Coin coin = (Coin) node;
+				if (coin.getBoundsInParent().intersects(getUser().getBoundsInParent())) {
+					CoinSystem.getInstance().addCoins(1); // Add coins to system
+					coinsToRemove.add(coin); // Mark coin for removal
+					System.out.println("Coin collected! Total coins: " + CoinSystem.getInstance().getCoins());
+				}
+			}
+		}
+		getRoot().getChildren().removeAll(coinsToRemove); // Remove coins from the scene
+	}
 
 	private void handleEnemyPenetration() {
 		for (ActiveActorDestructible enemy : enemyUnits) {
