@@ -2,11 +2,9 @@ package com.example.demo;
 import java.util.*;
 import java.util.stream.Collectors;
 import javafx.animation.*;
-import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
-import javafx.scene.input.*;
 import javafx.util.Duration;
 
 public abstract class LevelParent {
@@ -21,7 +19,6 @@ public abstract class LevelParent {
 
 
 	private final Group root;
-	private final Timeline timeline;
 	protected final UserPlane user;
 	private final Scene scene;
 	protected final ImageView background;
@@ -38,6 +35,8 @@ public abstract class LevelParent {
 	private final LevelView levelView;
 	private final CollisionManager collisionManager;
 	protected final InputHandler inputHandler;
+	private final GameLoop gameLoop;
+
 
 	private int currentNumberOfEnemies;
 
@@ -46,10 +45,11 @@ public abstract class LevelParent {
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
-		this.timeline = new Timeline();
 		this.user = new UserPlane(playerInitialHealth);
 		this.collisionManager = new CollisionManager(this);
 		this.inputHandler = new InputHandler(this, InputHandler.MovementMode.VERTICAL_ONLY); // Default movement to vertical
+		this.gameLoop = new GameLoop(MILLISECOND_DELAY);
+		this.gameLoop.setUpdateCallback(this::updateScene);
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -61,7 +61,6 @@ public abstract class LevelParent {
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
-		initializeTimeline();
 		friendlyUnits.add(user);
 		this.userShield = new ShieldImage(0, 0); // Initial position; will follow the user
 		root.getChildren().add(userShield); // Add shield image to the sce
@@ -76,11 +75,13 @@ public abstract class LevelParent {
 		if (userIsDestroyed()) {
 			loseGame();
 		} else if (userHasReachedKillTarget()) {
-			timeline.stop(); // Stop the game timeline
+			gameLoop.stop(); // Stop the game loop
 			if (myobserver != null) {
-				myobserver.onLevelWin("NEXT");}
+				myobserver.onLevelWin("NEXT");
+			}
 		}
 	}
+
 
 	protected abstract boolean userHasReachedKillTarget();
 
@@ -102,10 +103,9 @@ public abstract class LevelParent {
 		return scene;
 	}
 
-
 	public void startGame() {
 		background.requestFocus();
-		timeline.play();
+		gameLoop.start();
 	}
 
 	public void goToNextLevel(String levelName) {//Notifies the observer (the Controller) when a level is won via the MyObserver interface.
@@ -132,14 +132,6 @@ public abstract class LevelParent {
 		checkIfGameOver();
 		misc();
 
-	}
-
-
-
-	private void initializeTimeline() {
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		KeyFrame gameLoop = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> updateScene());
-		timeline.getKeyFrames().add(gameLoop);
 	}
 
 	protected void initializeBackground() {
@@ -250,12 +242,8 @@ public abstract class LevelParent {
 	}
 
 	protected void loseGame() {
-		timeline.stop();
+		gameLoop.stop();
 		levelView.showGameOverImage();
-	}
-
-	protected void stopLevel() {
-		timeline.stop();
 	}
 
 	protected UserPlane getUser() {
