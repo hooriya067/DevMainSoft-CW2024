@@ -1,12 +1,9 @@
 package com.example.demo;
-
 import java.util.*;
 import java.util.stream.Collectors;
-
 import javafx.animation.*;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.input.*;
@@ -39,6 +36,7 @@ public abstract class LevelParent {
 
 
 	private final LevelView levelView;
+	private final CollisionManager collisionManager;
 
 	private int currentNumberOfEnemies;
 
@@ -49,6 +47,7 @@ public abstract class LevelParent {
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.timeline = new Timeline();
 		this.user = new UserPlane(playerInitialHealth);
+		this.collisionManager = new CollisionManager(this);
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -117,16 +116,12 @@ public abstract class LevelParent {
 
 	protected void updateScene() {
 		spawnEnemyUnits();
+		collisionManager.handleAllCollisions();
 		spawnCoins();
 		updateActors();
-		handleCoinCollisions();
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		updateUserShieldPosition();//ONLY FOR POWER UPS
-		handleEnemyPenetration();
-		handleUserProjectileCollisions();
-		handleEnemyProjectileCollisions();
-		handlePlaneCollisions();
 		removeAllDestroyedActors();
 		updateWinningParameter();
 		updateLevelView();
@@ -270,89 +265,11 @@ public abstract class LevelParent {
 	}
 
 
-	private void handlePlaneCollisions() {
-		handleCollisions(friendlyUnits, enemyUnits);
-	}
-
-	private void handleUserProjectileCollisions() {
-		handleCollisions(userProjectiles, enemyUnits);
-	}
-
-	private void handleEnemyProjectileCollisions() {
-		handleCollisions(enemyProjectiles, friendlyUnits);
-	}
-
-//actors2 should always be the enemy units list (enemyUnits).
-//actors1 should be the user projectiles list (userProjectiles)
-private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
-	boolean isShieldActive = isShieldActive(); // Check if shield is active
-	for (ActiveActorDestructible actor : actors2) {
-		for (ActiveActorDestructible otherActor : actors1) {
-			if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
-				// Case 1: UserPlane with Shield
-				if ((actor instanceof UserPlane && isShieldActive) || (otherActor instanceof UserPlane && isShieldActive)) {
-					System.out.println("Shield absorbed collision! No damage to user.--levelparent handlecollisions");
-					// Damage the non-UserPlane entity
-					if (!(actor instanceof UserPlane)) {
-						actor.takeDamage();
-					}
-					if (!(otherActor instanceof UserPlane)) {
-						otherActor.takeDamage();
-					}
-				}
-				// Case 2: Regular collision (no shield or non-UserPlane actor)
-				else {
-					actor.takeDamage();
-					otherActor.takeDamage();
-
-					// Count kills if an enemy is destroyed
-					if (actor.isDestroyed()) {
-						incrementKillCount();
-					}
-				}
-			}
-		}
-	}
-}
-	private void handleCoinCollisions() {
-		List<ActiveActorDestructible> coinsToRemove = new ArrayList<>();
-		for (Node node : getRoot().getChildren()) {
-			if (node instanceof Coin) {
-				Coin coin = (Coin) node;
-				if (coin.getBoundsInParent().intersects(getUser().getBoundsInParent())) {
-					CoinSystem.getInstance().addCoins(1); // Add coins to system
-					coinsToRemove.add(coin); // Mark coin for removal
-					System.out.println("Coin collected! Total coins: " + CoinSystem.getInstance().getCoins());
-				}
-			}
-		}
-		getRoot().getChildren().removeAll(coinsToRemove); // Remove coins from the scene
-	}
-
-	private void handleEnemyPenetration() {
-		for (ActiveActorDestructible enemy : enemyUnits) {
-			if (enemyHasPenetratedDefenses(enemy)) {
-				//user.takeDamage();
-				enemy.destroy();
-			}
-		}
-	}
-
 
 
 	private void updateLevelView() {
 		levelView.removeHearts(user.getHealth());
 	}
-
-
-	private boolean enemyHasPenetratedDefenses(ActiveActorDestructible enemy) {
-		return Math.abs(enemy.getTranslateX()) > screenWidth;
-	}
-
-//	protected void winGame() {
-//		timeline.stop();
-//		levelView.showWinImage();
-//	}
 
 	protected void loseGame() {
 		timeline.stop();
@@ -418,9 +335,26 @@ private void handleCollisions(List<ActiveActorDestructible> actors1, List<Active
 	public LevelView getLevelView() {
 		return levelView;
 	}
-
-	protected void setUser(ActiveActorDestructible userPlane) {
-		this.userPlane = userPlane;
+	public List<ActiveActorDestructible> getFriendlyUnits() {
+		return friendlyUnits;
 	}
+
+	public List<ActiveActorDestructible> getEnemyUnits() {
+		return enemyUnits;
+	}
+
+	public List<ActiveActorDestructible> getUserProjectiles() {
+		return userProjectiles;
+	}
+
+	public List<ActiveActorDestructible> getEnemyProjectiles() {
+		return enemyProjectiles;
+	}
+
+
+	public List<Coin> getCoins() {
+		return coins;
+	}
+
 }
 

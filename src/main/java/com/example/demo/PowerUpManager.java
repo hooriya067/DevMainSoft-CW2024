@@ -18,7 +18,7 @@ public class PowerUpManager {
     }
 
     public boolean purchaseExtraLife() {
-        if (levelParent != null && CoinSystem.getInstance().subtractCoins(10)) {
+        if (levelParent != null && CoinSystem.getInstance().subtractCoins(2)) {
             levelParent.grantExtraLife();
             return true;
         }
