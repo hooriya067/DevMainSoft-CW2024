@@ -37,6 +37,7 @@ public abstract class LevelParent {
 
 	private final LevelView levelView;
 	private final CollisionManager collisionManager;
+	protected final InputHandler inputHandler;
 
 	private int currentNumberOfEnemies;
 
@@ -48,6 +49,7 @@ public abstract class LevelParent {
 		this.timeline = new Timeline();
 		this.user = new UserPlane(playerInitialHealth);
 		this.collisionManager = new CollisionManager(this);
+		this.inputHandler = new InputHandler(this, InputHandler.MovementMode.VERTICAL_ONLY); // Default movement to vertical
 		this.friendlyUnits = new ArrayList<>();
 		this.enemyUnits = new ArrayList<>();
 		this.userProjectiles = new ArrayList<>();
@@ -96,8 +98,10 @@ public abstract class LevelParent {
 		levelView.showCoinDisplay();
 		levelView.showPowerUpButton();
 		levelView.updateCoinCount(CoinSystem.getInstance().getCoins());
+		inputHandler.initialize(scene); // Initialize input handling
 		return scene;
 	}
+
 
 	public void startGame() {
 		background.requestFocus();
@@ -142,32 +146,6 @@ public abstract class LevelParent {
 		background.setFocusTraversable(true);
 		background.setFitHeight(screenHeight);
 		background.setFitWidth(screenWidth);
-
-		// Ensure the background only responds when not paused
-		background.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent e) {
-				if (GameStateManager.getInstance().isGamePaused()) {
-					return; // Do nothing if the game is paused
-				}
-
-				KeyCode kc = e.getCode();
-				if (kc == KeyCode.UP) user.moveUp();
-				if (kc == KeyCode.DOWN) user.moveDown();
-				if (kc == KeyCode.SPACE) fireProjectile();
-			}
-		});
-
-		background.setOnKeyReleased(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent e) {
-				if (GameStateManager.getInstance().isGamePaused()) {
-					return; // Do nothing if the game is paused
-				}
-
-				KeyCode kc = e.getCode();
-				if (kc == KeyCode.UP || kc == KeyCode.DOWN) user.stopVerticalMovement();
-			}
-		});
-
 		root.getChildren().add(background);
 	}
 

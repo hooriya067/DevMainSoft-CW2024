@@ -21,6 +21,7 @@ public class LevelThree extends LevelParent {
 
     public LevelThree(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+        this.inputHandler.setMovementMode(InputHandler.MovementMode.FULL);
 
         initializeWinningParameter(); // Initialize the kill counter label once
     }
@@ -98,52 +99,6 @@ public class LevelThree extends LevelParent {
     protected boolean userHasReachedKillTarget() {
         return getNumberOfKills() >= KILLS_TO_ADVANCE;
     }
-
-    @Override
-    protected void initializeBackground() {
-        super.initializeBackground(); // Call the original to set up basic behavior
-
-        // Override and extend with additional controls for left and right movement
-        background.setFocusTraversable(true);
-
-        background.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent e) {
-                if (GameStateManager.getInstance().isGamePaused()) {
-                    return; // Do nothing if the game is paused
-                }
-
-                KeyCode kc = e.getCode();
-                if (kc == KeyCode.UP) {
-                    user.moveUp();
-                } else if (kc == KeyCode.DOWN) {
-                    user.moveDown();
-                } else if (kc == KeyCode.LEFT) {
-                    user.moveLeft();
-                } else if (kc == KeyCode.RIGHT) {
-                    user.moveRight();
-                } else if (kc == KeyCode.SPACE) {
-                    fireProjectile();
-                }
-            }
-        });
-
-        background.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent e) {
-                if (GameStateManager.getInstance().isGamePaused()) {
-                    return; // Do nothing if the game is paused
-                }
-
-                KeyCode kc = e.getCode();
-                if (kc == KeyCode.UP || kc == KeyCode.DOWN) {
-                    user.stopVerticalMovement(); // Replace with `user`
-                } else if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT) {
-                    user.stopHorizontalMovement(); // Replace with `user`
-                }
-            }
-        });
-    }
-
-
 
     @Override
     protected void misc() {
