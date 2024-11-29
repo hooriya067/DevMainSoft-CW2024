@@ -9,7 +9,7 @@ public class Coin extends ActiveActorDestructible {
 
     public Coin(double initialX, double initialY, LevelParent level) {
         super(IMAGE_NAME, IMAGE_SIZE, initialX, initialY);
-        this.level = level; // Initialize the level reference
+        this.level = level;
     }
 
     @Override
@@ -22,11 +22,7 @@ public class Coin extends ActiveActorDestructible {
         if (GameStateManager.isPaused) {
             return; // Skip updating position if paused
         }
-
         moveHorizontally(HORIZONTAL_VELOCITY);
-
-
-        // Check if the coin is off-screen and remove it
         if (getTranslateX() < 0) {
             destroy();
         }
@@ -41,7 +37,6 @@ public class Coin extends ActiveActorDestructible {
 
     @Override
     public void takeDamage() {
-        // Coins do not take damage, so they are destroyed when interacted with
         destroy();
     }
 }

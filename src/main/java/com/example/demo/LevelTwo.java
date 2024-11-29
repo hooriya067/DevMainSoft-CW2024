@@ -56,11 +56,6 @@ public class LevelTwo extends LevelParent {
 	}
 
 	@Override
-	protected void initializeFriendlyUnits() {
-		getRoot().getChildren().add(getUser());
-	}
-
-	@Override
 	protected void spawnEnemyUnits() {
 		// No need to initialize boss here, as it is already initialized in the constructor
 		if (getCurrentNumberOfEnemies() == 0) {

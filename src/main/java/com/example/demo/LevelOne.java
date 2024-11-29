@@ -46,10 +46,6 @@ public class LevelOne extends LevelParent {
 		});
 	}
 
-	@Override
-	protected void initializeFriendlyUnits() {
-		getRoot().getChildren().add(getUser());
-	}
 
 	protected void spawnEnemyUnits() {
 		double spawnProbability = 0.1; // Example: 10% chance to spawn an enemy each update cycle

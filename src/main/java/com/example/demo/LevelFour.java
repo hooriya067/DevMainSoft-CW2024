@@ -60,10 +60,6 @@ public class LevelFour extends LevelParent {
         });
     }
 
-    @Override
-    protected void initializeFriendlyUnits() {
-        getRoot().getChildren().add(getUser());
-    }
 
     @Override
     protected void spawnEnemyUnits() {

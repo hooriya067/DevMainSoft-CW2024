@@ -7,32 +7,33 @@ import java.util.List;
 
 public class CollisionManager {
 
-    private final LevelParent levelParent;
+        private final LevelParent levelParent;
+        private final ActorManager actorManager;
 
-    public CollisionManager(LevelParent levelParent) {
-        this.levelParent = levelParent;
-    }
+        public CollisionManager(LevelParent levelParent, ActorManager actorManager) {
+            this.levelParent = levelParent;
+            this.actorManager = actorManager;
+        }
 
-    public void handleAllCollisions() {
-        handlePlaneCollisions();
-        handleUserProjectileCollisions();
-        handleEnemyProjectileCollisions();
-        handleCoinCollisions();
-        handleEnemyPenetration(levelParent.getEnemyUnits());
-    }
+        public void handleAllCollisions() {
+            handlePlaneCollisions();
+            handleUserProjectileCollisions();
+            handleEnemyProjectileCollisions();
+            handleCoinCollisions();
+            handleEnemyPenetration(actorManager.getEnemyUnits());
+        }
 
+        private void handlePlaneCollisions() {
+            handleCollisions(actorManager.getFriendlyUnits(), actorManager.getEnemyUnits());
+        }
 
-    private void handlePlaneCollisions() {
-        handleCollisions(levelParent.getFriendlyUnits(), levelParent.getEnemyUnits());
-    }
+        private void handleUserProjectileCollisions() {
+            handleCollisions(actorManager.getUserProjectiles(), actorManager.getEnemyUnits());
+        }
 
-    private void handleUserProjectileCollisions() {
-        handleCollisions(levelParent.getUserProjectiles(), levelParent.getEnemyUnits());
-    }
-
-    private void handleEnemyProjectileCollisions() {
-        handleCollisions(levelParent.getEnemyProjectiles(), levelParent.getFriendlyUnits());
-    }
+        private void handleEnemyProjectileCollisions() {
+            handleCollisions(actorManager.getEnemyProjectiles(), actorManager.getFriendlyUnits());
+        }
 
     public void handleCoinCollisions() {
         List<Node> coinsToRemove = new ArrayList<>();

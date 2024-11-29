@@ -67,6 +67,7 @@ public class UserPlane extends FighterPlane {
 	}
 
 
+
 	// Methods for vertical movement
 	public void moveUp() {
 		velocityMultiplier = -1;

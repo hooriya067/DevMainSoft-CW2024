@@ -1,10 +1,7 @@
 package com.example.demo;
 
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
 public class LevelFive extends LevelParent {
@@ -44,10 +41,6 @@ public class LevelFive extends LevelParent {
         });
     }
 
-    @Override
-    protected void initializeFriendlyUnits() {
-        getRoot().getChildren().add(getUser());
-    }
     @Override
     protected void spawnEnemyUnits() {
         // Handle Meteor Storm Phase
@@ -118,49 +111,6 @@ public class LevelFive extends LevelParent {
         if (getNumberOfKills() > 5) {
             meteorStormActive = false; // Disable meteor storm after 5 kills
         }
-    }
-    @Override
-    protected void initializeBackground() {
-        super.initializeBackground(); // Call the original to set up basic behavior
-
-        // Override and extend with additional controls for left and right movement
-        background.setFocusTraversable(true);
-
-        background.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent e) {
-                if (GameStateManager.getInstance().isGamePaused()) {
-                    return; // Do nothing if the game is paused
-                }
-
-                KeyCode kc = e.getCode();
-                if (kc == KeyCode.UP) {
-                    getUser().moveUp();
-                } else if (kc == KeyCode.DOWN) {
-                    getUser().moveDown();
-                } else if (kc == KeyCode.LEFT) {
-                    getUser().moveLeft();
-                } else if (kc == KeyCode.RIGHT) {
-                    getUser().moveRight();
-                } else if (kc == KeyCode.SPACE) {
-                    fireProjectile();
-                }
-            }
-        });
-
-        background.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent e) {
-                if (GameStateManager.getInstance().isGamePaused()) {
-                    return; // Do nothing if the game is paused
-                }
-
-                KeyCode kc = e.getCode();
-                if (kc == KeyCode.UP || kc == KeyCode.DOWN) {
-                    getUser().stopVerticalMovement();
-                } else if (kc == KeyCode.LEFT || kc == KeyCode.RIGHT) {
-                    getUser().stopHorizontalMovement();
-                }
-            }
-        });
     }
 }
 

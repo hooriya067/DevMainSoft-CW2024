@@ -74,10 +74,6 @@ public class LevelView {
 		coinCountLabel.setText("Coins: " + newCoinCount);
 	}
 
-	private void showPowerUpMenu() {
-		System.out.println("Power-Up Menu opened!");
-		// Logic for opening the power-up menu will be added later
-	}
 	public void showCoinDisplay() {
 		coinCountLabel.toFront();
 	}

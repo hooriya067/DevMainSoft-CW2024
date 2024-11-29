@@ -51,11 +51,7 @@ public class LevelThree extends LevelParent {
         });
     }
 
-    @Override
-    protected void initializeFriendlyUnits() {
-        getRoot().getChildren().add(getUser());
-    }
-    @Override
+        @Override
     protected void spawnEnemyUnits() {
         double spawnProbability = 0.1;
 

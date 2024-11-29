@@ -59,7 +59,7 @@ public class LevelManager {
 
     // Method to proceed to the level after introduction
     public void proceedToLevel(String levelName) {
-        try {
+    //    try {
             // Instantiate the appropriate level based on the level name
             switch (levelName) {
                 case "LEVEL_ONE":
@@ -86,10 +86,10 @@ public class LevelManager {
             Scene scene = currentLevel.initializeScene();
             stage.setScene(scene);
             currentLevel.startGame();
-
-        } catch (IllegalArgumentException e) {
-            showErrorAlert(e);
-        }
+//
+//        } catch (IllegalArgumentException e) {
+//            showErrorAlert(e);
+    //   }
     }
     private void showFinalWinScreen() {
         // Debugging: Print stage dimensions
