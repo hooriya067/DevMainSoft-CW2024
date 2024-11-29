@@ -40,7 +40,13 @@ public class GameLoop {
     public void stop() {
         timeline.stop();
     }
+    public void pause() {
+        timeline.pause();
+    }
 
+    public void resume() {
+        timeline.play();
+    }
     // Check if the game loop is running
     public boolean isRunning() {
         return timeline.getStatus() == Timeline.Status.RUNNING;

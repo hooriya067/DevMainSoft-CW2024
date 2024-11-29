@@ -1,8 +1,13 @@
 package com.example.demo;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
 public class PowerUpManager {
     private static PowerUpManager instance;
-    private LevelParent levelParent; // Set when initializing the game
+    private LevelParent levelParent; // Set during initialization
+    private Timeline shieldTimer; // Shield timer
 
     private PowerUpManager() {}
 
@@ -18,27 +23,48 @@ public class PowerUpManager {
     }
 
     public boolean purchaseExtraLife() {
-        if (levelParent != null && CoinSystem.getInstance().subtractCoins(2)) {
-            levelParent.grantExtraLife();
+        if (CoinSystem.getInstance().subtractCoins(10)) {
+            System.out.println("Extra life granted!");
+            levelParent.getUser().addHealth(1); // Update user health
+            levelParent.getLevelView().addHeart(); // Notify LevelView
             return true;
         }
         return false;
     }
 
-
     public boolean purchaseShield() {
-        if (levelParent != null) {
-            if (levelParent.isShieldActive()) {
-                return false;
-            } else if (CoinSystem.getInstance().subtractCoins(2)) {
-                levelParent.activateShieldForUser();
-                levelParent.getLevelView().startShieldTimer(20);
-                return true;
-            }
+        if (levelParent.isShieldActive()) {
+            System.err.println("Shield already active!");
+            return false;
+        }
+        if (CoinSystem.getInstance().subtractCoins(20)) {
+            activateShield();
+            return true;
         }
         return false;
     }
 
+    private void activateShield() {
+        System.out.println("Shield activated!");
 
+        levelParent.getUserShield().showShield(); // Show shield
+        levelParent.getLevelView().startShieldTimer(20); // Notify LevelView about timer
 
+        shieldTimer = new Timeline(
+                new KeyFrame(Duration.seconds(20), e -> deactivateShield())
+        );
+        shieldTimer.setCycleCount(1);
+        shieldTimer.play();
+    }
+
+    private void deactivateShield() {
+        System.out.println("Shield deactivated!");
+
+        levelParent.getUserShield().hideShield(); // Hide shield
+        if (shieldTimer != null) {
+            shieldTimer.stop();
+            shieldTimer = null;
+        }
+    }
 }
+

@@ -81,7 +81,6 @@ public class PowerUpMenu {
 
         healthButton.setOnAction(e -> {
             if (PowerUpManager.getInstance().purchaseExtraLife()) {
-                System.out.println("Extra life purchased!");
             } else {
                 showAlert("Not enough coins for Extra Life!");
             }
@@ -112,7 +111,7 @@ public class PowerUpMenu {
 
         shieldButton.setOnAction(e -> {
             if (PowerUpManager.getInstance().purchaseShield()) {
-                System.out.println("Shield purchased!");
+
             } else {
                 showAlert("Not enough coins for Shield OR its already active!!");
             }

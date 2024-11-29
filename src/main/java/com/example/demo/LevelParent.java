@@ -1,10 +1,8 @@
 package com.example.demo;
 import java.util.*;
-import javafx.animation.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
-import javafx.util.Duration;
 
 public abstract class LevelParent {
 
@@ -23,7 +21,7 @@ public abstract class LevelParent {
 	protected final ImageView background;
 	private int numberOfKills;
 	private final ShieldImage userShield;
-	private Timeline shieldTimer; // Timer for shield duration
+
 
 
 	private final LevelView levelView;
@@ -151,34 +149,6 @@ public abstract class LevelParent {
 			actorManager.addCoin(coin);
 		}
 	}
-
-	public void grantExtraLife() {
-		System.out.println("Health before adding: " + user.getHealth());
-		user.addHealth(1); // Increase user's health
-		System.out.println("Health after adding: " + user.getHealth());
-
-		levelView.addHeart(); // Add the heart to the UI
-		System.out.println("Extra life granted! Remaining coins: " + CoinSystem.getInstance().getCoins());
-	}
-	public void activateShieldForUser() {
-		System.out.println("Shield activated for the user!");
-
-		userShield.showShield(); // Show the shield visually
-		shieldTimer = new Timeline(
-				new KeyFrame(Duration.seconds(20), event -> deactivateShieldForUser()) // Deactivate after 20 seconds
-		);
-		shieldTimer.setCycleCount(1);
-		shieldTimer.play();
-	}
-	public void deactivateShieldForUser() {
-		System.out.println("Shield deactivated!");
-		userShield.hideShield(); // Hide the shield visually
-		if (shieldTimer != null) {
-			shieldTimer.stop(); // Stop the timer if running
-			shieldTimer = null;
-		}
-	}
-
 	public boolean isShieldActive() {
 		return userShield != null && userShield.isVisible();
 	}
@@ -246,6 +216,9 @@ public abstract class LevelParent {
 
 	public List<Coin> getCoins() {
 		return actorManager.getCoins();
+	}
+	public ShieldImage getUserShield() {
+		return userShield;
 	}
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies =    actorManager.getEnemyUnits().size();
