@@ -1,44 +1,29 @@
 package com.example.demo;
 
-public class EnemyPlane extends FighterPlane {
+public class EnemyPlane extends EnemyParent {
 
 	private static final String IMAGE_NAME = "enemyplane.png";
-	private static final int IMAGE_HEIGHT = 60;
-	private static final int HORIZONTAL_VELOCITY = -6;
-	private static final double PROJECTILE_X_POSITION_OFFSET = -100.0;
-	private static final double PROJECTILE_Y_POSITION_OFFSET = 50.0;
-	private static final int INITIAL_HEALTH = 1;
-	private static final double FIRE_RATE = .01;
+	private static final double FIRE_RATE = 0.01;
 
-	public EnemyPlane(double initialXPos, double initialYPos) {
-		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, INITIAL_HEALTH);
-	}
-
-	@Override
-	public void updatePosition() {
-		moveHorizontally(HORIZONTAL_VELOCITY);
-	}
-
-	@Override
-	public ActiveActorDestructible fireProjectile() {
-		if (GameStateManager.isPaused) {
-			return null;  // Skip updating position if paused
-		}
-
-		if (Math.random() < FIRE_RATE) {
-			double projectileXPosition = getProjectileXPosition(PROJECTILE_X_POSITION_OFFSET);
-			double projectileYPostion = getProjectileYPosition(PROJECTILE_Y_POSITION_OFFSET);
-			return new EnemyProjectile(projectileXPosition, projectileYPostion);
-		}
-		return null;
+	public EnemyPlane(double initialXPos, double initialYPos,LevelParent levelParent) {
+		super(IMAGE_NAME, 60, initialXPos, initialYPos, 1, levelParent);
 	}
 
 	@Override
 	public void updateActor() {
-		if (GameStateManager.isPaused) {
-			return;  // Skip updating position if paused
-		}
 		updatePosition();
 	}
 
+	@Override
+	public void updatePositionWhenActive() {
+		moveHorizontally(-6);
+	}
+
+	@Override
+	public ActiveActorDestructible fireProjectileWhenActive() {
+		if (Math.random() < FIRE_RATE) {
+			return new EnemyProjectile(getProjectileXPosition(0), getProjectileYPosition(20));
+		}
+		return null;
+	}
 }

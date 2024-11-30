@@ -20,7 +20,7 @@ public class LevelFour extends LevelParent {
     private static final int TOTAL_ENEMIES = 5;
     private static final int KILLS_TO_ADVANCE = 15;
 
-    private Label killsLabel;
+
     private List<StealthEnemyPlane> stealthEnemies;
     private final List<FlarePowerUp> powerUps = new ArrayList<>();
 
@@ -32,47 +32,28 @@ public class LevelFour extends LevelParent {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         this.inputHandler.setMovementMode(InputHandler.MovementMode.FULL);
 
-        initializeWinningParameter();  // Initialize the kill counter label once
         stealthEnemies = new ArrayList<>();
 
-    }
-
-    @Override
-    protected void initializeWinningParameter() {
-        killsLabel = new Label("Kills: 0");
-        killsLabel.setLayoutX(getScreenWidth() / 2 - 100);
-        killsLabel.setLayoutY(20);
-
-        // CSS for styling
-        String labelStyle = "-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(#ff0000, #ff5500); -fx-effect: dropshadow(gaussian, black, 8, 0.5, 3, 3);";
-        killsLabel.setStyle(labelStyle);
-
-        getRoot().getChildren().addAll(killsLabel);
-       // killsLabel.toFront();
-    }
-
-
-    @Override
-    protected void updateWinningParameter() {
-        Platform.runLater(() -> {
-            killsLabel.setText("Kills: " + getNumberOfKills());
-            killsLabel.toFront();
-        });
     }
 
 
     @Override
     protected void spawnEnemyUnits() {
-        double spawnProbability = 0.15; // Probability for spawning stealth planes
+        double spawnProbability = 0.15; // Probability for spawning enemies
         if (Math.random() < spawnProbability && getCurrentNumberOfEnemies() < TOTAL_ENEMIES) {
             double randomYPosition = 70 + (Math.random() * (getEnemyMaximumYPosition() - 70));
-            StealthEnemyPlane newStealthEnemy = new StealthEnemyPlane(getScreenWidth(), randomYPosition, this);
-            stealthEnemies.add(newStealthEnemy);
+
+            EnemyParent newStealthEnemy = EnemyFactory.createEnemy("STEALTH", getScreenWidth(), randomYPosition, this);
             addEnemyUnit(newStealthEnemy);
 
+            // Ensure stealth enemies are added to the dedicated list
+            if (newStealthEnemy instanceof StealthEnemyPlane) {
+                stealthEnemies.add((StealthEnemyPlane) newStealthEnemy);
+            }
+        }
+    }
 
-    }
-    }
+
 
     private void spawnBombs() {
         if (GameStateManager.isPaused) {

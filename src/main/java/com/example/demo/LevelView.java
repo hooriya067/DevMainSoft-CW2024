@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class LevelView {
+public abstract class LevelView {
 
 	private static final double HEART_DISPLAY_X_POSITION = 5;
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
@@ -32,13 +32,15 @@ public class LevelView {
 	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
 	private final PauseButtonDisplay pauseButtonDisplay;
+	private final LevelParent levelParent; // Reference to the parent level
 
+	public LevelView(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
 
-	public LevelView(Group root, int heartsToDisplay, double sceneWidth, double sceneHeight) {
-		this.root = root;
+		this.root=root;
+		this.levelParent = levelParent;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
-		this.gameOverImage = new GameOverImage(sceneWidth, sceneHeight);
+		this.gameOverImage = new GameOverImage(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		this.pauseButtonDisplay = new PauseButtonDisplay();
 		this.pauseButtonDisplay.setPosition(PAUSE_BUTTON_X_POSITION, PAUSE_BUTTON_Y_POSITION);
 		// Coin counter label
@@ -100,11 +102,10 @@ public class LevelView {
 	public void showHeartDisplay() {
 		heartDisplay.getContainer().toFront();
 	}
+	public abstract void initializeWinningParameter();
 
-//	public void showWinImage() {
-//		root.getChildren().add(winImage);
-//		winImage.showWinImage();
-//	}
+	public abstract void updateWinningParameter();
+
 
 	public void showGameOverImage() {
 		root.getChildren().add(gameOverImage);
@@ -151,4 +152,12 @@ public class LevelView {
 		}
 		shieldTimerLabel.setVisible(false);
 	}
+	public Group getRoot() {
+		return root;
+	}
+
+	public LevelParent getLevelParent() {
+		return levelParent; // Provide access to the parent level
+	}
+
 }

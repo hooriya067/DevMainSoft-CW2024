@@ -11,34 +11,12 @@ public class LevelFive extends LevelParent {
     private static final int TOTAL_ENEMIES = 8;
     private static final int KILLS_TO_ADVANCE = 15;
 
-    private Label killsLabel;
     private boolean meteorStormActive = true; // Flag to handle meteor storm phase
 
     public LevelFive(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         this.inputHandler.setMovementMode(InputHandler.MovementMode.FULL);
-        initializeWinningParameter();
         displayShowdownText();
-    }
-    @Override
-    protected void initializeWinningParameter() {
-        killsLabel = new Label("Kills: 0");
-        killsLabel.setLayoutX(getScreenWidth() / 2 - 100);
-        killsLabel.setLayoutY(20);
-
-        String labelStyle = "-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: linear-gradient(#ff0000, #ff5500); -fx-effect: dropshadow(gaussian, black, 8, 0.5, 3, 3);";
-        killsLabel.setStyle(labelStyle);
-
-        getRoot().getChildren().addAll(killsLabel);
-        killsLabel.toFront();
-    }
-
-    @Override
-    protected void updateWinningParameter() {
-        Platform.runLater(() -> {
-            killsLabel.setText("Kills: " + getNumberOfKills());
-            killsLabel.toFront();
-        });
     }
 
     @Override
@@ -47,26 +25,28 @@ public class LevelFive extends LevelParent {
         if (meteorStormActive) {
             spawnMeteors();
         }
-        // Handle Showdown Phase
-        double spawnProbability = 0.25; // 10% chance to spawn an enemy per update
+        double spawnProbability = 0.25; // 25% chance to spawn an enemy per update
 
         if (Math.random() < spawnProbability && getCurrentNumberOfEnemies() < TOTAL_ENEMIES) {
             double randomYPosition = 40 + (Math.random() * (getEnemyMaximumYPosition() - 40));
-            ActiveActorDestructible newEnemy;
+            String enemyType;
 
+            // Determine enemy type based on probabilities
             double enemyTypeChance = Math.random();
             if (enemyTypeChance < 0.6) {
-                newEnemy = new EnemyPlane(getScreenWidth(), randomYPosition);
+                enemyType = "ENEMY1";
             } else if (enemyTypeChance < 0.8) {
-                newEnemy = new EnemyPlaneTypeA(getScreenWidth(), randomYPosition, this);
-            } else{
-                newEnemy = new EnemyPlaneTypeB(getScreenWidth(), randomYPosition, this);
+                enemyType = "TYPEA";
+            } else {
+                enemyType = "TYPEB";
             }
-            addEnemyUnit(newEnemy);
+
+            ActiveActorDestructible newEnemy = EnemyFactory.createEnemy(enemyType, getScreenWidth(), randomYPosition, this);
+            addEnemyUnit(newEnemy); // Add the enemy to the level
         }
     }
 
-    private void spawnMeteors() {
+        private void spawnMeteors() {
         double meteorProbability = 0.2; // 20% chance to spawn a meteor
         if (Math.random() < meteorProbability) {
             Meteor meteor = new Meteor(this); // Pass the level reference
@@ -97,7 +77,7 @@ public class LevelFive extends LevelParent {
     }
     @Override
     protected LevelView instantiateLevelView() {
-        return new LevelVeiwLevelFive(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight());
+        return new LevelVeiwLevelFive(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(),this);
     }
 
     @Override

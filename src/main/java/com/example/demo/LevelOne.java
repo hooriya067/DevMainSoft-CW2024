@@ -9,61 +9,33 @@ public class LevelOne extends LevelParent {
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 10;
 	private static final int PLAYER_INITIAL_HEALTH = 5;
-	private static final double TOOLBAR_HEIGHT = 70;
-	private Label killsLabel;
+	private static final double TOOLBAR_HEIGHT = 90;
+
 
 	public LevelOne(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		initializeWinningParameter(); // Initialize the kill counter label once
+
 	}
-		@Override
-		protected void initializeWinningParameter() {
-			killsLabel = new Label("Kills: 0");
-			killsLabel.setLayoutX(getScreenWidth() / 2 - 100); // Adjust position to better center the label
-			killsLabel.setLayoutY(20);
 
-			// Apply CSS to make the label bold, with shadow and more appealing font style
-			killsLabel.setStyle(
-					"-fx-font-size: 30px;" +              // Larger font size for better visibility
-							"-fx-font-weight: bold;" +             // Bold font
-							"-fx-text-fill: linear-gradient(#ff0000, #ff5500);" +  // Dual-color text (red to orange gradient)
-							"-fx-effect: dropshadow(gaussian, black, 8, 0.5, 3, 3);" // Shadow effect (black, blurred)
-			);
 
-			getRoot().getChildren().add(killsLabel);
-			//killsLabel.toFront();
-			System.out.println("Kill counter label initialized and added to root.");
-		}
 
 	@Override
-	protected void updateWinningParameter() {
-		Platform.runLater(() -> {
-			killsLabel.setText("Kills: " + getNumberOfKills());
-			killsLabel.toFront();
-//			System.out.println("Kill counter label updated: " + getNumberOfKills());
-		});
-	}
-
-
 	protected void spawnEnemyUnits() {
 		double spawnProbability = 0.1; // Example: 10% chance to spawn an enemy each update cycle
 
 		if (Math.random() < spawnProbability && getCurrentNumberOfEnemies() < TOTAL_ENEMIES) {
 			double randomYPosition = TOOLBAR_HEIGHT + (Math.random() * (getEnemyMaximumYPosition() - TOOLBAR_HEIGHT));
-			ActiveActorDestructible newEnemy = new EnemyPlane(getScreenWidth(), randomYPosition);
-			addEnemyUnit(newEnemy);
+			//Factory
+			ActiveActorDestructible newEnemy = EnemyFactory.createEnemy(
+					"ENEMY1", getScreenWidth(), randomYPosition, this);
+			addEnemyUnit(newEnemy); // Add the new enemy to the level
 		}
 	}
-
-
 	@Override
 	protected LevelView instantiateLevelView() {
-		return new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight());
+		return new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(), this);
 	}
 
-//	protected boolean userHasReachedKillTarget() {
-//		return getUser().getNumberOfKills() >= KILLS_TO_ADVANCE;
-//	}
 	protected boolean userHasReachedKillTarget() {
 		return getNumberOfKills() >= KILLS_TO_ADVANCE;  // Now using LevelParent's numberOfKills
 	}

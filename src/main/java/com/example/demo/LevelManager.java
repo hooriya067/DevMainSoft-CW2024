@@ -62,7 +62,7 @@ public class LevelManager {
             // Instantiate the appropriate level based on the level name
             switch (levelName) {
                 case "LEVEL_ONE":
-                   currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+                  currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_TWO":
                     currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());

@@ -3,11 +3,15 @@ package com.example.demo;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.util.Duration;
 
+
+
 public class LevelViewLevelTwo extends LevelView {
+
 
 	private static final int SHIELD_X_POSITION = 1150;
 	private static final int SHIELD_Y_POSITION = 500;
@@ -17,24 +21,34 @@ public class LevelViewLevelTwo extends LevelView {
 	private final double screenHeight;
 	private boolean shieldMessageDisplayed = false;  // Flag to track if shield message has been displayed
 
-	public LevelViewLevelTwo(Group root, int heartsToDisplay, double screenWidth, double screenHeight) {
-		super(root, heartsToDisplay, screenWidth, screenHeight); // Pass screen dimensions to the parent class
+
+	public LevelViewLevelTwo(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
+		super(root, heartsToDisplay, screenWidth, screenHeight, levelParent);
 		this.root = root;
-		this.screenWidth = screenWidth;
+		this.screenWidth = getLevelParent().getScreenWidth(); // Assign after superclass call
 		this.screenHeight = screenHeight;
 		this.shieldImage = new ShieldImage(SHIELD_X_POSITION, SHIELD_Y_POSITION);
+
 		addImagesToRoot();
 	}
+
 
 	private void addImagesToRoot() {
 		root.getChildren().addAll(shieldImage);
 	}
 
+
+	@Override
+	public void initializeWinningParameter() {
+	}
+
+	@Override
+	public void updateWinningParameter() {}
+
 	public void showShield() {
 		System.out.println("LevelViewLevelTwo: Showing Shield");
 		shieldImage.showShield();
 
-		// Show "Shield Activated!" message only if it hasn't been displayed yet
 		if (!shieldMessageDisplayed) {
 			showShieldActivatedMessage();
 			shieldMessageDisplayed = true;  // Set flag to true after displaying the message

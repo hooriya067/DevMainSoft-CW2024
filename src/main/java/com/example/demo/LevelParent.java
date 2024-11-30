@@ -57,8 +57,8 @@ public abstract class LevelParent {
 	protected void initializeFriendlyUnits() {
 		actorManager.addFriendlyUnit(user); // Add user to ActorManager
 	}
-	protected abstract void initializeWinningParameter();
-	protected abstract void updateWinningParameter();
+//	protected abstract void initializeWinningParameter();
+//	protected abstract void updateWinningParameter();
 
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
@@ -77,10 +77,11 @@ public abstract class LevelParent {
 	protected abstract LevelView instantiateLevelView();
 
 	protected abstract void misc();
-	public Scene initializeScene() {
+	protected Scene initializeScene() {
 		CoinSystem.getInstance().addListener(levelView::updateCoinCount);
 		initializeBackground();
 		initializeFriendlyUnits();
+		levelView.initializeWinningParameter();
 		levelView.showHeartDisplay();
 		levelView.showPauseButton();
 		levelView.showCoinDisplay();
@@ -107,7 +108,7 @@ public abstract class LevelParent {
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		updateUserShieldPosition();
-		updateWinningParameter();
+		levelView.updateWinningParameter();
 		updateLevelView();
 		checkIfGameOver();
 		misc();
@@ -220,6 +221,9 @@ public abstract class LevelParent {
 	}
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies =    actorManager.getEnemyUnits().size();
+	}
+	public Scene getScene() {
+		return scene;
 	}
 
 }

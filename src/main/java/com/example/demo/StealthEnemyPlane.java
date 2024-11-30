@@ -4,7 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class StealthEnemyPlane extends FighterPlane {
+public class StealthEnemyPlane extends EnemyParent {
 
     private static final String IMAGE_NAME = "stealth_enemy.png";
     private static final int IMAGE_HEIGHT = 50;
@@ -13,11 +13,9 @@ public class StealthEnemyPlane extends FighterPlane {
     private static final double DETECTION_RADIUS = 200.0; // Distance at which the plane becomes visible
     private boolean isVisible;
     private Timeline visibilityCheckTimeline;
-    private final LevelParent levelParent;
 
     public StealthEnemyPlane(double initialX, double initialY, LevelParent levelParent) {
-        super(IMAGE_NAME, IMAGE_HEIGHT, initialX, initialY, PLANE_HEALTH);
-        this.levelParent = levelParent;
+        super(IMAGE_NAME, IMAGE_HEIGHT, initialX, initialY, PLANE_HEALTH, levelParent);
         setHorizontalVelocity(INITIAL_VELOCITY);
         isVisible = false; // Initially invisible
         setVisible(isVisible);
@@ -35,7 +33,10 @@ public class StealthEnemyPlane extends FighterPlane {
     private void updateVisibility() {
         UserPlane userPlane = levelParent.getUser();
         if (userPlane != null) {
-            double distance = Math.sqrt(Math.pow(userPlane.getLayoutX() - getLayoutX(), 2) + Math.pow(userPlane.getLayoutY() - getLayoutY(), 2));
+            double distance = Math.sqrt(
+                    Math.pow(userPlane.getLayoutX() - getLayoutX(), 2) +
+                            Math.pow(userPlane.getLayoutY() - getLayoutY(), 2)
+            );
             if (distance <= DETECTION_RADIUS) {
                 isVisible = true;
             }
@@ -44,22 +45,21 @@ public class StealthEnemyPlane extends FighterPlane {
     }
 
     @Override
-    public ActiveActorDestructible fireProjectile() {
+    protected ActiveActorDestructible fireProjectileWhenActive() {
         double probability = 0.001; // Lower firing rate for stealth planes
-        return (Math.random() < probability) ? new EnemyProjectile(getProjectileXPosition(0), getProjectileYPosition(20)) : null;
-    }
-
-    @Override
-    public void updatePosition() {
-        if (GameStateManager.isPaused) {
-            return;  // Skip updating position if paused
-        }
-        moveHorizontally(getHorizontalVelocity());
+        return (Math.random() < probability)
+                ? new EnemyProjectile(getProjectileXPosition(0), getProjectileYPosition(20))
+                : null;
     }
 
     @Override
     public void updateActor() {
         updatePosition();
+    }
+
+    @Override
+    protected void updatePositionWhenActive() {
+        moveHorizontally(getHorizontalVelocity());
     }
 
     @Override
@@ -69,7 +69,4 @@ public class StealthEnemyPlane extends FighterPlane {
             visibilityCheckTimeline.stop();
         }
     }
-
-
 }
-

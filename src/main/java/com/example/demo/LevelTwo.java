@@ -1,31 +1,26 @@
 package com.example.demo;
 
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 public class LevelTwo extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 
+	private Label bossHealthLabel;
 	private final Boss boss;  // Declare boss as final and initialize it properly in the constructor
 	private LevelViewLevelTwo levelView;
-	private Label bossHealthLabel;
+
 
 	public LevelTwo(double screenHeight, double screenWidth) {
 		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
-		boss = new Boss(GameConfig.SCREEN_HEIGHT); // Properly initialize boss in the constructor
-		initializeWinningParameter(); // Initialize the boss health label
+
+		EnemyFactory enemyFactory = new EnemyFactory(this);
+		boss = (Boss) enemyFactory.createEnemy("BOSS", 1000, 100, this);
+		initializeWinningParameter();
 	}
 
-	// Getter methods for screen dimensions
-	public double getScreenWidth() {
-		return super.getScreenWidth();
-	}
-
-	public double getScreenHeight() {
-		return super.getScreenHeight();
-	}
-	@Override
 	protected void initializeWinningParameter() {
 		bossHealthLabel = new Label("Boss Health: 100");  // Set to initial boss health
 		bossHealthLabel.setLayoutX(getScreenWidth() / 2 - 100); // Center the label a bit better
@@ -44,7 +39,6 @@ public class LevelTwo extends LevelParent {
 		System.out.println("Boss health label initialized and added to root.");
 	}
 
-	@Override
 	protected void updateWinningParameter() {
 		if (boss != null && !boss.isDestroyed()) {
 			Platform.runLater(() -> {
@@ -54,6 +48,15 @@ public class LevelTwo extends LevelParent {
 			});
 		}
 	}
+	// Getter methods for screen dimensions
+	public double getScreenWidth() {
+		return super.getScreenWidth();
+	}
+
+	public double getScreenHeight() {
+		return super.getScreenHeight();
+	}
+
 
 	@Override
 	protected void spawnEnemyUnits() {
@@ -62,12 +65,13 @@ public class LevelTwo extends LevelParent {
 			addEnemyUnit(boss);
 		}
 	}
-
 	@Override
 	protected LevelView instantiateLevelView() {
-		levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight());
+		levelView = new LevelViewLevelTwo(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(), this);
 		return levelView;
 	}
+
+
 
 	private void updateShieldImage() {
 		if (levelView == null || boss == null) {
@@ -78,7 +82,7 @@ public class LevelTwo extends LevelParent {
 		double bossY = boss.getLayoutY() + boss.getTranslateY();
 		levelView.updateShieldPosition(bossX, bossY);
 
-		if (boss.getIsShielded()) {
+		if (boss.isShieldActive()) {
 			levelView.showShield();
 		} else {
 			levelView.hideShield();
@@ -95,5 +99,11 @@ public class LevelTwo extends LevelParent {
 		return boss.isDestroyed();
 	}
 
+	@Override
+	protected void updateScene() {
+		super.updateScene();
+		updateWinningParameter();
+	}
 }
+
 
