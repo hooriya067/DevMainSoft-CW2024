@@ -23,7 +23,7 @@ public class PowerUpManager {
     }
 
     public boolean purchaseExtraLife() {
-        if (CoinSystem.getInstance().subtractCoins(10)) {
+        if (CoinSystem.getInstance().subtractCoins(2)) {
             System.out.println("Extra life granted!");
             levelParent.getUser().addHealth(1); // Update user health
             levelParent.getLevelView().addHeart(); // Notify LevelView
@@ -37,7 +37,7 @@ public class PowerUpManager {
             System.err.println("Shield already active!");
             return false;
         }
-        if (CoinSystem.getInstance().subtractCoins(20)) {
+        if (CoinSystem.getInstance().subtractCoins(2)) {
             activateShield();
             return true;
         }
@@ -48,7 +48,7 @@ public class PowerUpManager {
         System.out.println("Shield activated!");
 
         levelParent.getUserShield().showShield(); // Show shield
-        levelParent.getLevelView().startShieldTimer(20); // Notify LevelView about timer
+        levelParent.getLevelView().startShieldTimer(20);
 
         shieldTimer = new Timeline(
                 new KeyFrame(Duration.seconds(20), e -> deactivateShield())

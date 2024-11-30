@@ -70,8 +70,6 @@ public abstract class LevelParent {
 			}
 		}
 	}
-
-
 	protected abstract boolean userHasReachedKillTarget();
 
 	protected abstract void spawnEnemyUnits();
@@ -103,8 +101,8 @@ public abstract class LevelParent {
 
 	protected void updateScene() {
 		spawnEnemyUnits();
-		collisionManager.handleAllCollisions();
 		spawnCoins();
+		collisionManager.handleAllCollisions();
 		actorManager.handleAllActors();
 		generateEnemyFire();
 		updateNumberOfEnemies();

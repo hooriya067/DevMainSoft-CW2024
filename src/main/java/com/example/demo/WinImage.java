@@ -15,6 +15,7 @@ public class WinImage extends Pane {
 	private static final double IMAGE_HEIGHT = 500;
 
 	public WinImage(double screenWidth, double screenHeight) {
+		Stage stage = StageManager.getStage();
 		// Create the Win Image
 		ImageView winImage = new ImageView(
 				new Image(Objects.requireNonNull(getClass().getResource(IMAGE_NAME)).toExternalForm())
@@ -42,7 +43,7 @@ public class WinImage extends Pane {
 		// Add functionality to buttons
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
-				Stage stage = (Stage) this.getScene().getWindow(); // Dynamically retrieve the Stage
+
 				Controller gameController = new Controller(stage);
 				gameController.launchGame();
 			} catch (Exception e) {
@@ -51,7 +52,6 @@ public class WinImage extends Pane {
 		});
 
 		quitButton.setOnClick(() -> {
-			Stage stage = (Stage) this.getScene().getWindow(); // Dynamically retrieve the Stage
 			stage.close(); // Exit the application
 		});
 

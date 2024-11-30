@@ -1,24 +1,23 @@
 package com.example.demo;
 
 import com.example.demo.controller.Controller;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class LevelManager {
 
-    private final Stage stage;
+    Stage stage = StageManager.getStage();
     private final List<String> levelSequence = new ArrayList<>();
     private int currentLevelIndex = 0;
     private LevelParent currentLevel;  // Reference to the current level being played
 
     public LevelManager(Stage stage) {
-        this.stage = stage;
+
 
         // Add levels to the sequence
         levelSequence.add("LEVEL_ONE");

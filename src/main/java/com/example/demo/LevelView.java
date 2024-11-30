@@ -1,14 +1,10 @@
 package com.example.demo;
 
-//import com.example.demo.controller.Controller;
-import javafx.animation.FadeTransition;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 

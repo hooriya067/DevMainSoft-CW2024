@@ -16,7 +16,7 @@ public class GameOverImage extends Pane {
 	private static final double IMAGE_WIDTH = 600;
 
 	public GameOverImage(double screenWidth, double screenHeight) {
-		// Create a dim background rectangle
+
 		Rectangle dimBackground = new Rectangle(screenWidth, screenHeight, Color.BLACK);
 		dimBackground.setOpacity(0.5); // Set transparency for dim effect
 
@@ -41,7 +41,7 @@ public class GameOverImage extends Pane {
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
 				// Restart the game using Controller logic
-				Stage stage = (Stage) this.getScene().getWindow();
+				Stage stage = StageManager.getStage();
 				Controller gameController = new Controller(stage);
 				gameController.launchGame(); // Launch the game from Level 1
 			} catch (Exception e) {
