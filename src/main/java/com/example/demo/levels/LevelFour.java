@@ -4,7 +4,7 @@ package com.example.demo.levels;
 import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.actors.active.ActiveActorDestructible;
 import com.example.demo.actors.collectibles.FlarePowerUp;
-import com.example.demo.actors.active.destructible.EnemyParent;
+import com.example.demo.actors.active.enemies.EnemyParent;
 import com.example.demo.actors.active.Factories.EnemyFactory;
 import com.example.demo.actors.active.enemies.StealthEnemyPlane;
 import com.example.demo.actors.active.Factories.ProjectileFactory;

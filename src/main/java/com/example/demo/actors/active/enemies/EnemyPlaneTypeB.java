@@ -4,7 +4,6 @@ import com.example.demo.levels.LevelParent;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.actors.active.ActiveActorDestructible;
-import com.example.demo.actors.active.destructible.EnemyParent;
 
 public class EnemyPlaneTypeB extends EnemyParent {
 

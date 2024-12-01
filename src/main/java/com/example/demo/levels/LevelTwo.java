@@ -25,7 +25,7 @@ public class LevelTwo extends LevelParent {
 	}
 
 	protected void initializeWinningParameter() {
-		bossHealthLabel = new Label("Boss Health: 100");  // Set to initial boss health
+		bossHealthLabel = new Label("Boss Health: 20");  // Set to initial boss health
 		bossHealthLabel.setLayoutX(getScreenWidth() / 2 - 100); // Center the label a bit better
 		bossHealthLabel.setLayoutY(20);
 

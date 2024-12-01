@@ -1,9 +1,8 @@
-package com.example.demo.actors.active.destructible;
+package com.example.demo.actors.active.enemies;
 
 import com.example.demo.actors.active.FighterPlane;
 import com.example.demo.levels.LevelParent;
 import com.example.demo.actors.active.ActiveActorDestructible;
-import com.example.demo.actors.active.enemies.Enemy;
 import com.example.demo.core.GameStateManager;
 
 public abstract class EnemyParent extends FighterPlane implements Enemy {

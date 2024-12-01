@@ -1,6 +1,5 @@
 package com.example.demo.actors.active.enemies;
 
-import com.example.demo.actors.active.destructible.EnemyParent;
 import com.example.demo.levels.LevelParent;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
 import com.example.demo.actors.active.ActiveActorDestructible;
@@ -31,7 +30,7 @@ public class Boss extends EnemyParent {
 
 	private Consumer<Integer> healthChangeListener; // Listener for health changes
 	public Boss(double initialX, double initialY, int screenHeight, LevelParent levelParent) {
-		super(IMAGE_NAME, 50, initialX, initialY, 10, levelParent);
+		super(IMAGE_NAME, 50, initialX, initialY, 20, levelParent);
 		this.screenHeight = screenHeight;
 		this.movePattern = new ArrayList<>();
 		this.isShielded = false;

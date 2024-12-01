@@ -3,7 +3,6 @@ package com.example.demo.actors.active.enemies;
 import com.example.demo.levels.LevelParent;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
 import com.example.demo.actors.active.ActiveActorDestructible;
-import com.example.demo.actors.active.destructible.EnemyParent;
 
 public class EnemyPlane extends EnemyParent {
 

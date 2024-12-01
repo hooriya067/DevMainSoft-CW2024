@@ -17,7 +17,7 @@ public class LevelThree extends LevelParent {
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background3.jpg";
     private static final int PLAYER_INITIAL_HEALTH = 5;
     private static final int TOTAL_ENEMIES = 5;
-    private static final int KILLS_TO_ADVANCE = 10;
+    private static final int KILLS_TO_ADVANCE = 15;
     private static final int TOOLBAR_HEIGHT = 90;
 
     private Label killsLabel;
