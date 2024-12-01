@@ -52,9 +52,6 @@ public class LevelFour extends LevelParent {
             }
         }
     }
-
-
-
     private void spawnBombs() {
         if (GameStateManager.isPaused) {
             return;
@@ -62,10 +59,11 @@ public class LevelFour extends LevelParent {
         double spawnProbability = 0.01; // Adjust this value for bomb frequency
         if (Math.random() < spawnProbability) {
             double randomXPosition = Math.random() * getScreenWidth();
-            BombProjectile bomb = new BombProjectile(randomXPosition, 0); // Spawning bombs at the top of the screen (Y = 0)
+            ActiveActorDestructible bomb = ProjectileFactory.createProjectile("BOMB", randomXPosition, 0, null);
             addProjectileToLevel(bomb);
         }
     }
+
     private void spawnFlarePowerUp() {
         if (GameStateManager.isPaused) {
             return;

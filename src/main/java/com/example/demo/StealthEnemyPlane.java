@@ -11,6 +11,7 @@ public class StealthEnemyPlane extends EnemyParent {
     private static final int PLANE_HEALTH = 3;
     private static final double INITIAL_VELOCITY = -3.0;
     private static final double DETECTION_RADIUS = 200.0; // Distance at which the plane becomes visible
+    private static final double FIRE_RATE = 0.001; // Lower firing rate for stealth planes
     private boolean isVisible;
     private Timeline visibilityCheckTimeline;
 
@@ -46,11 +47,9 @@ public class StealthEnemyPlane extends EnemyParent {
 
     @Override
     protected ActiveActorDestructible fireProjectileWhenActive() {
-        double probability = 0.001; // Lower firing rate for stealth planes
-        return (Math.random() < probability)
-                ? new EnemyProjectile(getProjectileXPosition(0), getProjectileYPosition(20))
-                : null;
-    }
+        return Math.random() < FIRE_RATE
+                ? ProjectileFactory.createProjectile("ENEMY_PROJECTILE", getProjectileXPosition(0), getProjectileYPosition(20), levelParent)
+                : null;}
 
     @Override
     public void updateActor() {

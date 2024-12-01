@@ -33,7 +33,7 @@ public class LevelViewLevelOne extends LevelView {
         Platform.runLater(() -> {
             killsLabel.setText("Kills: " + getLevelParent().getNumberOfKills());
             killsLabel.toFront();
-            System.out.println("Kill counter label updated: " + getLevelParent().getNumberOfKills());
+           // System.out.println("Kill counter label updated: " + getLevelParent().getNumberOfKills());
         });
     }
 

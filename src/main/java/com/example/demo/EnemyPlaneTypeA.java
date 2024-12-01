@@ -3,8 +3,8 @@ package com.example.demo;
 public class EnemyPlaneTypeA extends EnemyParent {
 
     private static final String IMAGE_NAME = "enemyplaneA.png";
-
-    public EnemyPlaneTypeA(double initialX, double initialY,LevelParent levelParent) {
+    private static final double FIRE_RATE = 0.01;
+    public EnemyPlaneTypeA(double initialX, double initialY, LevelParent levelParent) {
         super(IMAGE_NAME, 60, initialX, initialY, 2, levelParent);
     }
 
@@ -20,6 +20,7 @@ public class EnemyPlaneTypeA extends EnemyParent {
 
     @Override
     public ActiveActorDestructible fireProjectileWhenActive() {
-        return Math.random() < 0.01 ? new EnemyProjectile(getProjectileXPosition(0), getProjectileYPosition(20)) : null;
-    }
+        return Math.random() < FIRE_RATE
+                ? ProjectileFactory.createProjectile("ENEMY_PROJECTILE_LEVEL_THREE", getProjectileXPosition(0), getProjectileYPosition(20), levelParent)
+                : null;}
 }

@@ -73,10 +73,10 @@ public class Boss extends EnemyParent {
 
 	@Override
 	public ActiveActorDestructible fireProjectileWhenActive() {{
-
-		return Math.random() <  BOSS_FIRE_RATE  ? new BossProjectile(getProjectileInitialPosition()) : null;
-
-	}
+			return Math.random() < BOSS_FIRE_RATE
+					? ProjectileFactory.createProjectile("BOSS_PROJECTILE",0, getProjectileInitialPosition(), levelParent)
+					: null;
+		}
 	}
 
 	private double getProjectileInitialPosition() {

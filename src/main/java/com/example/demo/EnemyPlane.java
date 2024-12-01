@@ -21,9 +21,9 @@ public class EnemyPlane extends EnemyParent {
 
 	@Override
 	public ActiveActorDestructible fireProjectileWhenActive() {
-		if (Math.random() < FIRE_RATE) {
-			return new EnemyProjectile(getProjectileXPosition(0), getProjectileYPosition(20));
-		}
-		return null;
-	}
+		return Math.random() < FIRE_RATE
+					? ProjectileFactory.createProjectile("ENEMY_PROJECTILE", getProjectileXPosition(0), getProjectileYPosition(20), levelParent)
+					: null;}
+
+
 }
