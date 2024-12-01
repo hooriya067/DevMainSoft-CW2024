@@ -1,8 +1,4 @@
 package com.example.demo;
-
-
-
-
 public class PauseButtonDisplay extends ButtonParent {
 
     public PauseButtonDisplay() {

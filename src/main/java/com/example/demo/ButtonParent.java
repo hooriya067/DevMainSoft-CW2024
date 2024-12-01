@@ -1,9 +1,9 @@
 package com.example.demo;
-
+import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
+import javafx.util.Duration;
 import java.util.Objects;
 
 public abstract class ButtonParent {
@@ -13,6 +13,7 @@ public abstract class ButtonParent {
     public ButtonParent(String imagePath, double fitWidth, boolean preserveRatio) {
         this.button = new Button();
         initializeButton(imagePath, fitWidth, preserveRatio);
+        addBounceEffect(); // Add bounce effect to the button
     }
 
     private void initializeButton(String imagePath, double fitWidth, boolean preserveRatio) {
@@ -33,14 +34,26 @@ public abstract class ButtonParent {
         }
     }
 
+    // Method to add a bounce effect when the button is clicked
+    private void addBounceEffect() {
+        button.setOnMousePressed(event -> createBounceAnimation(0.9).play()); // Scale down
+        button.setOnMouseReleased(event -> createBounceAnimation(1.0).play()); // Scale back to normal
+    }
+
+    // Method to create the bounce animation
+    private ScaleTransition createBounceAnimation(double scaleValue) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), button);
+        scaleTransition.setToX(scaleValue);
+        scaleTransition.setToY(scaleValue);
+        return scaleTransition;
+    }
+
     // Method to set the click action
     public void setOnClick(Runnable action) {
         button.setOnAction(event -> action.run());
     }
 
-
     public Button getButton() {
         return button;
     }
 }
-
