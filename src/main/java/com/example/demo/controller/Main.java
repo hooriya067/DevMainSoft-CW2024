@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
 import java.lang.reflect.InvocationTargetException;
-import com.example.demo.GameConfig;
-import com.example.demo.MainMenu;
-import com.example.demo.StageManager; // Import the StageManager
+import com.example.demo.core.GameConfig;
+import com.example.demo.UI.screens.MainMenu;
+import com.example.demo.core.StageManager; // Import the StageManager
 import javafx.application.Application;
 import javafx.stage.Stage;
 

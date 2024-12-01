@@ -1,12 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.GameConfig;
-import com.example.demo.StageManager;
+import com.example.demo.core.GameConfig;
+import com.example.demo.core.StageManager;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.example.demo.MyObserver;
-import com.example.demo.LevelManager;
+import com.example.demo.levels.LevelManager;
 
 public class Controller implements MyObserver { // Implementing MyObserver to get notified when the player wins a level
 
@@ -45,13 +45,13 @@ public class Controller implements MyObserver { // Implementing MyObserver to ge
 //import javafx.scene.control.Alert;
 //import javafx.scene.control.Alert.AlertType;
 //import javafx.stage.Stage;
-//import com.example.demo.LevelParent;
+//import com.example.demo.levels.LevelParent;
 //import com.example.demo.MyObserver;
 //
 //
 //public class Controller implements MyObserver { //Implementing MyObserver to get notified when the player wins a level
 //
-//	private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.LevelOne";
+//	private static final String LEVEL_ONE_CLASS_NAME = "com.example.demo.levels.LevelOne";
 //	private final Stage stage;
 //
 //	private LevelParent currentLevel;
