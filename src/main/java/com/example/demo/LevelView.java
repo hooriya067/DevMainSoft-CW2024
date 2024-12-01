@@ -127,11 +127,12 @@ public abstract class LevelView {
 		shieldTimerLabel.setVisible(true);
 		shieldTimerLabel.toFront();
 		shieldTimerLabel.setText("Shield: " + durationInSeconds + "s");
-
+		if (GameStateManager.isPaused) {
+			return;
+		}
 		if (shieldTimer != null) {
 			shieldTimer.stop();
 		}
-
 		shieldTimer = new Timeline(
 				new KeyFrame(Duration.seconds(1), event -> {
 					int remainingTime = Integer.parseInt(shieldTimerLabel.getText().replaceAll("[^0-9]", ""));

@@ -49,7 +49,9 @@ public class PowerUpManager {
 
         levelParent.getUserShield().showShield(); // Show shield
         levelParent.getLevelView().startShieldTimer(20);
-
+        if (GameStateManager.isPaused) {
+            return;
+        }
         shieldTimer = new Timeline(
                 new KeyFrame(Duration.seconds(20), e -> deactivateShield())
         );

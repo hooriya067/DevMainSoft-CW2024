@@ -57,9 +57,6 @@ public abstract class LevelParent {
 	protected void initializeFriendlyUnits() {
 		actorManager.addFriendlyUnit(user); // Add user to ActorManager
 	}
-//	protected abstract void initializeWinningParameter();
-//	protected abstract void updateWinningParameter();
-
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();

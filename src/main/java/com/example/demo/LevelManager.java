@@ -30,27 +30,29 @@ public class LevelManager {
     // Method to start the first level
     public void startFirstLevel() {
         if (!levelSequence.isEmpty()) {
-            goToLevel(levelSequence.get(currentLevelIndex));
+            goToLevelIntro(levelSequence.get(currentLevelIndex));
         }
     }
-
-    // Method to proceed to the next level
     public void goToNextLevel() {
-        currentLevelIndex++;
-        if (currentLevelIndex < levelSequence.size()) {
-            goToLevel(levelSequence.get(currentLevelIndex));
+        if (currentLevelIndex + 1 < levelSequence.size()) {
+            currentLevelIndex++; // Increment the level index to move to the next level
+            LevelCompletedScreen levelCompletedPage = new LevelCompletedScreen(
+                    stage.getWidth(),
+                    stage.getHeight(),
+                    () -> goToLevelIntro(levelSequence.get(currentLevelIndex)), // Go to the intro screen for the next level
+                    () -> proceedToLevel(levelSequence.get(currentLevelIndex - 1)) // Replay the previous level
+            );
+            stage.getScene().setRoot(levelCompletedPage); // Display Level Completed Screen
         } else {
-            showFinalWinScreen(); // Show final win screen when all levels are completed
+            showFinalWinScreen(); // Show the final win screen if all levels are completed
         }
     }
-
-    private void goToLevel(String levelName) {
+    private void goToLevelIntro(String levelName) {
         try {
-            // Create a LevelIntroScreen instance before starting the actual level
-            LevelIntroScreen levelIntroScreen = new LevelIntroScreen( levelName, this);
+            // Show Level Intro Screen
+            LevelIntroScreen levelIntroScreen = new LevelIntroScreen(levelName, this);
             Scene introScene = levelIntroScreen.getScene();
             stage.setScene(introScene);
-
         } catch (IllegalArgumentException e) {
             showErrorAlert(e);
         }
@@ -90,6 +92,7 @@ public class LevelManager {
 //            showErrorAlert(e);
     //   }
     }
+
     private void showFinalWinScreen() {
         // Debugging: Print stage dimensions
         System.out.println("Stage dimensions: " + stage.getWidth() + "x" + stage.getHeight());
@@ -128,6 +131,13 @@ public class LevelManager {
     private void showErrorAlert(Exception e) {
         System.out.println("Error: " + e.getMessage());
 
+    }
+    public String getCurrentLevelName() {
+        if (currentLevelIndex >= 0 && currentLevelIndex < levelSequence.size()) {
+            return levelSequence.get(currentLevelIndex);
+        } else {
+            throw new IllegalStateException("Invalid level index: " + currentLevelIndex);
+        }
     }
 
 }
