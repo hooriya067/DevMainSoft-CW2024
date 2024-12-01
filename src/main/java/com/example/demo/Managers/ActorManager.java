@@ -39,12 +39,14 @@ public class ActorManager {
         enemyUnits.add(unit);
         root.getChildren().add(unit);
     }
-
     public void addUserProjectile(ActiveActorDestructible projectile) {
+        if (projectile == null) {
+            System.err.println("Attempted to add a null projectile to the root!");
+            return;
+        }
         userProjectiles.add(projectile);
         root.getChildren().add(projectile);
     }
-
     public void addEnemyProjectile(ActiveActorDestructible projectile) {
         if (!enemyProjectiles.contains(projectile)) { // Prevent duplicate addition
             enemyProjectiles.add(projectile);

@@ -1,5 +1,6 @@
 package com.example.demo.actors.user;
 
+import com.example.demo.Managers.BulletSystemManager;
 import com.example.demo.actors.active.FighterPlane;
 import com.example.demo.actors.active.ActiveActorDestructible;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
@@ -64,15 +65,18 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
-		double currentXPosition = getLayoutX() + getTranslateX() + getFitWidth() + 120;
-		double currentYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
+		BulletSystemManager bulletManager = BulletSystemManager.getInstance();
 
-		// Use ProjectileFactory to create a UserProjectile
-		return ProjectileFactory.createProjectile("USER_PROJECTILE", currentXPosition, currentYPosition, null);
+		if (bulletManager.subtractBullets(1)) {
+			double currentXPosition = getLayoutX() + getTranslateX() + getFitWidth() + 120;
+			double currentYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
+			return ProjectileFactory.createProjectile("USER_PROJECTILE", currentXPosition, currentYPosition, null);
+
+		} else {
+			System.out.println("Out of bullets!"); // Debug message
+			return null; // No projectile fired
+		}
 	}
-
-
-
 	// Methods for vertical movement
 	public void moveUp() {
 		velocityMultiplier = -1;

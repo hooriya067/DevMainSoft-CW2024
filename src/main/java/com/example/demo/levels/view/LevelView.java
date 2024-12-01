@@ -28,6 +28,8 @@ public abstract class LevelView {
 	private static final double PAUSE_BUTTON_Y_POSITION = 20;
 	private static final double COIN_DISPLAY_X_POSITION = 1200;
 	private static final double COIN_DISPLAY_Y_POSITION = 80;
+	private static final double BULLET_DISPLAY_X_POSITION = 1150; // Same X position for right alignment
+	private static final double BULLET_DISPLAY_Y_POSITION = GameConfig.SCREEN_HEIGHT - 100; // Move it up slightly from the bottom
 	private static final double POWER_UP_BUTTON_X_POSITION = 1140;
 	private static final double POWER_UP_BUTTON_Y_POSITION = 20;
 
@@ -43,6 +45,7 @@ public abstract class LevelView {
 	private final HeartDisplay heartDisplay;
 	private final PauseButtonDisplay pauseButtonDisplay;
 	private final LevelParent levelParent; // Reference to the parent level
+	private Label bulletCountLabel;
 
 	public LevelView(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
 
@@ -70,20 +73,41 @@ public abstract class LevelView {
 		shieldTimerLabel.setVisible(false); // Initially hidden
 		root.getChildren().add(shieldTimerLabel);
 
+		bulletCountLabel = new Label("Bullets: 0"); // Initial display
+		bulletCountLabel.setLayoutX(BULLET_DISPLAY_X_POSITION); // Adjust for screen width
+		bulletCountLabel.setLayoutY(BULLET_DISPLAY_Y_POSITION);
+		bulletCountLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: red;");
+
 		addUIElementsToRoot();
 	}
 	Stage stage = StageManager.getStage();
 
-	private void addUIElementsToRoot() {
-		root.getChildren().addAll(heartDisplay.getContainer(), pauseButtonDisplay.getButton(),powerUpButton.getButton(),coinCountLabel );
-	}
-	public void updateCoinCount(int newCoinCount) {
 
+	private void addUIElementsToRoot() {
+		root.getChildren().addAll(
+				heartDisplay.getContainer(),
+				pauseButtonDisplay.getButton(),
+				powerUpButton.getButton(),
+				coinCountLabel,
+				bulletCountLabel // Add bullet label here
+		);
+		System.out.println("Root children count: " + root.getChildren().size());
+		System.out.println("Bullet Count Label Added: " + root.getChildren().contains(bulletCountLabel));
+	}
+
+	public void updateBulletCount(int newBulletCount) {
+		System.out.println("Updating bullets to: " + newBulletCount);
+		bulletCountLabel.setText("Bullets: " + newBulletCount);
+	}
+
+	public void updateCoinCount(int newCoinCount) {
 		coinCountLabel.setText("Coins: " + newCoinCount);
 	}
 
-	public void showCoinDisplay() {
+	public void showLabels() {
 		coinCountLabel.toFront();
+		bulletCountLabel.toFront();
+
 	}
 
 	public void showPowerUpButton() {

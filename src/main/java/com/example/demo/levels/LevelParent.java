@@ -2,15 +2,11 @@ package com.example.demo.levels;
 import java.util.*;
 
 import com.example.demo.*;
-import com.example.demo.Managers.CollisionManager;
-import com.example.demo.Managers.InputHandlingManager;
-import com.example.demo.Managers.PowerUpManager;
+import com.example.demo.Managers.*;
 import com.example.demo.actors.active.ActiveActorDestructible;
-import com.example.demo.Managers.ActorManager;
 import com.example.demo.actors.active.FighterPlane;
 import com.example.demo.actors.collectibles.ShieldImage;
 import com.example.demo.actors.collectibles.Coin;
-import com.example.demo.Managers.CoinSystemManager;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.GameLoop;
 import com.example.demo.core.GameStateManager;
@@ -94,15 +90,17 @@ public abstract class LevelParent implements ControllableLevel {
 		 return initializeScene();
 	}
 	protected Scene initializeScene() {
+		BulletSystemManager.getInstance().addListener(levelView::updateBulletCount);
 		CoinSystemManager.getInstance().addListener(levelView::updateCoinCount);
 		initializeBackground();
 		initializeFriendlyUnits();
 		levelView.initializeWinningParameter();
 		levelView.showHeartDisplay();
 		levelView.showPauseButton();
-		levelView.showCoinDisplay();
+		levelView.showLabels();
 		levelView.showPowerUpButton();
 		levelView.updateCoinCount(CoinSystemManager.getInstance().getCoins());
+		levelView.updateBulletCount(BulletSystemManager.getInstance().getBullets());
 		inputHandler.initialize(scene);
 		return scene;
 	}
@@ -128,8 +126,8 @@ public abstract class LevelParent implements ControllableLevel {
 		updateLevelView();
 		checkIfGameOver();
 		misc();
-
 	}
+
 
 	protected void initializeBackground() {
 		background.setFocusTraversable(true);
@@ -141,14 +139,18 @@ public abstract class LevelParent implements ControllableLevel {
 	public void fireProjectile() {
 		fireUserProjectile();
 	}
-
 	protected void fireUserProjectile() {
 		if (GameStateManager.isPaused) {
-		return;
-	}
+			return;
+		}
+		if (BulletSystemManager.getInstance().getBullets() <= 0) {
+			AlertManager.getInstance().showAlert("Bullets are low! Collect coins to buy more!");
+			return; // Prevent firing
+		}
 		ActiveActorDestructible projectile = user.fireProjectile();
 		actorManager.addUserProjectile(projectile);
 	}
+
 
 	private void generateEnemyFire() {
 		actorManager.getEnemyUnits().forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));

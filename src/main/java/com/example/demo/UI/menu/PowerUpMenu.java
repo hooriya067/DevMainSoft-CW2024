@@ -1,5 +1,6 @@
 package com.example.demo.UI.menu;
 
+import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.PowerUpManager;
 import com.example.demo.core.GameStateManager;
 import javafx.geometry.Pos;
@@ -36,13 +37,16 @@ public class PowerUpMenu extends OnScreenMenu {
         HBox powerUpBox = new HBox(30);
         powerUpBox.setAlignment(Pos.CENTER);
 
+
         // Health Power-Up
         VBox healthBox = createPowerUpButtonWithLabels("heart.png", "EXTRA LIFE", "10 Coins", () -> {
             if (PowerUpManager.getInstance().purchaseExtraLife()) {
-              removeOverlay();
-              GameStateManager.getInstance().resumeGame();
+                removeOverlay();
+                GameStateManager.getInstance().resumeGame();
+                AlertManager.getInstance().showAlert("You are now One Heart Stronger!!!");
+
             } else {
-                showAlert("Not enough coins for Extra Life!");
+                AlertManager.getInstance().showAlert("Not Enough coins for Extra Health");
             }
         });
 
@@ -51,14 +55,23 @@ public class PowerUpMenu extends OnScreenMenu {
             if (PowerUpManager.getInstance().purchaseShield()) {
                 removeOverlay();
                 GameStateManager.getInstance().resumeGame();
+                AlertManager.getInstance().showAlert("Shield is Fully Loaded!!!!");
             } else {
-                showAlert("Not enough coins for Shield \n " +
-                        "   OR it's already active!");
+                AlertManager.getInstance().showAlert("You don't have enough coins OR Shield is already active.");
             }
         });
+        // Bullets Power-Up
+        VBox bulletsBox = createPowerUpButtonWithLabels("bulletbelt.png", "10 BULLETS", "30 Coins", () -> {
+            if (PowerUpManager.getInstance().purchaseBullets()) {
+                removeOverlay();
+                GameStateManager.getInstance().resumeGame();
+                AlertManager.getInstance().showAlert("Bullets Reloaded succesfully Letssgo!");
+            } else {
+                AlertManager.getInstance().showAlert("You don't have enough coins for Bullets Belts");
+            }
+        });
+        powerUpBox.getChildren().addAll(healthBox, shieldBox, bulletsBox);
 
-        // Adding to powerUpBox
-        powerUpBox.getChildren().addAll(healthBox, shieldBox);
 
         Button resumeButton = new Button("BACK");
         resumeButton.setStyle("-fx-font-size: 14px; -fx-text-fill: white; -fx-background-color: darkblue;");
@@ -66,7 +79,6 @@ public class PowerUpMenu extends OnScreenMenu {
             removeOverlay();
             startResumeCountdown();
         });
-
 
         menuBox.getChildren().addAll(title, powerUpBox, resumeButton);
         return menuBox;

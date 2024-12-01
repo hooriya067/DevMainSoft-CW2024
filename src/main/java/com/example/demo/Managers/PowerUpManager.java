@@ -66,5 +66,20 @@ public class PowerUpManager {
             shieldTimer = null;
         }
     }
+    public boolean purchaseBullets() {
+        int bulletCost = 3; // Cost in coins
+        int bulletsToAdd = 10; // Number of bullets to add
+
+        if (CoinSystemManager.getInstance().subtractCoins(bulletCost)) {
+            System.out.println("Purchased " + bulletsToAdd + " bullets!");
+            BulletSystemManager.getInstance().addBullets(bulletsToAdd); // Update bullet count
+            return true;
+        }
+
+        System.err.println("Not enough coins to purchase bullets!");
+        return false;
+    }
+
+
 }
 
