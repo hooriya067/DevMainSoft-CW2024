@@ -1,5 +1,6 @@
 package com.example.demo.levels;
 
+import com.example.demo.Managers.BulletSystemManager;
 import com.example.demo.UI.screens.LevelCompletedScreen;
 import com.example.demo.UI.screens.LevelIntroScreen;
 import com.example.demo.UI.screens.WinImage;
@@ -18,7 +19,8 @@ public class LevelManager {
     Stage stage = StageManager.getStage();
     private final List<String> levelSequence = new ArrayList<>();
     private int currentLevelIndex = 0;
-    private LevelParent currentLevel;  // Reference to the current level being played
+    private LevelParent currentLevel;
+    public String currentLevelName;
 
     public LevelManager(Stage stage) {
 
@@ -37,6 +39,7 @@ public class LevelManager {
             goToLevelIntro(levelSequence.get(currentLevelIndex));
         }
     }
+
     public void goToNextLevel() {
         if (currentLevelIndex + 1 < levelSequence.size()) {
             currentLevelIndex++; // Increment the level index to move to the next level
@@ -46,29 +49,34 @@ public class LevelManager {
                     () -> goToLevelIntro(levelSequence.get(currentLevelIndex)), // Go to the intro screen for the next level
                     () -> proceedToLevel(levelSequence.get(currentLevelIndex - 1)) // Replay the previous level
             );
-            stage.getScene().setRoot(levelCompletedPage); // Display Level Completed Screen
+            stage.getScene().setRoot(levelCompletedPage);
         } else {
-            showFinalWinScreen(); // Show the final win screen if all levels are completed
+            showFinalWinScreen();
         }
     }
     private void goToLevelIntro(String levelName) {
         try {
+            currentLevelName = levelName; // Set the global current level name here
+            System.out.println("Setting current level name to: " + currentLevelName); // Debug log
+
             // Show Level Intro Screen
             LevelIntroScreen levelIntroScreen = new LevelIntroScreen(levelName, this);
             Scene introScene = levelIntroScreen.getScene();
             stage.setScene(introScene);
+            BulletSystemManager.getInstance().setBulletsUsed(0);
         } catch (IllegalArgumentException e) {
             showErrorAlert(e);
         }
     }
-
-    // Method to proceed to the level after introduction
     public void proceedToLevel(String levelName) {
-    //    try {
-            // Instantiate the appropriate level based on the level name
+        if (!levelName.equals(currentLevelName)) {
+            throw new IllegalStateException("Level name mismatch. Expected: " + currentLevelName + ", Got: " + levelName);
+        }
+
+        try {
             switch (levelName) {
                 case "LEVEL_ONE":
-                  currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+                    currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_TWO":
                     currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
@@ -80,40 +88,30 @@ public class LevelManager {
                     currentLevel = new LevelFour(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_FIVE":
-                   currentLevel = new LevelFive(stage.getHeight(), stage.getWidth());
+                    currentLevel = new LevelFive(stage.getHeight(), stage.getWidth());
                     break;
                 default:
                     throw new IllegalArgumentException("Unknown level: " + levelName);
             }
 
-            // Set the observer for the current level
             currentLevel.setmyobserver((Controller) stage.getUserData());
             Scene scene = currentLevel.initializeScenario();
             stage.setScene(scene);
             currentLevel.startGame();
-//
-//        } catch (IllegalArgumentException e) {
-//            showErrorAlert(e);
-    //   }
+        } catch (IllegalArgumentException e) {
+            showErrorAlert(e);
+        }
     }
-
-    private void showFinalWinScreen() {
-        // Debugging: Print stage dimensions
-        System.out.println("Stage dimensions: " + stage.getWidth() + "x" + stage.getHeight());
-
-        // Create a dim background overlay
+    public void showFinalWinScreen() {
         javafx.scene.shape.Rectangle dimBackground = new javafx.scene.shape.Rectangle(stage.getWidth(), stage.getHeight());
         dimBackground.setFill(javafx.scene.paint.Color.BLACK);
         dimBackground.setOpacity(0.5); // Semi-transparent black overlay
 
-        // Create the WinImage overlay
         WinImage winImage = new WinImage(stage.getWidth(), stage.getHeight());
         winImage.setVisible(true); // Ensure WinImage is visible
 
-        // Group all elements together
         Group winScreenRoot = new Group(dimBackground, winImage);
 
-        // Get the existing root of the scene
         Scene currentScene = stage.getScene();
 
         if (currentScene.getRoot() instanceof Group) {
@@ -128,10 +126,8 @@ public class LevelManager {
             currentScene.setRoot(newRoot);
         }
 
-        // Ensure the overlay comes to the front
         winScreenRoot.toFront();
     }
-    // Method to display an error alert
     private void showErrorAlert(Exception e) {
         System.out.println("Error: " + e.getMessage());
 

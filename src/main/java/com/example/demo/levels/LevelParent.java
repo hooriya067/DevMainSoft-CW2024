@@ -10,6 +10,7 @@ import com.example.demo.actors.collectibles.Coin;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.GameLoop;
 import com.example.demo.core.GameStateManager;
+import com.example.demo.core.StageManager;
 import com.example.demo.levels.view.LevelView;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -66,18 +67,25 @@ public abstract class LevelParent implements ControllableLevel {
 	}
 
 	protected void initializeFriendlyUnits() {
-		actorManager.addFriendlyUnit(user); // Add user to ActorManager
+		actorManager.addFriendlyUnit(user);
 	}
 	protected void checkIfGameOver() {
 		if (userIsDestroyed()) {
 			loseGame();
 		} else if (userHasReachedKillTarget()) {
-			gameLoop.stop(); // Stop the game loop
+			int bulletsUsed = BulletSystemManager.getInstance().getBulletsUsed();
+			int optimalBullets = calculateOptimalBullets();
+			String levelKey = StageManager.getLevelManager().getCurrentLevelName();
+			StarManager.getInstance().calculateLevelStars(levelKey, bulletsUsed, optimalBullets);
+			gameLoop.stop();
 			if (myobserver != null) {
 				myobserver.onLevelWin("NEXT");
 			}
 		}
 	}
+	public abstract int calculateOptimalBullets();
+
+
 	protected abstract boolean userHasReachedKillTarget();
 
 	protected abstract void spawnEnemyUnits();
@@ -144,8 +152,8 @@ public abstract class LevelParent implements ControllableLevel {
 			return;
 		}
 		if (BulletSystemManager.getInstance().getBullets() <= 0) {
-			AlertManager.getInstance().showAlert("Bullets are low! Collect coins to buy more!");
-			return; // Prevent firing
+			AlertManager.getInstance().showAlert("Bullets are FINISHED!! Collect coins to buy more!");
+			return;
 		}
 		ActiveActorDestructible projectile = user.fireProjectile();
 		actorManager.addUserProjectile(projectile);
@@ -193,6 +201,7 @@ public abstract class LevelParent implements ControllableLevel {
 	public void incrementKillCount() {
 		numberOfKills++;
 	}
+
 
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		actorManager.addEnemyUnit(enemy);
@@ -246,6 +255,5 @@ public abstract class LevelParent implements ControllableLevel {
 	public Scene getScene() {
 		return scene;
 	}
-
 }
 

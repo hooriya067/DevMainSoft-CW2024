@@ -42,10 +42,12 @@ public class LevelOne extends LevelParent {
 		return getNumberOfKills() >= KILLS_TO_ADVANCE;  // Now using LevelParent's numberOfKills
 	}
 
+	@Override
+	public int calculateOptimalBullets() {
+		return KILLS_TO_ADVANCE;
+	}
 
 	@Override
-	protected void misc() {
-
-	}
+	protected void misc() {}
 
 }

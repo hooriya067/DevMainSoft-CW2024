@@ -17,4 +17,5 @@ public interface ControllableLevel {
     boolean isShieldActive();
     void incrementKillCount();
     List<Coin> getCoins();
+
 }

@@ -92,7 +92,10 @@ public class LevelTwo extends LevelParent {
 		}
 	}
 
-
+	@Override
+	public int calculateOptimalBullets() {
+		return 20;
+	}
 	@Override
 	protected void misc() {
 		updateShieldImage();

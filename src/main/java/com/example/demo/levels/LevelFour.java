@@ -126,7 +126,10 @@ public class LevelFour extends LevelParent {
             }
         }
     }
-
+    @Override
+    public int calculateOptimalBullets() {
+        return KILLS_TO_ADVANCE*3;
+    }
     @Override
     protected void misc() {
 

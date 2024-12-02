@@ -89,14 +89,12 @@ public abstract class LevelView {
 				pauseButtonDisplay.getButton(),
 				powerUpButton.getButton(),
 				coinCountLabel,
-				bulletCountLabel // Add bullet label here
+				bulletCountLabel
 		);
-		System.out.println("Root children count: " + root.getChildren().size());
-		System.out.println("Bullet Count Label Added: " + root.getChildren().contains(bulletCountLabel));
 	}
 
 	public void updateBulletCount(int newBulletCount) {
-		System.out.println("Updating bullets to: " + newBulletCount);
+		//System.out.println("Updating bullets to: " + newBulletCount);
 		bulletCountLabel.setText("Bullets: " + newBulletCount);
 	}
 

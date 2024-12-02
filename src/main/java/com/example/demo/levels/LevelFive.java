@@ -46,7 +46,6 @@ public class LevelFive extends LevelParent {
             } else {
                 enemyType = "TYPEB";
             }
-
             ActiveActorDestructible newEnemy = EnemyFactory.createEnemy(enemyType, getScreenWidth(), randomYPosition, this);
             addEnemyUnit(newEnemy); // Add the enemy to the level
         }
@@ -84,6 +83,11 @@ public class LevelFive extends LevelParent {
     @Override
     protected LevelView instantiateLevelView() {
         return new LevelVeiwLevelFive(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(),this);
+    }
+
+    @Override
+    public int calculateOptimalBullets() {
+        return KILLS_TO_ADVANCE*2;
     }
 
     @Override

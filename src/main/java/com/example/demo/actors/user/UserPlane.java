@@ -68,13 +68,14 @@ public class UserPlane extends FighterPlane {
 		BulletSystemManager bulletManager = BulletSystemManager.getInstance();
 
 		if (bulletManager.subtractBullets(1)) {
+			BulletSystemManager.getInstance().incrementBulletsUsed();
 			double currentXPosition = getLayoutX() + getTranslateX() + getFitWidth() + 120;
 			double currentYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 			return ProjectileFactory.createProjectile("USER_PROJECTILE", currentXPosition, currentYPosition, null);
 
 		} else {
-			System.out.println("Out of bullets!"); // Debug message
-			return null; // No projectile fired
+			System.out.println("Out of bullets!");
+			return null;
 		}
 	}
 	// Methods for vertical movement

@@ -77,9 +77,10 @@ public class LevelThree extends LevelParent {
     protected boolean userHasReachedKillTarget() {
         return getNumberOfKills() >= KILLS_TO_ADVANCE;
     }
-
     @Override
-    protected void misc() {
-        // Add any additional behavior such as animations or shield updates if needed
+    public int calculateOptimalBullets() {
+        return (KILLS_TO_ADVANCE/2)*2+KILLS_TO_ADVANCE/2;
     }
+    @Override
+    protected void misc() {}
 }

@@ -8,10 +8,11 @@ public class BulletSystemManager {
     private static BulletSystemManager instance; // Singleton instance
     private int totalBullets;
     private final List<Consumer<Integer>> listeners; // List to store listeners
+    private int bulletsUsed;
 
     // Private constructor
     private BulletSystemManager() {
-        totalBullets = 5; // Initial bullet count
+        totalBullets = 2000; // Initial bullet count 100
         listeners = new ArrayList<>(); // Initialize the listeners list
     }
 
@@ -43,6 +44,18 @@ public class BulletSystemManager {
     // Get current bullet count
     public int getBullets() {
         return totalBullets;
+    }
+
+    public void setBulletsUsed(int bulletsUsed) {
+        this.bulletsUsed = bulletsUsed;
+    }
+
+    public void incrementBulletsUsed() {
+        bulletsUsed++;
+    }
+
+    public int getBulletsUsed() {
+        return bulletsUsed;
     }
 
     // Add a listener

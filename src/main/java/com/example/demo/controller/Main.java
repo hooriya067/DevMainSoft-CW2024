@@ -20,7 +20,8 @@ public class Main extends Application {
 
 		// Set the stage in the StageManager
 		StageManager.setStage(stage);
-
+		LevelManager levelManager = new LevelManager(stage);
+		StageManager.setLevelManager(levelManager);
 
 		stage.setTitle(TITLE);
 		stage.setResizable(false);

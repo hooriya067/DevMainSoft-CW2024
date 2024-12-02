@@ -116,7 +116,6 @@ public class LevelIntroScreen {
         });
         dropdown.play();
 
-        // Handle key press for "Enter"
         Scene scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
