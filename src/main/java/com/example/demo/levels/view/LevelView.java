@@ -1,6 +1,8 @@
 package com.example.demo.levels.view;
 
 
+import com.example.demo.Managers.BulletSystemManager;
+import com.example.demo.Managers.CoinSystemManager;
 import com.example.demo.UI.buttons.PauseButtonDisplay;
 import com.example.demo.UI.buttons.PowerUpButton;
 import com.example.demo.UI.menu.PauseMenu;
@@ -92,7 +94,15 @@ public abstract class LevelView {
 				bulletCountLabel
 		);
 	}
-
+public void AddUI(){
+		initializeWinningParameter();
+		showHeartDisplay();
+		showPauseButton();
+		showLabels();
+		showPowerUpButton();
+		updateCoinCount(CoinSystemManager.getInstance().getCoins());
+		updateBulletCount(BulletSystemManager.getInstance().getBullets());
+}
 	public void updateBulletCount(int newBulletCount) {
 		//System.out.println("Updating bullets to: " + newBulletCount);
 		bulletCountLabel.setText("Bullets: " + newBulletCount);
@@ -102,13 +112,13 @@ public abstract class LevelView {
 		coinCountLabel.setText("Coins: " + newCoinCount);
 	}
 
-	public void showLabels() {
+	private void showLabels() {
 		coinCountLabel.toFront();
 		bulletCountLabel.toFront();
 
 	}
 
-	public void showPowerUpButton() {
+	protected void showPowerUpButton() {
 		powerUpButton.getButton().toFront();
 		powerUpButton.setOnPowerUp(() -> {
 			//Stage stage = StageManager.getStage();
@@ -118,7 +128,7 @@ public abstract class LevelView {
 		});
 	}
 
-	public void showPauseButton() {
+	protected void showPauseButton() {
 		pauseButtonDisplay.getButton().toFront();
 
 		pauseButtonDisplay.setOnPause(() -> {
@@ -131,10 +141,10 @@ public abstract class LevelView {
 
 
 
-	public void showHeartDisplay() {
+	protected void showHeartDisplay() {
 		heartDisplay.getContainer().toFront();
 	}
-	public abstract void initializeWinningParameter();
+	protected abstract void initializeWinningParameter();
 
 	public abstract void updateWinningParameter();
 
@@ -144,7 +154,7 @@ public abstract class LevelView {
 	}
 
 	public void addHeart() {
-		heartDisplay.addHeart(); // Assuming HeartDisplay has an addHeart() method
+		heartDisplay.addHeart();
 	}
 
 	public void removeHearts(int heartsRemaining) {
@@ -187,7 +197,6 @@ public abstract class LevelView {
 	}
 
 	public LevelParent getLevelParent() {
-		return levelParent; // Provide access to the parent level
-	}
+		return levelParent; }
 
 }

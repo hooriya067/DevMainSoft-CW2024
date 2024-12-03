@@ -15,7 +15,7 @@ public class LevelFive extends LevelParent {
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background5.jpg";
     private static final int PLAYER_INITIAL_HEALTH = 5;
     private static final int TOTAL_ENEMIES = 8;
-    private static final int KILLS_TO_ADVANCE = 15;
+    private static final int KILLS_TO_ADVANCE = 2;
 
     private boolean meteorStormActive = true; // Flag to handle meteor storm phase
 

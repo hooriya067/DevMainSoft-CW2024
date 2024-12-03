@@ -30,7 +30,7 @@ public class Boss extends EnemyParent {
 
 	private Consumer<Integer> healthChangeListener; // Listener for health changes
 	public Boss(double initialX, double initialY, int screenHeight, LevelParent levelParent) {
-		super(IMAGE_NAME, 50, initialX, initialY, 20, levelParent);
+		super(IMAGE_NAME, 50, initialX, initialY, 2, levelParent);
 		this.screenHeight = screenHeight;
 		this.movePattern = new ArrayList<>();
 		this.isShielded = false;

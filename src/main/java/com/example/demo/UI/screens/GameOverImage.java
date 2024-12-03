@@ -1,5 +1,6 @@
 package com.example.demo.UI.screens;
 
+import com.example.demo.Managers.BulletSystemManager;
 import com.example.demo.UI.buttons.PlayAgainButton;
 import com.example.demo.UI.buttons.QuitButton;
 import com.example.demo.controller.Controller;
@@ -15,13 +16,13 @@ import java.util.Objects;
 
 public class GameOverImage extends Pane {
 
-	private static final String IMAGE_NAME = "/com/example/demo/images/gameover1.png";
+	private static final String IMAGE_NAME = "/com/example/demo/images/gameover.png";
 	private static final double IMAGE_WIDTH = 600;
 
 	public GameOverImage(double screenWidth, double screenHeight) {
 
 		Rectangle dimBackground = new Rectangle(screenWidth, screenHeight, Color.BLACK);
-		dimBackground.setOpacity(0.5); // Set transparency for dim effect
+		dimBackground.setOpacity(0.7); // Set transparency for dim effect
 
 		// Create Game Over Image
 		ImageView gameOverImage = new ImageView(
@@ -31,7 +32,7 @@ public class GameOverImage extends Pane {
 		gameOverImage.setPreserveRatio(true);
 
 		double gameOverX = (screenWidth - IMAGE_WIDTH) / 2;
-		double gameOverY = screenHeight / 15;
+		double gameOverY = screenHeight / 200;
 		gameOverImage.setLayoutX(gameOverX);
 		gameOverImage.setLayoutY(gameOverY);
 
@@ -43,7 +44,7 @@ public class GameOverImage extends Pane {
 		// Set action for Play Again button
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
-				// Restart the game using Controller logic
+				BulletSystemManager.getInstance().setBullets(100);//putting bullet count back
 				Stage stage = StageManager.getStage();
 				Controller gameController = new Controller(stage);
 				gameController.launchGame(); // Launch the game from Level 1

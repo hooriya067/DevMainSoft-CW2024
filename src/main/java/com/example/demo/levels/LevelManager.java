@@ -41,19 +41,23 @@ public class LevelManager {
     }
 
     public void goToNextLevel() {
+        Scene currentScene = stage.getScene();
         if (currentLevelIndex + 1 < levelSequence.size()) {
             currentLevelIndex++; // Increment the level index to move to the next level
-            LevelCompletedScreen levelCompletedPage = new LevelCompletedScreen(
+            LevelCompletedScreen levelCompletedPage;
+            levelCompletedPage = new LevelCompletedScreen(
                     stage.getWidth(),
                     stage.getHeight(),
                     () -> goToLevelIntro(levelSequence.get(currentLevelIndex)), // Go to the intro screen for the next level
-                    () -> proceedToLevel(levelSequence.get(currentLevelIndex - 1)) // Replay the previous level
+                    () -> replayCurrentLevel()
             );
-            stage.getScene().setRoot(levelCompletedPage);
+            Group root = (Group) currentScene.getRoot();
+            root.getChildren().add(levelCompletedPage);
         } else {
             showFinalWinScreen();
         }
     }
+
     private void goToLevelIntro(String levelName) {
         try {
             currentLevelName = levelName; // Set the global current level name here
@@ -102,6 +106,14 @@ public class LevelManager {
             showErrorAlert(e);
         }
     }
+    public void replayCurrentLevel() {
+
+            if (currentLevelIndex > 0) {
+                currentLevelIndex--; // Decrement index to match the replayed level
+            }
+            proceedToLevel(levelSequence.get(currentLevelIndex));
+    }
+
     public void showFinalWinScreen() {
         javafx.scene.shape.Rectangle dimBackground = new javafx.scene.shape.Rectangle(stage.getWidth(), stage.getHeight());
         dimBackground.setFill(javafx.scene.paint.Color.BLACK);

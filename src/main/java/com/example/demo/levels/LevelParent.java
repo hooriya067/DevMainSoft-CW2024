@@ -73,16 +73,18 @@ public abstract class LevelParent implements ControllableLevel {
 		if (userIsDestroyed()) {
 			loseGame();
 		} else if (userHasReachedKillTarget()) {
-			int bulletsUsed = BulletSystemManager.getInstance().getBulletsUsed();
+			gameLoop.stop(); 	int bulletsUsed = BulletSystemManager.getInstance().getBulletsUsed();
+			System.out.println("bullets used"+ bulletsUsed);
 			int optimalBullets = calculateOptimalBullets();
+			System.out.println("bullets optimal"+ optimalBullets);
 			String levelKey = StageManager.getLevelManager().getCurrentLevelName();
 			StarManager.getInstance().calculateLevelStars(levelKey, bulletsUsed, optimalBullets);
-			gameLoop.stop();
 			if (myobserver != null) {
 				myobserver.onLevelWin("NEXT");
 			}
 		}
 	}
+
 	public abstract int calculateOptimalBullets();
 
 
@@ -102,13 +104,7 @@ public abstract class LevelParent implements ControllableLevel {
 		CoinSystemManager.getInstance().addListener(levelView::updateCoinCount);
 		initializeBackground();
 		initializeFriendlyUnits();
-		levelView.initializeWinningParameter();
-		levelView.showHeartDisplay();
-		levelView.showPauseButton();
-		levelView.showLabels();
-		levelView.showPowerUpButton();
-		levelView.updateCoinCount(CoinSystemManager.getInstance().getCoins());
-		levelView.updateBulletCount(BulletSystemManager.getInstance().getBullets());
+		levelView.AddUI();
 		inputHandler.initialize(scene);
 		return scene;
 	}

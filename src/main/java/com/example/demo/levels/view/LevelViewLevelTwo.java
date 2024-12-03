@@ -40,7 +40,7 @@ public class LevelViewLevelTwo extends LevelView {
 
 
 	@Override
-	public void initializeWinningParameter() {
+    protected void initializeWinningParameter() {
 	}
 
 	@Override

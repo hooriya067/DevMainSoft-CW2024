@@ -13,7 +13,7 @@ public class LevelVeiwLevelFive extends LevelView {
         super(root, heartsToDisplay, screenWidth, screenHeight,levelParent);
     }
     @Override
-    public void initializeWinningParameter() {
+    protected void initializeWinningParameter() {
         killsLabel = new Label("Kills: 0");
         killsLabel.setLayoutX(getLevelParent().getScreenWidth() / 2 - 100);
         killsLabel.setLayoutY(20);

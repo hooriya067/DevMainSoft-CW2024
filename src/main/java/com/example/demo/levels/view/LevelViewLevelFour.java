@@ -25,7 +25,7 @@ public class LevelViewLevelFour extends LevelView {
 
 
     @Override
-    public void initializeWinningParameter() {
+    protected void initializeWinningParameter() {
         killsLabel = new Label("Kills: 0");
         killsLabel.setLayoutX(GameConfig.SCREEN_WIDTH / 2 - 100);
         killsLabel.setLayoutY(20);

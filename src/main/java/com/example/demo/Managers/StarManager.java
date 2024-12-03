@@ -35,7 +35,9 @@ public class StarManager {
             stars = 0;
         }
         levelStarsMap.put(levelKey, stars);
+        System.out.println("Stars="+stars);
         return stars;
+
     }
 
 

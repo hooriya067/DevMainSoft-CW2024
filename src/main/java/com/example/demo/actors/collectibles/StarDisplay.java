@@ -14,8 +14,9 @@ import java.util.Objects;
 public class StarDisplay {
 
     private static final String STAR_IMAGE_NAME = "/com/example/demo/images/star.png";
+    private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/finalstar_container.png"; // Your custom container image
     private static final int STAR_HEIGHT = 50;
-    private final VBox container; // Main container for the 3D box and text
+    private final VBox container; // Main container for the background image and text
 
     public StarDisplay(double xPosition, double yPosition, int starsToDisplay) {
         container = new VBox();
@@ -24,24 +25,38 @@ public class StarDisplay {
         container.setLayoutX(xPosition);
         container.setLayoutY(yPosition);
 
-        // Add a 3D white box
-        StackPane whiteBox = createWhiteBox();
+        // Create an image-based background container
+        StackPane imageBackground = createImageBackground();
         HBox starsContainer = new HBox();
         starsContainer.setAlignment(Pos.CENTER);
-        whiteBox.getChildren().add(starsContainer);
+        imageBackground.getChildren().add(starsContainer);
 
         initializeStars(starsToDisplay, starsContainer);
 
         Text starText = createStarText(starsToDisplay);
 
-        container.getChildren().addAll(whiteBox, starText);
+        container.getChildren().addAll(imageBackground, starText);
+       container.setTranslateY(-30); // Negative value moves it up
     }
 
-    private StackPane createWhiteBox() {
-        StackPane whiteBox = new StackPane();
-        whiteBox.setPrefSize(300, 50); // Size of the white box
-        whiteBox.setStyle("-fx-background-color: white; -fx-border-color: lightgray; -fx-border-width: 3.5; -fx-background-radius: 10; -fx-border-radius: 10;");
-        return whiteBox;
+    private StackPane createImageBackground() {
+        StackPane imageBackground = new StackPane();
+        imageBackground.setPrefSize(300, 100); // Adjust size to fit the background image
+
+        try {
+            ImageView backgroundImage = new ImageView(
+                    new Image(Objects.requireNonNull(getClass().getResource(BACKGROUND_IMAGE_NAME)).toExternalForm())
+            );
+            backgroundImage.setFitWidth(300);
+            backgroundImage.setFitHeight(100);
+            backgroundImage.setPreserveRatio(false);
+            imageBackground.getChildren().add(backgroundImage);
+        } catch (Exception e) {
+            System.err.println("Error loading background image: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return imageBackground;
     }
 
     private void initializeStars(int starsToDisplay, HBox starsContainer) {
@@ -53,25 +68,27 @@ public class StarDisplay {
                 star.setFitHeight(STAR_HEIGHT);
                 star.setPreserveRatio(true);
                 starsContainer.getChildren().add(star);
+                starsContainer.setTranslateY(-10); // Negative value moves it u
             } catch (Exception e) {
                 System.err.println("Error adding star: " + e.getMessage());
                 e.printStackTrace();
             }
         }
 
-        // If there are zero stars, leave the white box empty
+        // If there are zero stars, leave the background empty
         if (starsToDisplay == 0) {
             Text emptyMessage = new Text("No Stars Earned:/");
             emptyMessage.setFont(Font.font("Roboto", FontWeight.BOLD, 16));
-            emptyMessage.setFill(Color.GRAY);
+            emptyMessage.setFill(Color.DARKGRAY);
             starsContainer.getChildren().add(emptyMessage);
+            emptyMessage.setTranslateY(-10); // Negative value moves it u
         }
     }
 
     private Text createStarText(int starsToDisplay) {
         Text starText = new Text(starsToDisplay + (starsToDisplay == 1 ? " STAR" : " STARS"));
         starText.setFont(Font.font("Roboto", FontWeight.BOLD, 20));
-        starText.setFill(Color.BLACK);
+        starText.setFill(Color.YELLOW);
         return starText;
     }
 

@@ -13,7 +13,7 @@ public class LevelViewLevelOne extends LevelView {
 
     }
     @Override
-    public void initializeWinningParameter() {
+    protected void initializeWinningParameter() {
         killsLabel = new Label("Kills: 0");
         killsLabel.setLayoutX(GameConfig.SCREEN_WIDTH / 2 - 100); // Adjust position to better center the label
         killsLabel.setLayoutY(20);

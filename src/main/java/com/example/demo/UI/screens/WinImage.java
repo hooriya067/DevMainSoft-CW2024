@@ -20,8 +20,8 @@ import java.util.Objects;
 public class WinImage extends Pane {
 
 	private static final String IMAGE_NAME = "/com/example/demo/images/winimage.png";
-	private static final double IMAGE_WIDTH = 600;
-	private static final double IMAGE_HEIGHT = 500;
+	private static final double IMAGE_WIDTH = 500;
+	private static final double IMAGE_HEIGHT = 800;
 
 	public WinImage(double screenWidth, double screenHeight) {
 		Stage stage = StageManager.getStage();
@@ -35,7 +35,7 @@ public class WinImage extends Pane {
 
 		// Position the Win Image
 		double winImageX = (screenWidth - IMAGE_WIDTH) / 2;
-		double winImageY = screenHeight / 15;
+		double winImageY = screenHeight / 70;
 		winImage.setLayoutX(winImageX);
 		winImage.setLayoutY(winImageY);
 
@@ -43,12 +43,6 @@ public class WinImage extends Pane {
 		int finalStars = StarManager.getInstance().calculateFinalStars();
 		StarDisplay starDisplay = new StarDisplay(screenWidth / 2 - 125, screenHeight / 1.5, finalStars);
 
-//		// Create and position a label to show final stars text
-//		Text finalStarsText = new Text("Final Stars: " + finalStars);
-//		finalStarsText.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-//		finalStarsText.setFill(Color.WHITE);
-//		finalStarsText.setLayoutX(screenWidth / 2 - 75);
-//		finalStarsText.setLayoutY(screenHeight / 2 + 50);
 
 		// Create and position Play Again Button
 		PlayAgainButton playAgainButton = new PlayAgainButton();
