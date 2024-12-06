@@ -31,7 +31,7 @@ public class InputHandlingManager {
 
     private void handleKeyPressed(KeyCode keyCode) {
         if (GameStateManager.getInstance().isGamePaused()) {
-            return; // Ignore input when the game is paused
+            return;
         }
 
         switch (keyCode) {

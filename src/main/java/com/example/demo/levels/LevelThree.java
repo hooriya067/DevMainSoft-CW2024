@@ -81,6 +81,4 @@ public class LevelThree extends LevelParent {
     public int calculateOptimalBullets() {
         return (KILLS_TO_ADVANCE/2)*2+KILLS_TO_ADVANCE/2;
     }
-    @Override
-    protected void misc() {}
 }

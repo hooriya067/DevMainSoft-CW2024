@@ -3,19 +3,25 @@ package com.example.demo.Managers;
 import com.example.demo.actors.active.ActiveActorDestructible;
 import com.example.demo.actors.collectibles.Coin;
 import com.example.demo.actors.user.UserPlane;
+import com.example.demo.core.Updatable;
 import com.example.demo.levels.ControllableLevel;
 import javafx.scene.Node;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollisionManager {
+public class CollisionManager implements Updatable {
     private final ControllableLevel level;
     private final ActorManager actorManager;
 
     public CollisionManager(ControllableLevel level, ActorManager actorManager) {
         this.level = level;
         this.actorManager = actorManager;
+    }
+
+    @Override
+    public void update() {
+        handleAllCollisions();
     }
 
     public void handleAllCollisions() {

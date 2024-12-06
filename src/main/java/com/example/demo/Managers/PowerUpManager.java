@@ -25,7 +25,6 @@ public class PowerUpManager {
 
     public boolean purchaseExtraLife() {
         if (CoinSystemManager.getInstance().subtractCoins(2)) {
-            System.out.println("Extra life granted!");
             levelParent.getUser().addHealth(1); // Update user health
             levelParent.getLevelView().addHeart(); // Notify LevelView
             return true;
@@ -35,7 +34,6 @@ public class PowerUpManager {
 
     public boolean purchaseShield() {
         if (levelParent.isShieldActive()) {
-            System.err.println("Shield already active!");
             return false;
         }
         if (CoinSystemManager.getInstance().subtractCoins(2)) {
@@ -44,11 +42,8 @@ public class PowerUpManager {
         }
         return false;
     }
-
     private void activateShield() {
-      //  System.out.println("Shield activated!");
-
-        levelParent.getUserShield().showShield(); // Show shield
+          levelParent.getUserShield().showShield(); // Show shield
         levelParent.getLevelView().startShieldTimer(20);
         shieldTimer = new Timeline(
                 new KeyFrame(Duration.seconds(20), e -> deactivateShield())
@@ -58,9 +53,7 @@ public class PowerUpManager {
     }
 
     private void deactivateShield() {
-        System.out.println("Shield deactivated!");
-
-        levelParent.getUserShield().hideShield(); // Hide shield
+              levelParent.getUserShield().hideShield(); // Hide shield
         if (shieldTimer != null) {
             shieldTimer.stop();
             shieldTimer = null;
@@ -75,7 +68,6 @@ public class PowerUpManager {
             BulletSystemManager.getInstance().addBullets(bulletsToAdd); // Update bullet count
             return true;
         }
-
         System.err.println("Not enough coins to purchase bullets!");
         return false;
     }

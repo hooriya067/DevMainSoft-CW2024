@@ -4,10 +4,13 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameLoop {
 
+    private final List<Updatable> updatables = new ArrayList<>();
     private final Timeline timeline;
-    private Runnable updateCallback;
 
     public GameLoop(int millisecondsPerFrame) {
         this.timeline = new Timeline();
@@ -15,40 +18,48 @@ public class GameLoop {
         setUpdateInterval(millisecondsPerFrame);
     }
 
-    // Set the interval for each frame
+    public void addUpdatable(Updatable updatable) {
+        updatables.add(updatable);
+    }
+
     public void setUpdateInterval(int millisecondsPerFrame) {
         timeline.getKeyFrames().clear();
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(millisecondsPerFrame), e -> {
-            if (updateCallback != null) {
-                updateCallback.run();
-            }
-        });
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(millisecondsPerFrame), e -> updateAll());
         timeline.getKeyFrames().add(keyFrame);
     }
 
-    // Set the callback to be invoked on each frame
-    public void setUpdateCallback(Runnable updateCallback) {
-        this.updateCallback = updateCallback;
+    private void updateAll() {
+        for (Updatable updatable : updatables) {
+            updatable.update();
+        }
     }
 
-    // Start the game loop
     public void start() {
         timeline.play();
     }
 
-    // Stop the game loop
     public void stop() {
         timeline.stop();
     }
-    public void pause() {
-        timeline.pause();
-    }
 
-    public void resume() {
-        timeline.play();
-    }
-    // Check if the game loop is running
-    public boolean isRunning() {
-        return timeline.getStatus() == Timeline.Status.RUNNING;
-    }
+    //    public void removeUpdatable(Updatable updatable) {
+//        updatables.remove(updatable);
+//    }
+//
+//    public void clearUpdatables() {
+//        updatables.clear();
+//    }
+
+//
+//    public void pause() {
+//        timeline.pause();
+//    }
+//
+//    public void resume() {
+//        timeline.play();
+//    }
+//
+//    public boolean isRunning() {
+//        return timeline.getStatus() == Timeline.Status.RUNNING;
+//    }
 }

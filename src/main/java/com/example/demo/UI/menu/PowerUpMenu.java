@@ -85,7 +85,6 @@ public class PowerUpMenu extends OnScreenMenu {
     }
 
     private VBox createPowerUpButtonWithLabels(String imagePath, String label, String price, Runnable action) {
-        // Create icon for the button
         ImageView icon = new ImageView(new Image(getClass().getResource("/com/example/demo/images/" + imagePath).toExternalForm()));
         icon.setFitWidth(60);
         icon.setFitHeight(60);
@@ -109,4 +108,14 @@ public class PowerUpMenu extends OnScreenMenu {
 
         return powerUpBox;
     }
+    private void updateButtonState(Button button, boolean isAvailable) {
+        if (isAvailable) {
+            button.setDisable(false);
+            button.setStyle("-fx-opacity: 1.0;"); // Reset to full opacity
+        } else {
+            button.setDisable(true);
+            button.setStyle("-fx-opacity: 0.5;"); // Dim the button
+        }
+    }
+
 }

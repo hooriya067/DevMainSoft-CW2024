@@ -14,7 +14,7 @@ public class BombProjectile extends Projectile {
 
     @Override
     public void updatePosition() {
-        if (GameStateManager.isPaused) {
+        if (GameStateManager.getInstance().isGamePaused()) {
             return;  // Skip updating position if paused
         }
         moveVertically(VELOCITY); // Bombs move downward

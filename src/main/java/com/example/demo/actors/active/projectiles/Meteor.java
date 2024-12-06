@@ -39,7 +39,7 @@ public class Meteor extends ActiveActorDestructible {
 
     @Override
     public void updateActor() {
-        if (GameStateManager.isPaused) {
+        if (GameStateManager.getInstance().isGamePaused()) {
             return;
         }
         setTranslateX(getTranslateX() + directionX);

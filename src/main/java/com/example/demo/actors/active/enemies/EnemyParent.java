@@ -25,8 +25,8 @@ public abstract class EnemyParent extends FighterPlane implements Enemy {
 
     @Override
     public ActiveActorDestructible fireProjectile() {
-        if (GameStateManager.isPaused) {
-            return null; // Return null if the game is paused
+        if (GameStateManager.getInstance().isGamePaused()) {
+            return null;
         }
         return fireProjectileWhenActive(); // Delegate to abstract method
     }
@@ -35,8 +35,8 @@ public abstract class EnemyParent extends FighterPlane implements Enemy {
 
     @Override
     public void updatePosition() {
-        if (GameStateManager.isPaused) {
-            return; // Skip updating position if paused
+        if (GameStateManager.getInstance().isGamePaused()) {
+            return;
         }
         updatePositionWhenActive(); // Delegate to abstract method
     }

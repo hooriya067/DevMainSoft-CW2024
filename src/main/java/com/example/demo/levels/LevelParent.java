@@ -11,12 +11,13 @@ import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.GameLoop;
 import com.example.demo.core.GameStateManager;
 import com.example.demo.core.StageManager;
+import com.example.demo.core.Updatable;
 import com.example.demo.levels.view.LevelView;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 
-public abstract class LevelParent implements ControllableLevel {
+public abstract class LevelParent implements ControllableLevel, Updatable {
 
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
@@ -34,8 +35,6 @@ public abstract class LevelParent implements ControllableLevel {
 	private int numberOfKills;
 	private final ShieldImage userShield;
 
-
-
 	private final LevelView levelView;
 	private final CollisionManager collisionManager;
 	protected final InputHandlingManager inputHandler;
@@ -46,6 +45,7 @@ public abstract class LevelParent implements ControllableLevel {
 	private MyObserver myobserver;
 
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
+
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
 		this.user = new UserPlane(playerInitialHealth);
@@ -53,14 +53,15 @@ public abstract class LevelParent implements ControllableLevel {
 		this.collisionManager = new CollisionManager(this, actorManager);
 		this.inputHandler = new InputHandlingManager(this, InputHandlingManager.MovementMode.VERTICAL_ONLY);
 		this.gameLoop = new GameLoop(MILLISECOND_DELAY);
-		this.gameLoop.setUpdateCallback(this::updateScene);
+		gameLoop.addUpdatable(this); // LevelParent
+		gameLoop.addUpdatable(actorManager); // ActorManager
+		gameLoop.addUpdatable(collisionManager); // CollisionManager
 		this.background = new ImageView(new Image(Objects.requireNonNull(getClass().getResource(backgroundImageName)).toExternalForm()));
 		this.screenHeight = screenHeight;
 		this.screenWidth = screenWidth;
 		this.enemyMaximumYPosition = screenHeight - SCREEN_HEIGHT_ADJUSTMENT;
 		this.levelView = instantiateLevelView();
 		this.currentNumberOfEnemies = 0;
-
 		this.userShield = new ShieldImage(0, 0); // Initial position; will follow the user
 		root.getChildren().add(userShield); // Add shield image to the scene
 		PowerUpManager.getInstance().setLevelParent(this);
@@ -70,21 +71,25 @@ public abstract class LevelParent implements ControllableLevel {
 		actorManager.addFriendlyUnit(user);
 	}
 	protected void checkIfGameOver() {
-		if (userIsDestroyed()) {
+		if (GameStateManager.getInstance().checkGameOver(user,userHasReachedKillTarget())) {
+			gameLoop.stop();
+			handleGameOver();
+		}
+	}
+	private void handleGameOver() {
+		if (user.isDestroyed()) {
 			loseGame();
-		} else if (userHasReachedKillTarget()) {
-			gameLoop.stop(); 	int bulletsUsed = BulletSystemManager.getInstance().getBulletsUsed();
-			System.out.println("bullets used"+ bulletsUsed);
+		} else {
+			int bulletsUsed = BulletSystemManager.getInstance().getBulletsUsed();
 			int optimalBullets = calculateOptimalBullets();
-			System.out.println("bullets optimal"+ optimalBullets);
 			String levelKey = StageManager.getLevelManager().getCurrentLevelName();
 			StarManager.getInstance().calculateLevelStars(levelKey, bulletsUsed, optimalBullets);
+
 			if (myobserver != null) {
 				myobserver.onLevelWin("NEXT");
 			}
 		}
 	}
-
 	public abstract int calculateOptimalBullets();
 
 
@@ -94,7 +99,6 @@ public abstract class LevelParent implements ControllableLevel {
 
 	protected abstract LevelView instantiateLevelView();
 
-	protected abstract void misc();
 	@Override
 	public Scene initializeScenario() {
 		 return initializeScene();
@@ -117,22 +121,21 @@ public abstract class LevelParent implements ControllableLevel {
 	public void setmyobserver(MyObserver myobserver) {
 		this.myobserver = myobserver;
 	}
-
-	protected void updateScene() {
-		spawnEnemyUnits();
+	@Override
+	public void update() {
+		System.out.println("Updating Scene");
+		spawnEnemyUnits(); // Debug: Verify this is called
 		spawnCoins();
-		collisionManager.handleAllCollisions();
-		actorManager.handleAllActors();
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		updateUserShieldPosition();
 		levelView.updateWinningParameter();
 		updateLevelView();
 		checkIfGameOver();
-		misc();
+		updateSceneFurther();
 	}
 
-
+	protected void updateSceneFurther() {}
 	protected void initializeBackground() {
 		background.setFocusTraversable(true);
 		background.setFitHeight(screenHeight);
@@ -144,7 +147,7 @@ public abstract class LevelParent implements ControllableLevel {
 		fireUserProjectile();
 	}
 	protected void fireUserProjectile() {
-		if (GameStateManager.isPaused) {
+		if (GameStateManager.getInstance().isGamePaused()) {
 			return;
 		}
 		if (BulletSystemManager.getInstance().getBullets() <= 0) {
@@ -197,18 +200,14 @@ public abstract class LevelParent implements ControllableLevel {
 	public void incrementKillCount() {
 		numberOfKills++;
 	}
-
-
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		actorManager.addEnemyUnit(enemy);
 	}
-
 	protected void addProjectileToLevel(ActiveActorDestructible projectile) {
 		if (projectile != null) {
 			actorManager.addEnemyProjectile(projectile);
 		}
 	}
-
 	public UserPlane getUser() {
 		return user;
 	}
@@ -247,9 +246,6 @@ public abstract class LevelParent implements ControllableLevel {
 	}
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies =    actorManager.getEnemyUnits().size();
-	}
-	public Scene getScene() {
-		return scene;
 	}
 }
 

@@ -1,16 +1,16 @@
 package com.example.demo.core;
 
+import com.example.demo.actors.user.UserPlane;
+
 public class GameStateManager {
 
     private static GameStateManager instance;
-    public static boolean isPaused;
+    private boolean isPaused;
 
-    // Private constructor to enforce singleton pattern
     private GameStateManager() {
         this.isPaused = false;
     }
 
-    // Get the single instance of the GameStateManager
     public static GameStateManager getInstance() {
         if (instance == null) {
             instance = new GameStateManager();
@@ -18,20 +18,27 @@ public class GameStateManager {
         return instance;
     }
 
-    // Method to pause the game
     public void pauseGame() {
-        this.isPaused = true;
+        isPaused = true;
     }
 
-    // Method to resume the game
     public void resumeGame() {
-        this.isPaused = false;
+        isPaused = false;
     }
 
-    // Check if the game is paused
     public boolean isGamePaused() {
         return isPaused;
     }
+
+    public boolean checkGameOver(UserPlane user, boolean killTarget) {
+        if (user.isDestroyed()) {
+            System.out.println("User is destroyed. Game Over!");
+            return true;
+        }
+        if (killTarget) {
+            System.out.println("Kill target reached. Level completed!");
+            return true;
+        }
+        return false;
+    }
 }
-
-

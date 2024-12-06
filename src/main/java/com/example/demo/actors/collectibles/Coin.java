@@ -24,7 +24,7 @@ public class Coin extends ActiveActorDestructible {
 
     @Override
     public void updatePosition() {
-        if (GameStateManager.isPaused) {
+        if (GameStateManager.getInstance().isGamePaused()) {
             return; // Skip updating position if paused
         }
         moveHorizontally(HORIZONTAL_VELOCITY);

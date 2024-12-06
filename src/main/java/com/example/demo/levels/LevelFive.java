@@ -24,7 +24,6 @@ public class LevelFive extends LevelParent {
         this.inputHandler.setMovementMode(InputHandlingManager.MovementMode.FULL);
         displayShowdownText();
     }
-
     @Override
     protected void spawnEnemyUnits() {
         // Handle Meteor Storm Phase
@@ -32,11 +31,9 @@ public class LevelFive extends LevelParent {
             spawnMeteors();
         }
         double spawnProbability = 0.25; // 25% chance to spawn an enemy per update
-
         if (Math.random() < spawnProbability && getCurrentNumberOfEnemies() < TOTAL_ENEMIES) {
             double randomYPosition = 40 + (Math.random() * (getEnemyMaximumYPosition() - 40));
             String enemyType;
-
             // Determine enemy type based on probabilities
             double enemyTypeChance = Math.random();
             if (enemyTypeChance < 0.6) {
@@ -60,7 +57,6 @@ public class LevelFive extends LevelParent {
         }
     }
     private void displayShowdownText() {
-        // Create a PauseTransition to delay the appearance of the showdown text
         javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(Duration.seconds(3));
 
         delay.setOnFinished(event -> {
@@ -94,13 +90,15 @@ public class LevelFive extends LevelParent {
     protected boolean userHasReachedKillTarget() {
         return getNumberOfKills() >= KILLS_TO_ADVANCE;
     }
-
     @Override
-    protected void misc() {
-        // Handle meteor storm end
+    protected void updateSceneFurther() {
+        super.updateSceneFurther();
+        misc();
+    }
+      protected void misc() {
         if (getNumberOfKills() > 5) {
             meteorStormActive = false; // Disable meteor storm after 5 kills
-        }
-    }
+        }}
+
 }
 

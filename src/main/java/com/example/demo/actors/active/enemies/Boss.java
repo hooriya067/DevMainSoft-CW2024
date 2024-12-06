@@ -17,7 +17,7 @@ public class Boss extends EnemyParent {
 	private static final double BOSS_SHIELD_PROBABILITY = .002;
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
-	private static final int MAX_FRAMES_WITH_SHIELD = 1;//150;
+	private static final int MAX_FRAMES_WITH_SHIELD = 150;
 	private static final int IMAGE_HEIGHT = 50;
 	private static final int TOOLBAR_HEIGHT = 90;
 

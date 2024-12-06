@@ -47,7 +47,7 @@ public class LevelOne extends LevelParent {
 		return KILLS_TO_ADVANCE;
 	}
 
-	@Override
-	protected void misc() {}
+
+
 
 }

@@ -23,7 +23,6 @@ public class LevelTwo extends LevelParent {
 		boss = (Boss) enemyFactory.createEnemy("BOSS", 1000, 100, this);
 		initializeWinningParameter();
 	}
-
 	protected void initializeWinningParameter() {
 		bossHealthLabel = new Label("Boss Health: 20");  // Set to initial boss health
 		bossHealthLabel.setLayoutX(getScreenWidth() / 2 - 100); // Center the label a bit better
@@ -51,16 +50,6 @@ public class LevelTwo extends LevelParent {
 			});
 		}
 	}
-	// Getter methods for screen dimensions
-	public double getScreenWidth() {
-		return super.getScreenWidth();
-	}
-
-	public double getScreenHeight() {
-		return super.getScreenHeight();
-	}
-
-
 	@Override
 	protected void spawnEnemyUnits() {
 		// No need to initialize boss here, as it is already initialized in the constructor
@@ -96,19 +85,17 @@ public class LevelTwo extends LevelParent {
 	public int calculateOptimalBullets() {
 		return 20;
 	}
-	@Override
-	protected void misc() {
-		updateShieldImage();
-	}
+
 	@Override
 	protected boolean userHasReachedKillTarget() {
 		return boss.isDestroyed();
 	}
 
 	@Override
-	protected void updateScene() {
-		super.updateScene();
+	protected void updateSceneFurther() {
+		super.updateSceneFurther();
 		updateWinningParameter();
+		updateShieldImage();
 	}
 }
 

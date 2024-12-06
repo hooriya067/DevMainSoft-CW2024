@@ -2,12 +2,13 @@ package com.example.demo.Managers;
 
 import com.example.demo.actors.active.ActiveActorDestructible;
 import com.example.demo.actors.collectibles.Coin;
+import com.example.demo.core.Updatable;
 import javafx.scene.Group;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ActorManager {
+public class ActorManager implements Updatable {
 
     private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();
     private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
@@ -19,7 +20,8 @@ public class ActorManager {
     public ActorManager(Group root) {
         this.root = root;
     }
-    public void handleAllActors() {
+    @Override
+    public void update() {
         updateActors();
         removeDestroyedActors();
     }
@@ -33,12 +35,16 @@ public class ActorManager {
         friendlyUnits.add(unit);
         root.getChildren().add(unit);
     }
-
-
     public void addEnemyUnit(ActiveActorDestructible unit) {
+        if (unit == null) {
+            System.err.println("Attempted to add a null enemy!");
+            return;
+        }
+        System.out.println("Adding enemy: " + unit); // Debug: Check enemy addition
         enemyUnits.add(unit);
         root.getChildren().add(unit);
     }
+
     public void addUserProjectile(ActiveActorDestructible projectile) {
         if (projectile == null) {
             System.err.println("Attempted to add a null projectile to the root!");

@@ -37,8 +37,6 @@ public class LevelFour extends LevelParent {
         stealthEnemies = new ArrayList<>();
 
     }
-
-
     @Override
     protected void spawnEnemyUnits() {
         double spawnProbability = 0.15; // Probability for spawning enemies
@@ -55,7 +53,7 @@ public class LevelFour extends LevelParent {
         }
     }
     private void spawnBombs() {
-        if (GameStateManager.isPaused) {
+        if (GameStateManager.getInstance().isGamePaused()) {
             return;
         }
         double spawnProbability = 0.01; // Adjust this value for bomb frequency
@@ -67,7 +65,7 @@ public class LevelFour extends LevelParent {
     }
 
     private void spawnFlarePowerUp() {
-        if (GameStateManager.isPaused) {
+        if (GameStateManager.getInstance().isGamePaused()) {
             return;
         }
         double spawnProbability = 0.03; // Adjust this value to change the frequency of flare power-ups
@@ -111,8 +109,8 @@ public class LevelFour extends LevelParent {
         }
     }
     @Override
-    protected void updateScene() {
-        super.updateScene();
+    protected void updateSceneFurther() {
+        super.updateSceneFurther();
         spawnBombs();
         spawnFlarePowerUp();
         handlePowerUpCollisions();
@@ -130,8 +128,5 @@ public class LevelFour extends LevelParent {
     public int calculateOptimalBullets() {
         return KILLS_TO_ADVANCE*3;
     }
-    @Override
-    protected void misc() {
-
-    }}
+   }
 
