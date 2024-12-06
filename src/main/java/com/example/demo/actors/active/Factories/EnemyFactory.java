@@ -7,13 +7,11 @@ import com.example.demo.levels.LevelParent;
 
 public class EnemyFactory {
 
-    private final LevelParent levelParent; // Dependency for centralized access to UserPlane and other level data
-
     public EnemyFactory(LevelParent levelParent) {
         if (levelParent == null) {
             throw new IllegalArgumentException("LevelParent cannot be null");
         }
-        this.levelParent = levelParent;
+
     }
 
     // Static method to create enemies

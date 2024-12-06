@@ -12,7 +12,7 @@ public class UserPlane extends FighterPlane {
 	private static final double Y_LOWER_BOUND = 600.0;
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
-	private static final int IMAGE_HEIGHT = 70;
+	private static final int IMAGE_HEIGHT = 80;
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HORIZONTAL_VELOCITY = 8; // Velocity for left and right movement
 	private static final double TOOLBAR_HEIGHT = 70;
@@ -72,7 +72,6 @@ public class UserPlane extends FighterPlane {
 			double currentXPosition = getLayoutX() + getTranslateX() + getFitWidth() + 120;
 			double currentYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 			return ProjectileFactory.createProjectile("USER_PROJECTILE", currentXPosition, currentYPosition, null);
-
 		} else {
 			System.out.println("Out of bullets!");
 			return null;
@@ -112,16 +111,4 @@ public class UserPlane extends FighterPlane {
 		health += amount;
 		System.out.println("Health increased! Current health: " + health);
 	}
-
-
-
-//
-//	public int getNumberOfKills() {
-//		return numberOfKills;
-//	}
-//
-//	public void incrementKillCount() {
-//		numberOfKills++;
-//	}
-//
 }

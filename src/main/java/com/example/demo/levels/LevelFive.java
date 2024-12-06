@@ -1,5 +1,6 @@
 package com.example.demo.levels;
 
+import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.actors.active.ActiveActorDestructible;
 import com.example.demo.actors.active.Factories.EnemyFactory;
@@ -22,7 +23,11 @@ public class LevelFive extends LevelParent {
     public LevelFive(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         this.inputHandler.setMovementMode(InputHandlingManager.MovementMode.FULL);
-        displayShowdownText();
+        AlertManager.getInstance().showInfoAlert(
+                "SHOWDOWNNN!!!",
+                screenWidth,
+                screenHeight
+        );
     }
     @Override
     protected void spawnEnemyUnits() {
@@ -56,26 +61,7 @@ public class LevelFive extends LevelParent {
             System.out.println("Meteor spawned at X: " + meteor.getTranslateX() + ", Y: " + meteor.getTranslateY());
         }
     }
-    private void displayShowdownText() {
-        javafx.animation.PauseTransition delay = new javafx.animation.PauseTransition(Duration.seconds(3));
 
-        delay.setOnFinished(event -> {
-            // Run the following code on the JavaFX Application Thread
-            Platform.runLater(() -> {
-                Label showdownLabel = new Label("SHOWDOWN!!");
-                showdownLabel.setStyle("-fx-font-size: 60px; -fx-font-weight: bold; -fx-text-fill: red;");
-                showdownLabel.setLayoutX(getScreenWidth() / 2 - 200);
-                showdownLabel.setLayoutY(getScreenHeight() / 2 - 50);
-                getRoot().getChildren().add(showdownLabel);
-
-                // Create another PauseTransition to remove the text after 3 seconds
-                javafx.animation.PauseTransition removeDelay = new javafx.animation.PauseTransition(Duration.seconds(3));
-                removeDelay.setOnFinished(removeEvent -> getRoot().getChildren().remove(showdownLabel));
-                removeDelay.play(); // Explicitly start the second PauseTransition
-            });
-        });
-        delay.play(); // Explicitly start the initial PauseTransition
-    }
     @Override
     protected LevelView instantiateLevelView() {
         return new LevelVeiwLevelFive(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(),this);

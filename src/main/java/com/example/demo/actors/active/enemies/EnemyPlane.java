@@ -10,7 +10,7 @@ public class EnemyPlane extends EnemyParent {
 	private static final double FIRE_RATE = 0.01;
 
 	public EnemyPlane(double initialXPos, double initialYPos, LevelParent levelParent) {
-		super(IMAGE_NAME, 60, initialXPos, initialYPos, 1, levelParent);
+		super(IMAGE_NAME, 70, initialXPos, initialYPos, 1, levelParent);
 	}
 
 	@Override

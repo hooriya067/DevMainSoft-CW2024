@@ -7,7 +7,7 @@ import com.example.demo.actors.active.Factories.EnemyFactory;
 
 public class LevelOne extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background1.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background01.png";
 	private static final int TOTAL_ENEMIES = 5;
 	private static final int KILLS_TO_ADVANCE = 10;
 	private static final int PLAYER_INITIAL_HEALTH = 5;

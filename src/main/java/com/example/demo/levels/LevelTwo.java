@@ -46,13 +46,11 @@ public class LevelTwo extends LevelParent {
 			Platform.runLater(() -> {
 				bossHealthLabel.setText("Boss Health: " + boss.getHealth());
 				bossHealthLabel.toFront();
-				//System.out.println("Boss health label updated: " + boss.getHealth());
 			});
 		}
 	}
 	@Override
 	protected void spawnEnemyUnits() {
-		// No need to initialize boss here, as it is already initialized in the constructor
 		if (getCurrentNumberOfEnemies() == 0) {
 			addEnemyUnit(boss);
 		}
@@ -85,7 +83,6 @@ public class LevelTwo extends LevelParent {
 	public int calculateOptimalBullets() {
 		return 20;
 	}
-
 	@Override
 	protected boolean userHasReachedKillTarget() {
 		return boss.isDestroyed();

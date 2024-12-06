@@ -1,5 +1,6 @@
 package com.example.demo.levels;
 
+import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.levels.view.LevelView;
 import com.example.demo.levels.view.LevelViewLevelThree;
@@ -20,13 +21,16 @@ public class LevelThree extends LevelParent {
     private static final int KILLS_TO_ADVANCE = 2;
     private static final int TOOLBAR_HEIGHT = 90;
 
-    private Label killsLabel;
 
 
     public LevelThree(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         this.inputHandler.setMovementMode(InputHandlingManager.MovementMode.FULL);
-
+        AlertManager.getInstance().showInfoAlert(
+                "LEFT RIGHT MOVEMENTS ALLOWED NOW",
+                screenWidth,
+                screenHeight
+        );
     }
     @Override
     protected void spawnEnemyUnits() {
