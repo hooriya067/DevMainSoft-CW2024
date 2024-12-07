@@ -15,7 +15,6 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class GameOverImage extends Pane {
-
 	private static final String IMAGE_NAME = "/com/example/demo/images/gameover.png";
 	private static final double IMAGE_WIDTH = 600;
 

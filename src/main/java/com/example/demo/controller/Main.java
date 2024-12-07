@@ -28,7 +28,7 @@ public class Main extends Application {
 		stage.setHeight(GameConfig.SCREEN_HEIGHT);
 		stage.setWidth(GameConfig.SCREEN_WIDTH);
 
-		SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background.mp3");
+		SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
 		new MainMenu(stage);
 	}
 

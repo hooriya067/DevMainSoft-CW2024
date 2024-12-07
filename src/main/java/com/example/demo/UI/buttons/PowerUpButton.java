@@ -10,13 +10,8 @@ public class PowerUpButton extends ButtonParent {
         getButton().setLayoutX(x);
         getButton().setLayoutY(y);
     }
-    @FunctionalInterface
-    public interface PauseAction {
-        void execute(); // Define a single abstract method
-    }
-
-    public void setOnPowerUp(PauseButtonDisplay.PauseAction action) {
-        setOnClick(() -> action.execute());
+     public void setOnPowerUp(PauseButtonDisplay.PauseAction action) {
+         setOnClick(() -> action.execute());
     }
 
 }

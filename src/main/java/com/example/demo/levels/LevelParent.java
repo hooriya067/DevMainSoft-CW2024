@@ -21,7 +21,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
 	private static final int MILLISECOND_DELAY = 50;
-	private static final int TOOLBAR_HEIGHT = 80;
+	private static final int TOOLBAR_HEIGHT = 100;
 	private final double screenHeight;
 	private final double screenWidth;
 	private final double enemyMaximumYPosition;
@@ -123,13 +123,11 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	}
 	@Override
 	public void update() {
-		System.out.println("Updating Scene");
-		spawnEnemyUnits(); // Debug: Verify this is called
+		spawnEnemyUnits();
 		spawnCoins();
 		generateEnemyFire();
 		updateNumberOfEnemies();
 		updateUserShieldPosition();
-		levelView.updateWinningParameter();
 		updateLevelView();
 		checkIfGameOver();
 		updateSceneFurther();
@@ -170,7 +168,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	}
 
 	private void spawnCoins() {
-		double spawnProbability = 0.02; // Adjust probability as needed
+		double spawnProbability = 0.02;
 		if (Math.random() < spawnProbability) {
 			double randomYPosition = TOOLBAR_HEIGHT + Math.random() * (getScreenHeight() - TOOLBAR_HEIGHT);
 			Coin coin = new Coin(getScreenWidth(), randomYPosition, this); // Spawn coin
@@ -187,6 +185,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	}
 
 	private void updateLevelView() {
+		levelView.updateWinningParameter();
 		levelView.removeHearts(user.getHealth());
 	}
 
@@ -194,15 +193,14 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 		gameLoop.stop();
 		levelView.showGameOverImage();
 	}
-	protected boolean userIsDestroyed() {
-		return user.isDestroyed();
-	}
 	public void incrementKillCount() {
 		numberOfKills++;
 	}
+
 	protected void addEnemyUnit(ActiveActorDestructible enemy) {
 		actorManager.addEnemyUnit(enemy);
 	}
+
 	protected void addProjectileToLevel(ActiveActorDestructible projectile) {
 		if (projectile != null) {
 			actorManager.addEnemyProjectile(projectile);

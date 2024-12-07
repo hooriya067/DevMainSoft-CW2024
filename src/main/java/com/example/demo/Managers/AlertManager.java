@@ -5,6 +5,7 @@ import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
@@ -84,52 +85,54 @@ public class AlertManager {
     }
     // New method for informational alerts with animations
     public void showInfoAlert(String message, double screenWidth, double screenHeight) {
-        Stage stage = StageManager.getStage();
-        if (stage.getScene().getRoot() instanceof Group root) {
-            Label infoLabel = new Label(message);
-            infoLabel.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: red;");
+        Platform.runLater(() -> {
+            Stage stage = StageManager.getStage();
+            if (stage.getScene().getRoot() instanceof Group root) {
+                Label infoLabel = new Label(message);
+                infoLabel.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: red;");
 
-            // Position the label dynamically at the center of the screen
-            infoLabel.setLayoutX(screenWidth / 2 - 150); // Adjust X to center
-            infoLabel.setLayoutY(screenHeight / 2 - 50); // Adjust Y to center
-            root.getChildren().add(infoLabel);
+                // Position the label dynamically at the center of the screen
+                infoLabel.setLayoutX(screenWidth / 2 - 150); // Adjust X to center
+                infoLabel.setLayoutY(screenHeight / 2 - 50); // Adjust Y to center
+                root.getChildren().add(infoLabel);
 
-            // Scale Transition for the "pop-up" effect
-            ScaleTransition scaleUp = new ScaleTransition(Duration.seconds(0.5), infoLabel);
-            scaleUp.setFromX(1.0);
-            scaleUp.setFromY(1.0);
-            scaleUp.setToX(2.0);
-            scaleUp.setToY(2.0);
+                // Scale Transition for the "pop-up" effect
+                ScaleTransition scaleUp = new ScaleTransition(Duration.seconds(0.5), infoLabel);
+                scaleUp.setFromX(1.0);
+                scaleUp.setFromY(1.0);
+                scaleUp.setToX(2.0);
+                scaleUp.setToY(2.0);
 
-            ScaleTransition scaleDown = new ScaleTransition(Duration.seconds(0.5), infoLabel);
-            scaleDown.setFromX(2.0);
-            scaleDown.setFromY(2.0);
-            scaleDown.setToX(1.0);
-            scaleDown.setToY(1.0);
+                ScaleTransition scaleDown = new ScaleTransition(Duration.seconds(0.5), infoLabel);
+                scaleDown.setFromX(2.0);
+                scaleDown.setFromY(2.0);
+                scaleDown.setToX(1.0);
+                scaleDown.setToY(1.0);
 
-            // Fade Transition for smooth fade-in and fade-out
-            FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), infoLabel);
-            fadeIn.setFromValue(0.0);
-            fadeIn.setToValue(1.0);
+                // Fade Transition for smooth fade-in and fade-out
+                FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), infoLabel);
+                fadeIn.setFromValue(0.0);
+                fadeIn.setToValue(1.0);
 
-            PauseTransition pause = new PauseTransition(Duration.seconds(3)); // Pause before fade out
+                PauseTransition pause = new PauseTransition(Duration.seconds(3)); // Pause before fade out
 
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), infoLabel);
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
-            // Remove label after the animation sequence
-            fadeOut.setOnFinished(event -> root.getChildren().remove(infoLabel));
+                FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), infoLabel);
+                fadeOut.setFromValue(1.0);
+                fadeOut.setToValue(0.0);
+                // Remove label after the animation sequence
+                fadeOut.setOnFinished(event -> root.getChildren().remove(infoLabel));
 
-            // Play animations sequentially
-            fadeIn.setOnFinished(event -> scaleUp.play());
-            scaleUp.setOnFinished(event -> scaleDown.play());
-            scaleDown.setOnFinished(event -> pause.play());
-            pause.setOnFinished(event -> fadeOut.play());
+                // Play animations sequentially
+                fadeIn.setOnFinished(event -> scaleUp.play());
+                scaleUp.setOnFinished(event -> scaleDown.play());
+                scaleDown.setOnFinished(event -> pause.play());
+                pause.setOnFinished(event -> fadeOut.play());
 
-            fadeIn.play(); // Start animation sequence
-        } else {
-            System.err.println("Root is not a Group. Unable to display informational alert.");
-        }
-    }
+                fadeIn.play(); // Start animation sequence
 
-}
+            } else {
+                System.err.println("Root is not a Group. Unable to display informational alert.");
+            }
+        });
+
+}}

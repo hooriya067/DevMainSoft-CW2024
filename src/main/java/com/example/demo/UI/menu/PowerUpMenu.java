@@ -2,6 +2,7 @@ package com.example.demo.UI.menu;
 
 import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.PowerUpManager;
+import com.example.demo.Managers.SoundManager;
 import com.example.demo.core.GameStateManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -79,7 +80,6 @@ public class PowerUpMenu extends OnScreenMenu {
             removeOverlay();
             startResumeCountdown();
         });
-
         menuBox.getChildren().addAll(title, powerUpBox, resumeButton);
         return menuBox;
     }
@@ -89,7 +89,6 @@ public class PowerUpMenu extends OnScreenMenu {
         icon.setFitWidth(60);
         icon.setFitHeight(60);
 
-        // Create button with icon
         Button button = new Button("", icon);
         button.setStyle("-fx-background-color: transparent;");
         button.setOnAction(e -> action.run());
@@ -108,14 +107,4 @@ public class PowerUpMenu extends OnScreenMenu {
 
         return powerUpBox;
     }
-    private void updateButtonState(Button button, boolean isAvailable) {
-        if (isAvailable) {
-            button.setDisable(false);
-            button.setStyle("-fx-opacity: 1.0;"); // Reset to full opacity
-        } else {
-            button.setDisable(true);
-            button.setStyle("-fx-opacity: 0.5;"); // Dim the button
-        }
-    }
-
 }

@@ -1,5 +1,6 @@
 package com.example.demo.UI.menu;
 
+import com.example.demo.Managers.SoundManager;
 import com.example.demo.UI.screens.MainMenu;
 import com.example.demo.UI.buttons.MainMenuButton;
 import com.example.demo.UI.buttons.QuitButton;
@@ -15,6 +16,7 @@ public class PauseMenu extends OnScreenMenu {
     }
 
     public void displayOverlay() {
+
         VBox menuContent = createMenuContent();
         super.displayOverlay(menuContent);
     }

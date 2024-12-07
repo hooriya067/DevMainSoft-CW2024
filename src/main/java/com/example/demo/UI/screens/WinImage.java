@@ -1,5 +1,6 @@
 package com.example.demo.UI.screens;
 
+import com.example.demo.Managers.SoundManager;
 import com.example.demo.Managers.StarManager;
 import com.example.demo.UI.buttons.PlayAgainButton;
 import com.example.demo.UI.buttons.QuitButton;
@@ -25,7 +26,7 @@ public class WinImage extends Pane {
 
 	public WinImage(double screenWidth, double screenHeight) {
 		Stage stage = StageManager.getStage();
-		// Create the Win Image
+
 		ImageView winImage = new ImageView(
 				new Image(Objects.requireNonNull(getClass().getResource(IMAGE_NAME)).toExternalForm())
 		);
@@ -33,7 +34,6 @@ public class WinImage extends Pane {
 		winImage.setFitHeight(IMAGE_HEIGHT);
 		winImage.setPreserveRatio(true);
 
-		// Position the Win Image
 		double winImageX = (screenWidth - IMAGE_WIDTH) / 2;
 		double winImageY = screenHeight / 70;
 		winImage.setLayoutX(winImageX);
@@ -43,21 +43,17 @@ public class WinImage extends Pane {
 		int finalStars = StarManager.getInstance().calculateFinalStars();
 		StarDisplay starDisplay = new StarDisplay(screenWidth / 2 - 125, screenHeight / 1.5, finalStars);
 
-
-		// Create and position Play Again Button
 		PlayAgainButton playAgainButton = new PlayAgainButton();
 		playAgainButton.getButton().setLayoutX((screenWidth / 2) - 600); // Set X position
 		playAgainButton.getButton().setLayoutY((screenHeight / 2) + 170); // Set Y position
 
-		// Create and position Quit Button
 		QuitButton quitButton = new QuitButton();
 		quitButton.getButton().setLayoutX((screenWidth / 2) + 300);
 		quitButton.getButton().setLayoutY((screenHeight / 2) + 170);
 
-		// Add functionality to buttons
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
-
+				SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
 				Controller gameController = new Controller(stage);
 				gameController.launchGame();
 			} catch (Exception e) {

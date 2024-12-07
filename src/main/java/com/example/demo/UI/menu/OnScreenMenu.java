@@ -1,5 +1,6 @@
 package com.example.demo.UI.menu;
 
+import com.example.demo.Managers.SoundManager;
 import com.example.demo.core.GameConfig;
 import com.example.demo.core.GameStateManager;
 import com.example.demo.core.StageManager;
@@ -29,6 +30,7 @@ public abstract class OnScreenMenu {
     }
 
     protected void displayOverlay(VBox menuContent) {
+        SoundManager.getInstance().lowerBackgroundMusicVolume(0.2);
         if (overlayActive) {
             System.err.println(getClass().getSimpleName() + " menu is already active! overlayActive = true");
             return;
@@ -57,6 +59,7 @@ public abstract class OnScreenMenu {
         if (overlayLayout == null) return;
 
         if (overlayLayout.getParent() instanceof Group) {
+            SoundManager.getInstance().restoreBackgroundMusicVolume(0.5);
             Group currentRoot = (Group) overlayLayout.getParent();
             currentRoot.getChildren().remove(overlayLayout);
             overlayActive = false;

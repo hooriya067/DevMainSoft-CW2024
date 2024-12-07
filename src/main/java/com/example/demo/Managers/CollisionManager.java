@@ -5,6 +5,7 @@ import com.example.demo.actors.collectibles.Coin;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.Updatable;
 import com.example.demo.levels.ControllableLevel;
+import javafx.application.Platform;
 import javafx.scene.Node;
 
 import java.util.ArrayList;
@@ -43,21 +44,26 @@ public class CollisionManager implements Updatable {
     private void handleEnemyProjectileCollisions() {
         handleCollisions(actorManager.getEnemyProjectiles(), actorManager.getFriendlyUnits());
     }
-
     public void handleCoinCollisions() {
+        // Create a separate list for nodes to remove after iteration
         List<Node> coinsToRemove = new ArrayList<>();
 
-        for (Node node : level.getRoot().getChildren()) {
+        for (Node node : new ArrayList<>(level.getRoot().getChildren())) { // Iterate over a copy
             if (node instanceof Coin coin && coin.getBoundsInParent().intersects(level.getUser().getBoundsInParent())) {
+                SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/coin.mp3");
                 CoinSystemManager.getInstance().addCoins(1);
+
+                double userX = level.getUser().getLayoutX() + level.getUser().getTranslateX()+20;
+                double userY = level.getUser().getLayoutY() + level.getUser().getTranslateY();
+                coin.showPlusOneEffect(level.getRoot(), userX, userY);
                 coinsToRemove.add(coin);
-                System.out.println("Coin collected! Total coins: " + CoinSystemManager.getInstance().getCoins());
             }
         }
-        level.getRoot().getChildren().removeAll(coinsToRemove);
-        level.getCoins().removeAll(coinsToRemove);
+        Platform.runLater(() -> {
+            level.getRoot().getChildren().removeAll(coinsToRemove);
+            level.getCoins().removeAll(coinsToRemove);
+        });
     }
-
     public void handleEnemyPenetration(List<ActiveActorDestructible> enemies) {
         double screenWidth = level.getScreenWidth();
         for (ActiveActorDestructible enemy : enemies) {

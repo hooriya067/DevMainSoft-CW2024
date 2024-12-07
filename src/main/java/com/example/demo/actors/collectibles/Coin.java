@@ -4,6 +4,11 @@ import com.example.demo.Managers.CoinSystemManager;
 import com.example.demo.levels.LevelParent;
 import com.example.demo.actors.active.ActiveActorDestructible;
 import com.example.demo.core.GameStateManager;
+import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
+import javafx.scene.Group;
+import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class Coin extends ActiveActorDestructible {
 
@@ -16,7 +21,6 @@ public class Coin extends ActiveActorDestructible {
         super(IMAGE_NAME, IMAGE_SIZE, initialX, initialY);
         this.level = level;
     }
-
     @Override
     public void updateActor() {
         updatePosition();
@@ -32,12 +36,24 @@ public class Coin extends ActiveActorDestructible {
             destroy();
         }
     }
+    public void showPlusOneEffect(Group root, double x, double y) {
+        Text plusOneText = new Text("+1");
+        plusOneText.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-fill: orange;");
+        plusOneText.setLayoutX(x);
+        plusOneText.setLayoutY(y);
+      root.getChildren().add(plusOneText);
 
-    private void collectCoin() {
-        CoinSystemManager.getInstance().addCoins(1); // Add coin to the system
-        destroy(); // Mark the coin as destroyed
-        level.getRoot().getChildren().remove(this); // Remove the coin from the level's root
-        System.out.println("Coin collected! Current coin count: " + CoinSystemManager.getInstance().getCoins());
+        TranslateTransition moveUp = new TranslateTransition(Duration.seconds(1.5), plusOneText);
+        moveUp.setByY(-50);
+
+        FadeTransition fadeOut = new FadeTransition(Duration.seconds(1), plusOneText);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        moveUp.setOnFinished(event -> root.getChildren().remove(plusOneText));
+        fadeOut.setOnFinished(event -> root.getChildren().remove(plusOneText));
+        moveUp.play();
+        fadeOut.play();
     }
 
     @Override

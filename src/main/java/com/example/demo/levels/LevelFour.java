@@ -1,6 +1,7 @@
 
 package com.example.demo.levels;
 
+import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.actors.active.ActiveActorDestructible;
 import com.example.demo.actors.collectibles.FlarePowerUp;
@@ -33,8 +34,12 @@ public class LevelFour extends LevelParent {
     public LevelFour(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         this.inputHandler.setMovementMode(InputHandlingManager.MovementMode.FULL);
-
         stealthEnemies = new ArrayList<>();
+        AlertManager.getInstance().showInfoAlert(
+                "Enemies are Hidden!! 💀", // Add the skull emoji here
+                screenWidth,
+                screenHeight
+        );
 
     }
     @Override

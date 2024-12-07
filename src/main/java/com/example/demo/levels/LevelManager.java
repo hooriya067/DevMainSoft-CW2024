@@ -1,6 +1,7 @@
 package com.example.demo.levels;
 
 import com.example.demo.Managers.BulletSystemManager;
+import com.example.demo.Managers.SoundManager;
 import com.example.demo.UI.screens.LevelCompletedScreen;
 import com.example.demo.UI.screens.LevelIntroScreen;
 import com.example.demo.UI.screens.WinImage;
@@ -43,8 +44,11 @@ public class LevelManager {
     public void goToNextLevel() {
         Scene currentScene = stage.getScene();
         if (currentLevelIndex + 1 < levelSequence.size()) {
-            currentLevelIndex++; // Increment the level index to move to the next level
-            LevelCompletedScreen levelCompletedPage;
+            currentLevelIndex++;
+            SoundManager.getInstance().stopBackgroundMusic();
+            SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/levelcomplete.mp3");
+            SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
+                        LevelCompletedScreen levelCompletedPage;
             levelCompletedPage = new LevelCompletedScreen(
                     stage.getWidth(),
                     stage.getHeight(),
@@ -61,9 +65,6 @@ public class LevelManager {
     private void goToLevelIntro(String levelName) {
         try {
             currentLevelName = levelName; // Set the global current level name here
-            System.out.println("Setting current level name to: " + currentLevelName); // Debug log
-
-            // Show Level Intro Screen
             LevelIntroScreen levelIntroScreen = new LevelIntroScreen(levelName, this);
             Scene introScene = levelIntroScreen.getScene();
             stage.setScene(introScene);
@@ -80,7 +81,8 @@ public class LevelManager {
         try {
             switch (levelName) {
                 case "LEVEL_ONE":
-                    currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+                    currentLevel = new LevelFive(stage.getHeight(), stage.getWidth());
+                   // currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_TWO":
                     currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
@@ -107,33 +109,32 @@ public class LevelManager {
         }
     }
     public void replayCurrentLevel() {
-
-            if (currentLevelIndex > 0) {
+         if (currentLevelIndex > 0) {
                 currentLevelIndex--; // Decrement index to match the replayed level
             }
             proceedToLevel(levelSequence.get(currentLevelIndex));
     }
 
     public void showFinalWinScreen() {
+        SoundManager.getInstance().stopBackgroundMusic();
+        SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/wingame.mp3");;
+        SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
         javafx.scene.shape.Rectangle dimBackground = new javafx.scene.shape.Rectangle(stage.getWidth(), stage.getHeight());
         dimBackground.setFill(javafx.scene.paint.Color.BLACK);
-        dimBackground.setOpacity(0.5); // Semi-transparent black overlay
+        dimBackground.setOpacity(0.5);
 
         WinImage winImage = new WinImage(stage.getWidth(), stage.getHeight());
-        winImage.setVisible(true); // Ensure WinImage is visible
+        winImage.setVisible(true);
 
         Group winScreenRoot = new Group(dimBackground, winImage);
-
         Scene currentScene = stage.getScene();
 
         if (currentScene.getRoot() instanceof Group) {
-            // If the root is a Group, add the WinScreenRoot directly
             Group root = (Group) currentScene.getRoot();
             root.getChildren().add(winScreenRoot);
         } else {
-            // If the root is not a Group, wrap it in a new Group and set it as the root
             Group newRoot = new Group();
-            newRoot.getChildren().add(currentScene.getRoot()); // Preserve the current root as a child
+            newRoot.getChildren().add(currentScene.getRoot());
             newRoot.getChildren().add(winScreenRoot);
             currentScene.setRoot(newRoot);
         }

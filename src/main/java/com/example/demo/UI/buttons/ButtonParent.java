@@ -1,5 +1,4 @@
 package com.example.demo.UI.buttons;
-
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -16,8 +15,8 @@ public abstract class ButtonParent {
     public ButtonParent(String imagePath, double fitWidth, boolean preserveRatio) {
         this.button = new Button();
         initializeButton(imagePath, fitWidth, preserveRatio);
-        addBounceEffect(); // Add bounce effect to the button
-        addHoverEffect(); // Add hover effect to the button
+        addBounceEffect();
+        addHoverEffect();
     }
 
     private void initializeButton(String imagePath, double fitWidth, boolean preserveRatio) {
@@ -63,7 +62,9 @@ public abstract class ButtonParent {
 
     // Method to set the click action
     public void setOnClick(Runnable action) {
-        button.setOnAction(event -> action.run());
+
+        button.setOnAction(
+                event -> action.run());
     }
 
     public Button getButton() {

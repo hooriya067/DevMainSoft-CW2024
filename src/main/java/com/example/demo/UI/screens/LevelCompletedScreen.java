@@ -17,8 +17,8 @@ import java.util.Objects;
 
 public class LevelCompletedScreen extends Pane {
     private static final String IMAGE_NAME = "/com/example/demo/images/levelcompleted.png";
-    private static final double IMAGE_WIDTH = 550; // Adjusted size for the Level Completed image
-    private static final double IMAGE_Y_OFFSET = 200; // Move image upwards
+    private static final double IMAGE_WIDTH = 550;
+    private static final double IMAGE_Y_OFFSET = 200;
 
     public LevelCompletedScreen(double screenWidth, double screenHeight, Runnable onNextLevel, Runnable onReplayLevel) {
 
@@ -26,10 +26,8 @@ public class LevelCompletedScreen extends Pane {
         LevelManager levelManager = StageManager.getLevelManager();
         String currentLevelName = levelManager.getCurrentLevelName();
 
-
-
         Rectangle dimBackground = new Rectangle(screenWidth, screenHeight, Color.BLACK);
-        dimBackground.setOpacity(0.7); // Semi-transparent black for overlay effect
+        dimBackground.setOpacity(0.7);
 
         ImageView levelCompletedImage = new ImageView(
                 new Image(Objects.requireNonNull(getClass().getResource(IMAGE_NAME)).toExternalForm())
@@ -46,22 +44,20 @@ public class LevelCompletedScreen extends Pane {
         int starsEarned = StarManager.getInstance().getLevelStarsMap().getOrDefault(currentLevelName, 0);
         StarDisplay starDisplay = new StarDisplay(stage.getWidth() / 2 - 125, stage.getHeight() / 1.35, starsEarned);
 
-
-        // Add Next Button
         NextButton nextButton = new NextButton();
-        nextButton.getButton().setPrefWidth(200); // Standardized button size
+        nextButton.getButton().setPrefWidth(200);
         nextButton.getButton().setPrefHeight(70);
-        nextButton.getButton().setLayoutX((screenWidth / 2) -600); // Adjust X position for Next button
-        nextButton.getButton().setLayoutY((screenHeight / 2) + 115); // Adjust Y position for placement
-        nextButton.setOnClick(onNextLevel); // Set action to go to the next level
+        nextButton.getButton().setLayoutX((screenWidth / 2) -600);
+        nextButton.getButton().setLayoutY((screenHeight / 2) + 115);
+        nextButton.setOnClick(onNextLevel);
 
         // Add Replay Button
         PlayAgainButton replayButton = new PlayAgainButton();
-        replayButton.getButton().setPrefWidth(200); // Standardized button size
+        replayButton.getButton().setPrefWidth(200);
         replayButton.getButton().setPrefHeight(70);
-        replayButton.getButton().setLayoutX((screenWidth / 2) + 300); // Adjust X position for Replay button
-        replayButton.getButton().setLayoutY((screenHeight / 2) + 170); // Adjust Y position for placement
-        replayButton.setOnClick(onReplayLevel); // Set action to replay the current level
+        replayButton.getButton().setLayoutX((screenWidth / 2) + 300);
+        replayButton.getButton().setLayoutY((screenHeight / 2) + 170);
+        replayButton.setOnClick(onReplayLevel);
 
         this.getChildren().addAll(dimBackground, levelCompletedImage,starDisplay.getContainer(), nextButton.getButton(), replayButton.getButton());
         starDisplay.getContainer().toFront();

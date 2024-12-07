@@ -1,6 +1,7 @@
 package com.example.demo.actors.user;
 
 import com.example.demo.Managers.BulletSystemManager;
+import com.example.demo.Managers.SoundManager;
 import com.example.demo.actors.active.FighterPlane;
 import com.example.demo.actors.active.ActiveActorDestructible;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
@@ -8,7 +9,6 @@ import com.example.demo.actors.active.Factories.ProjectileFactory;
 public class UserPlane extends FighterPlane {
 
 	private static final String IMAGE_NAME = "userplane1.png";
-	private static final double Y_UPPER_BOUND = -40;
 	private static final double Y_LOWER_BOUND = 600.0;
 	private static final double INITIAL_X_POSITION = 5.0;
 	private static final double INITIAL_Y_POSITION = 300.0;
@@ -16,7 +16,6 @@ public class UserPlane extends FighterPlane {
 	private static final int VERTICAL_VELOCITY = 8;
 	private static final int HORIZONTAL_VELOCITY = 8; // Velocity for left and right movement
 	private static final double TOOLBAR_HEIGHT = 70;
-	private static final int PROJECTILE_X_POSITION = 110;
 	private static final int PROJECTILE_Y_POSITION_OFFSET = 20;
 
 	private int velocityMultiplier; // For vertical movement
@@ -65,6 +64,7 @@ public class UserPlane extends FighterPlane {
 
 	@Override
 	public ActiveActorDestructible fireProjectile() {
+		SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/userfire.mp3");
 		BulletSystemManager bulletManager = BulletSystemManager.getInstance();
 
 		if (bulletManager.subtractBullets(1)) {
@@ -73,7 +73,6 @@ public class UserPlane extends FighterPlane {
 			double currentYPosition = getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 			return ProjectileFactory.createProjectile("USER_PROJECTILE", currentXPosition, currentYPosition, null);
 		} else {
-			System.out.println("Out of bullets!");
 			return null;
 		}
 	}

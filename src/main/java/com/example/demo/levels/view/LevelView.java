@@ -3,6 +3,7 @@ package com.example.demo.levels.view;
 
 import com.example.demo.Managers.BulletSystemManager;
 import com.example.demo.Managers.CoinSystemManager;
+import com.example.demo.Managers.SoundManager;
 import com.example.demo.UI.buttons.PauseButtonDisplay;
 import com.example.demo.UI.buttons.PowerUpButton;
 import com.example.demo.UI.menu.PauseMenu;
@@ -104,7 +105,6 @@ public void AddUI(){
 		updateBulletCount(BulletSystemManager.getInstance().getBullets());
 }
 	public void updateBulletCount(int newBulletCount) {
-		//System.out.println("Updating bullets to: " + newBulletCount);
 		bulletCountLabel.setText("Bullets: " + newBulletCount);
 	}
 
@@ -115,26 +115,19 @@ public void AddUI(){
 	private void showLabels() {
 		coinCountLabel.toFront();
 		bulletCountLabel.toFront();
-
 	}
-
 	protected void showPowerUpButton() {
 		powerUpButton.getButton().toFront();
 		powerUpButton.setOnPowerUp(() -> {
-			//Stage stage = StageManager.getStage();
 			PowerUpMenu powerupMenu = new PowerUpMenu(stage);
-			System.out.println("Powerup button clicked!"); // Debug
 			powerupMenu.displayOverlay();
 		});
 	}
 
 	protected void showPauseButton() {
 		pauseButtonDisplay.getButton().toFront();
-
 		pauseButtonDisplay.setOnPause(() -> {
-		//	Stage stage = StageManager.getStage();
 			PauseMenu pauseMenu = new PauseMenu(stage);
-			System.out.println("Pause button clicked!"); // Debug
 			pauseMenu.displayOverlay();
 		});
 	}
@@ -150,6 +143,9 @@ public void AddUI(){
 
 
 	public void showGameOverImage() {
+		SoundManager.getInstance().stopBackgroundMusic();
+		SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/gameover.mp3");
+		SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
 		root.getChildren().add(gameOverImage);
 	}
 

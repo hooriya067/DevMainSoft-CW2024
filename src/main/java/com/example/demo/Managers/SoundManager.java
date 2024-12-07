@@ -111,6 +111,19 @@ public class SoundManager {
             soundPlayer.setVolume(volume);
         }
     }
+    // Temporarily lower background music volume
+    public void lowerBackgroundMusicVolume(double reducedVolume) {
+        if (backgroundMusicPlayer != null) {
+            backgroundMusicPlayer.setVolume(reducedVolume);
+        }
+    }
+
+    // Restore original background music volume
+    public void restoreBackgroundMusicVolume(double originalVolume) {
+        if (backgroundMusicPlayer != null) {
+            backgroundMusicPlayer.setVolume(originalVolume);
+        }
+    }
 
     // Mute/unmute all sounds
     public void toggleMute() {

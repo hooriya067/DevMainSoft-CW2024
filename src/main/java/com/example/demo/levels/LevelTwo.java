@@ -8,11 +8,11 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 public class LevelTwo extends LevelParent {
 
-	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.jpg";
+	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.png";
 	private static final int PLAYER_INITIAL_HEALTH = 5;
 
 	private Label bossHealthLabel;
-	private final Boss boss;  // Declare boss as final and initialize it properly in the constructor
+	private final Boss boss;
 	private LevelViewLevelTwo levelView;
 
 
@@ -24,16 +24,15 @@ public class LevelTwo extends LevelParent {
 		initializeWinningParameter();
 	}
 	protected void initializeWinningParameter() {
-		bossHealthLabel = new Label("Boss Health: 20");  // Set to initial boss health
-		bossHealthLabel.setLayoutX(getScreenWidth() / 2 - 100); // Center the label a bit better
+		bossHealthLabel = new Label("Boss Health: 20");
+		bossHealthLabel.setLayoutX(getScreenWidth() / 2 - 100);
 		bossHealthLabel.setLayoutY(20);
 
-		// Apply CSS to make the label bold, with shadow and a more appealing font style
 		bossHealthLabel.setStyle(
-				"-fx-font-size: 30px;" +              // Larger font size
-						"-fx-font-weight: bold;" +             // Bold font
-						"-fx-text-fill: linear-gradient(#ff0000, #ff5500);" +  // Dual-color text (red to orange gradient)
-						"-fx-effect: dropshadow(gaussian, black, 8, 0.5, 3, 3);" // Shadow effect (black, blurred)
+				"-fx-font-size: 30px;" +
+						"-fx-font-weight: bold;" +
+						"-fx-text-fill: linear-gradient(#ff0000, #ff5500);" +
+						"-fx-effect: dropshadow(gaussian, black, 8, 0.5, 3, 3);"
 		);
 
 		getRoot().getChildren().add(bossHealthLabel);
@@ -65,9 +64,8 @@ public class LevelTwo extends LevelParent {
 
 	private void updateShieldImage() {
 		if (levelView == null || boss == null) {
-			return; // Ensure no null references
+			return;
 		}
-
 		double bossX = boss.getLayoutX() + boss.getTranslateX();
 		double bossY = boss.getLayoutY() + boss.getTranslateY();
 		levelView.updateShieldPosition(bossX, bossY);

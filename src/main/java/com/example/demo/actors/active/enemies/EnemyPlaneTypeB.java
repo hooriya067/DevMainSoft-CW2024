@@ -27,7 +27,7 @@ public class EnemyPlaneTypeB extends EnemyParent {
     @Override
     public ActiveActorDestructible fireProjectileWhenActive() {
         UserPlane userPlane = levelParent.getUser(); // Access UserPlane from LevelParent
-        if (Math.random() < 0.0009) {
+        if (Math.random() < 0.0008) {
             return ProjectileFactory.createProjectile(
                     "HOMING_MISSILE",
                     getProjectileXPosition(0),
