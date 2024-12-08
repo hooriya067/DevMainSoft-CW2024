@@ -3,6 +3,8 @@ package com.example.demo.UI.screens;
 import com.example.demo.UI.buttons.SoundButton;
 import com.example.demo.UI.buttons.QuitButton;
 import com.example.demo.UI.buttons.StartGameButton;
+import com.example.demo.UI.buttons.CustomizePlaneButton;
+import com.example.demo.controller.Controller;
 import com.example.demo.core.GameConfig;
 import com.example.demo.core.GameStateManager;
 import javafx.geometry.Pos;
@@ -10,9 +12,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import com.example.demo.controller.Controller;
 
 import java.util.Objects;
 
@@ -29,51 +31,55 @@ public class MainMenu {
         backgroundImageView.setFitHeight(MENU_HEIGHT);
 
         // Set the VBox for the main menu
-        VBox menuBox = new VBox(40);  // Increased spacing to make it visually balanced on larger screen
-        menuBox.setAlignment(Pos.CENTER);  // Align elements to the center
-        menuBox.setStyle("-fx-background-color: rgba(50, 50, 50, 0.9); -fx-padding: 20;");  // Semi-transparent background
-        menuBox.setMaxWidth(600);  // Adjusted width for larger screen
+        VBox menuBox = new VBox(10);
+        menuBox.setAlignment(Pos.CENTER);
+        menuBox.setStyle("-fx-background-color: rgba(50, 50, 50, 0.9); -fx-padding: 20;");
+        menuBox.setMaxWidth(600);
 
         // Add the components
         Title title = new Title();
         StartGameButton startButton = new StartGameButton();
+        CustomizePlaneButton customizeButton = new CustomizePlaneButton(); // Use the new button class
         QuitButton quitButton = new QuitButton();
+        menuBox.getChildren().addAll(title.getTitleImage(), startButton.getButton(), customizeButton.getButton(), quitButton.getButton());
 
-        menuBox.getChildren().addAll(title.getTitleImage(), startButton.getButton(), quitButton.getButton());
-        menuBox.setLayoutX((MENU_WIDTH - menuBox.getMaxWidth()) / 2 - 50);  // Center horizontally
-        menuBox.setLayoutY(MENU_HEIGHT * 0.15); // Move the VBox higher (30% from the top)
+        menuBox.setLayoutX((MENU_WIDTH - menuBox.getMaxWidth()) / 2 +50);
+        menuBox.setLayoutY(MENU_HEIGHT * 0.1);
 
         // Add the sound button
         SoundButton soundButton = new SoundButton();
         Pane soundIconPane = new Pane();
         soundIconPane.getChildren().add(soundButton.getSoundButtonImage());
-        soundButton.getSoundButtonImage().setLayoutX(GameConfig.SCREEN_WIDTH - 120); // Move it slightly left to keep it within the screen
+        soundButton.getSoundButtonImage().setLayoutX(GameConfig.SCREEN_WIDTH - 120);
         soundButton.getSoundButtonImage().setLayoutY(20);
 
         // Create a Group for layout
         Group rootLayout = new Group();
         rootLayout.getChildren().addAll(backgroundImageView, menuBox, soundIconPane);
 
-        // Add event handler for start button
+        // Event handler for start button
         startButton.setOnStartGame(() -> {
             try {
-                GameStateManager.getInstance().resumeGame();
+                GameStateManager.getInstance().resumeGame();   //explicitly true flag true whenever game starts
                 Controller gameController = new Controller(primaryStage);
                 gameController.launchGame();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         });
+        customizeButton.setOnCustomize(() -> {
+            CustomizationScreen customizationScreen = new CustomizationScreen(primaryStage, () -> {
+                new MainMenu(primaryStage);
+            });
+            primaryStage.getScene().setRoot(customizationScreen);
+        });
 
-        // Add event handler for quit button
         quitButton.setOnQuit(primaryStage);
 
-        // Create the scene with the root layout and set it to the stage
         Scene scene = new Scene(rootLayout, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // Request focus so key events are recognized
         rootLayout.requestFocus();
     }
 }

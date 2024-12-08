@@ -45,6 +45,7 @@ public class PowerUpMenu extends OnScreenMenu {
                 removeOverlay();
                 GameStateManager.getInstance().resumeGame();
                 AlertManager.getInstance().showAlert("You are now One Heart Stronger!!!");
+                AlertManager.getInstance().showAlert("You are now One Heart Stronger!!!");
 
             } else {
                 AlertManager.getInstance().showAlert("Not Enough coins for Extra Health");

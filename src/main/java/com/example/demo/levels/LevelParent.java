@@ -4,6 +4,7 @@ import java.util.*;
 import com.example.demo.*;
 import com.example.demo.Managers.*;
 import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.Factories.UserPlaneFactory;
 import com.example.demo.actors.active.FighterPlane;
 import com.example.demo.actors.collectibles.ShieldImage;
 import com.example.demo.actors.collectibles.Coin;
@@ -48,7 +49,8 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 
 		this.root = new Group();
 		this.scene = new Scene(root, screenWidth, screenHeight);
-		this.user = new UserPlane(playerInitialHealth);
+		UserPlaneFactory.setInitialHealth(playerInitialHealth);
+		this.user = UserPlaneFactory.createUserPlane();
 		this.actorManager = new ActorManager(root);
 		this.collisionManager = new CollisionManager(this, actorManager);
 		this.inputHandler = new InputHandlingManager(this, InputHandlingManager.MovementMode.VERTICAL_ONLY);
