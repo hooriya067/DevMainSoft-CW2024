@@ -3,7 +3,7 @@ package com.example.demo.UI.buttons;
 public class PauseButtonDisplay extends ButtonParent {
 
     public PauseButtonDisplay() {
-        super("/com/example/demo/images/pause_icon.png", 50, true);
+        super("/com/example/demo/images/pause_icon.png", 60, true);
     }
 
     public void setPosition(double x, double y) {

@@ -9,7 +9,6 @@ import com.example.demo.UI.buttons.PowerUpButton;
 import com.example.demo.UI.menu.PauseMenu;
 import com.example.demo.UI.menu.PowerUpMenu;
 import com.example.demo.UI.screens.GameOverImage;
-import com.example.demo.UI.screens.WinImage;
 import com.example.demo.actors.collectibles.HeartDisplay;
 import com.example.demo.core.GameConfig;
 import com.example.demo.core.StageManager;
@@ -25,15 +24,13 @@ public abstract class LevelView {
 
 	private static final double HEART_DISPLAY_X_POSITION = 5;
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
-	private static final int WIN_IMAGE_X_POSITION = 355;
-	private static final int WIN_IMAGE_Y_POSITION = 175;
-	private static final double PAUSE_BUTTON_X_POSITION =1200; // Adjusted position for easier visibility
+	private static final double PAUSE_BUTTON_X_POSITION =1200;
 	private static final double PAUSE_BUTTON_Y_POSITION = 20;
 	private static final double COIN_DISPLAY_X_POSITION = 1200;
-	private static final double COIN_DISPLAY_Y_POSITION = 80;
-	private static final double BULLET_DISPLAY_X_POSITION = 1150; // Same X position for right alignment
-	private static final double BULLET_DISPLAY_Y_POSITION = GameConfig.SCREEN_HEIGHT - 100; // Move it up slightly from the bottom
-	private static final double POWER_UP_BUTTON_X_POSITION = 1140;
+	private static final double COIN_DISPLAY_Y_POSITION = 90;
+	private static final double BULLET_DISPLAY_X_POSITION = 1140;
+	private static final double BULLET_DISPLAY_Y_POSITION = GameConfig.SCREEN_HEIGHT - 100;
+	private static final double POWER_UP_BUTTON_X_POSITION = 1120;
 	private static final double POWER_UP_BUTTON_Y_POSITION = 20;
 
 	private final Group root;
@@ -43,7 +40,6 @@ public abstract class LevelView {
 	private Timeline shieldTimer;
 	private static final double TIMER_X_POSITION = 580;
 	private static final double TIMER_Y_POSITION = 100;
-	private final WinImage winImage;
 	private final GameOverImage gameOverImage;
 	private final HeartDisplay heartDisplay;
 	private final PauseButtonDisplay pauseButtonDisplay;
@@ -55,7 +51,6 @@ public abstract class LevelView {
 		this.root=root;
 		this.levelParent = levelParent;
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
-		this.winImage = new WinImage(WIN_IMAGE_X_POSITION, WIN_IMAGE_Y_POSITION);
 		this.gameOverImage = new GameOverImage(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		this.pauseButtonDisplay = new PauseButtonDisplay();
 		this.pauseButtonDisplay.setPosition(PAUSE_BUTTON_X_POSITION, PAUSE_BUTTON_Y_POSITION);
@@ -64,7 +59,7 @@ public abstract class LevelView {
 
 		this.coinCountLabel.setLayoutX(COIN_DISPLAY_X_POSITION);
 		this.coinCountLabel.setLayoutY(COIN_DISPLAY_Y_POSITION);
-		this.coinCountLabel.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: yellow;");
+		this.coinCountLabel.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: yellow;");
 
 		this.powerUpButton = new PowerUpButton();
 		this.powerUpButton.setPosition(POWER_UP_BUTTON_X_POSITION, POWER_UP_BUTTON_Y_POSITION);
@@ -78,9 +73,9 @@ public abstract class LevelView {
 		root.getChildren().add(shieldTimerLabel);
 
 		bulletCountLabel = new Label("Bullets: 0"); // Initial display
-		bulletCountLabel.setLayoutX(BULLET_DISPLAY_X_POSITION); // Adjust for screen width
+		bulletCountLabel.setLayoutX(BULLET_DISPLAY_X_POSITION);
 		bulletCountLabel.setLayoutY(BULLET_DISPLAY_Y_POSITION);
-		bulletCountLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: red;");
+		bulletCountLabel.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: red;");
 
 		addUIElementsToRoot();
 	}
