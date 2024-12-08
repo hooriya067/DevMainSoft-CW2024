@@ -23,7 +23,7 @@ public class MainMenu {
     private static final double MENU_HEIGHT = GameConfig.SCREEN_HEIGHT;
 
     public MainMenu(Stage primaryStage) {
-        // Load the background image
+
         Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResource("/com/example/demo/images/background0.png")).toExternalForm());
         ImageView backgroundImageView = new ImageView(backgroundImage);
         backgroundImageView.setFitWidth(MENU_WIDTH);
@@ -47,8 +47,8 @@ public class MainMenu {
         // GridPane for buttons
         GridPane buttonGrid = new GridPane();
         buttonGrid.setAlignment(Pos.CENTER);
-        buttonGrid.setHgap(20); // Horizontal gap between buttons
-        buttonGrid.setVgap(30); // Vertical gap between rows
+        buttonGrid.setHgap(0);
+        buttonGrid.setVgap(0);
 
         // Buttons
         StartGameButton startButton = new StartGameButton();
@@ -57,10 +57,10 @@ public class MainMenu {
         QuitButton quitButton = new QuitButton();
 
         // Add buttons to grid (row, column)
-        buttonGrid.add(startButton.getButton(), 0, 0); // Row 0, Col 0
-        buttonGrid.add(customizeButton.getButton(), 1, 0); // Row 0, Col 1
-        buttonGrid.add(instructionButton.getButton(), 0, 1); // Row 1, Col 0
-        buttonGrid.add(quitButton.getButton(), 1, 1); // Row 1, Col 1
+        buttonGrid.add(startButton.getButton(), 0, 0);
+        buttonGrid.add(customizeButton.getButton(), 1, 0);
+        buttonGrid.add(instructionButton.getButton(), 0, 1);
+        buttonGrid.add(quitButton.getButton(), 1, 1);
 
         // Align buttons in the grid
         GridPane.setHalignment(startButton.getButton(), HPos.CENTER);
@@ -83,11 +83,9 @@ public class MainMenu {
         soundButton.getSoundButtonImage().setLayoutX(GameConfig.SCREEN_WIDTH - 120);
         soundButton.getSoundButtonImage().setLayoutY(20);
 
-        // Create a Group for layout
         Group rootLayout = new Group();
         rootLayout.getChildren().addAll(backgroundImageView, greyBox, soundIconPane);
 
-        // Event handler for start button
         startButton.setOnStartGame(() -> {
             try {
                 GameStateManager.getInstance().resumeGame();

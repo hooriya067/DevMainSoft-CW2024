@@ -56,7 +56,6 @@ public abstract class LevelView {
 		this.pauseButtonDisplay.setPosition(PAUSE_BUTTON_X_POSITION, PAUSE_BUTTON_Y_POSITION);
 		// Coin counter label
 		this.coinCountLabel = new Label("\uD83D\uDCB0: 0");
-
 		this.coinCountLabel.setLayoutX(COIN_DISPLAY_X_POSITION);
 		this.coinCountLabel.setLayoutY(COIN_DISPLAY_Y_POSITION);
 		this.coinCountLabel.setStyle("-fx-font-size: 30px; -fx-font-weight: bold; -fx-text-fill: yellow;");

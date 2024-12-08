@@ -42,8 +42,4 @@ public class UserPlaneFactory {
         horizontalVelocity = horizontal;
     }
 
-    public static void setBounds(double newYLowerBound, double newToolbarHeight) {
-        yLowerBound = newYLowerBound;
-        toolbarHeight = newToolbarHeight;
-    }
 }
