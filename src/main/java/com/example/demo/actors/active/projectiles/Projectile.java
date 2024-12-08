@@ -1,10 +1,10 @@
 package com.example.demo.actors.active.projectiles;
 
 
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.core.GameStateManager;
 
-public class Projectile extends ActiveActorDestructible {
+public class Projectile extends ActiveActor {
 	private final double horizontalVelocity;  // Change from int to double
 
 	public Projectile(String imageName, int imageHeight, double initialXPos, double initialYPos, double horizontalVelocity) {  // Change the parameter type to double

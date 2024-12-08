@@ -1,6 +1,6 @@
 package com.example.demo.Managers;
 
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.collectibles.Coin;
 import com.example.demo.core.Updatable;
 import javafx.scene.Group;
@@ -10,10 +10,10 @@ import java.util.stream.Collectors;
 
 public class ActorManager implements Updatable {
 
-    private final List<ActiveActorDestructible> friendlyUnits = new ArrayList<>();
-    private final List<ActiveActorDestructible> enemyUnits = new ArrayList<>();
-    private final List<ActiveActorDestructible> userProjectiles = new ArrayList<>();
-    private final List<ActiveActorDestructible> enemyProjectiles = new ArrayList<>();
+    private final List<ActiveActor> friendlyUnits = new ArrayList<>();
+    private final List<ActiveActor> enemyUnits = new ArrayList<>();
+    private final List<ActiveActor> userProjectiles = new ArrayList<>();
+    private final List<ActiveActor> enemyProjectiles = new ArrayList<>();
     private final List<Coin> coins = new ArrayList<>();
     private final Group root;
 
@@ -27,7 +27,7 @@ public class ActorManager implements Updatable {
     }
 
     // Add methods
-    public void addFriendlyUnit(ActiveActorDestructible unit) {
+    public void addFriendlyUnit(ActiveActor unit) {
         if (friendlyUnits.contains(unit)) {
             System.out.println("Duplicate friendly unit detected: " + unit);
             return; // Prevent adding duplicate
@@ -35,7 +35,7 @@ public class ActorManager implements Updatable {
         friendlyUnits.add(unit);
         root.getChildren().add(unit);
     }
-    public void addEnemyUnit(ActiveActorDestructible unit) {
+    public void addEnemyUnit(ActiveActor unit) {
         if (unit == null) {
             System.err.println("Attempted to add a null enemy!");
             return;
@@ -45,7 +45,7 @@ public class ActorManager implements Updatable {
         root.getChildren().add(unit);
     }
 
-    public void addUserProjectile(ActiveActorDestructible projectile) {
+    public void addUserProjectile(ActiveActor projectile) {
         if (projectile == null) {
             System.err.println("Attempted to add a null projectile to the root!");
             return;
@@ -53,7 +53,7 @@ public class ActorManager implements Updatable {
         userProjectiles.add(projectile);
         root.getChildren().add(projectile);
     }
-    public void addEnemyProjectile(ActiveActorDestructible projectile) {
+    public void addEnemyProjectile(ActiveActor projectile) {
         if (!enemyProjectiles.contains(projectile)) { // Prevent duplicate addition
             enemyProjectiles.add(projectile);
             root.getChildren().add(projectile);
@@ -80,19 +80,19 @@ public class ActorManager implements Updatable {
         coins.removeIf(Coin::isDestroyed);
     }
 
-    private void removeDestroyed(List<ActiveActorDestructible> actors) {
-        List<ActiveActorDestructible> destroyedActors = actors.stream()
-                .filter(ActiveActorDestructible::isDestroyed)
+    private void removeDestroyed(List<ActiveActor> actors) {
+        List<ActiveActor> destroyedActors = actors.stream()
+                .filter(ActiveActor::isDestroyed)
                 .collect(Collectors.toList());
         root.getChildren().removeAll(destroyedActors);
         actors.removeAll(destroyedActors);
     }
 
     public void updateActors() {
-        friendlyUnits.forEach(ActiveActorDestructible::updateActor);
-        enemyUnits.forEach(ActiveActorDestructible::updateActor);
-        userProjectiles.forEach(ActiveActorDestructible::updateActor);
-        enemyProjectiles.forEach(ActiveActorDestructible::updateActor);
+        friendlyUnits.forEach(ActiveActor::updateActor);
+        enemyUnits.forEach(ActiveActor::updateActor);
+        userProjectiles.forEach(ActiveActor::updateActor);
+        enemyProjectiles.forEach(ActiveActor::updateActor);
         root.getChildren().stream()
                 .filter(node -> node instanceof Coin)
                 .map(node -> (Coin) node)
@@ -101,19 +101,19 @@ public class ActorManager implements Updatable {
 
 
     // Getters for actor lists
-    public List<ActiveActorDestructible> getFriendlyUnits() {
+    public List<ActiveActor> getFriendlyUnits() {
         return friendlyUnits;
     }
 
-    public List<ActiveActorDestructible> getEnemyUnits() {
+    public List<ActiveActor> getEnemyUnits() {
         return enemyUnits;
     }
 
-    public List<ActiveActorDestructible> getUserProjectiles() {
+    public List<ActiveActor> getUserProjectiles() {
         return userProjectiles;
     }
 
-    public List<ActiveActorDestructible> getEnemyProjectiles() {
+    public List<ActiveActor> getEnemyProjectiles() {
         return enemyProjectiles;
     }
 

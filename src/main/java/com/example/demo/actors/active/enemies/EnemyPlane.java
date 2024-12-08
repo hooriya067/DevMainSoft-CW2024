@@ -2,7 +2,7 @@ package com.example.demo.actors.active.enemies;
 
 import com.example.demo.levels.LevelParent;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 
 public class EnemyPlane extends EnemyParent {
 
@@ -24,7 +24,7 @@ public class EnemyPlane extends EnemyParent {
 	}
 
 	@Override
-	public ActiveActorDestructible fireProjectileWhenActive() {
+	public ActiveActor fireProjectileWhenActive() {
 		return Math.random() < FIRE_RATE
 					? ProjectileFactory.createProjectile("ENEMY_PROJECTILE", getProjectileXPosition(0), getProjectileYPosition(20), levelParent)
 					: null;}

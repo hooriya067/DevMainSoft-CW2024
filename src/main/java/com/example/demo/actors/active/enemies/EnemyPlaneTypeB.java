@@ -3,7 +3,7 @@ package com.example.demo.actors.active.enemies;
 import com.example.demo.levels.LevelParent;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
 import com.example.demo.actors.user.UserPlane;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 
 public class EnemyPlaneTypeB extends EnemyParent {
 
@@ -25,7 +25,7 @@ public class EnemyPlaneTypeB extends EnemyParent {
     }
 
     @Override
-    public ActiveActorDestructible fireProjectileWhenActive() {
+    public ActiveActor fireProjectileWhenActive() {
         UserPlane userPlane = levelParent.getUser(); // Access UserPlane from LevelParent
         if (Math.random() < 0.0008) {
             return ProjectileFactory.createProjectile(

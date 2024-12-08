@@ -2,7 +2,7 @@ package com.example.demo.actors.active.enemies;
 
 import com.example.demo.levels.LevelParent;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -76,7 +76,7 @@ public class Boss extends EnemyParent {
 
 
 	@Override
-	public ActiveActorDestructible fireProjectileWhenActive() {{
+	public ActiveActor fireProjectileWhenActive() {{
 			return Math.random() < BOSS_FIRE_RATE
 					? ProjectileFactory.createProjectile("BOSS_PROJECTILE",0, getProjectileInitialPosition(), levelParent)
 					: null;

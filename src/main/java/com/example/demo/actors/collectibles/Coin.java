@@ -1,8 +1,7 @@
 package com.example.demo.actors.collectibles;
 
-import com.example.demo.Managers.CoinSystemManager;
 import com.example.demo.levels.LevelParent;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.core.GameStateManager;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
@@ -10,7 +9,7 @@ import javafx.scene.Group;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-public class Coin extends ActiveActorDestructible {
+public class Coin extends ActiveActor {
 
     private static final String IMAGE_NAME = "coin.png";
     private static final int IMAGE_SIZE = 25; // Size of the coin

@@ -2,7 +2,7 @@ package com.example.demo.actors.active.enemies;
 
 import com.example.demo.actors.active.FighterPlane;
 import com.example.demo.levels.LevelParent;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.core.GameStateManager;
 
 public abstract class EnemyParent extends FighterPlane implements Enemy {
@@ -24,14 +24,14 @@ public abstract class EnemyParent extends FighterPlane implements Enemy {
     }
 
     @Override
-    public ActiveActorDestructible fireProjectile() {
+    public ActiveActor fireProjectile() {
         if (GameStateManager.getInstance().isGamePaused()) {
             return null;
         }
         return fireProjectileWhenActive(); // Delegate to abstract method
     }
 
-    protected abstract ActiveActorDestructible fireProjectileWhenActive();
+    protected abstract ActiveActor fireProjectileWhenActive();
 
     @Override
     public void updatePosition() {

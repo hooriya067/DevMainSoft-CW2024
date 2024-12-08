@@ -3,7 +3,7 @@ package com.example.demo.levels;
 
 import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.collectibles.FlarePowerUp;
 import com.example.demo.actors.active.enemies.EnemyParent;
 import com.example.demo.actors.active.Factories.EnemyFactory;
@@ -64,7 +64,7 @@ public class LevelFour extends LevelParent {
         double spawnProbability = 0.01; // Adjust this value for bomb frequency
         if (Math.random() < spawnProbability) {
             double randomXPosition = Math.random() * getScreenWidth();
-            ActiveActorDestructible bomb = ProjectileFactory.createProjectile("BOMB", randomXPosition, 0, null);
+            ActiveActor bomb = ProjectileFactory.createProjectile("BOMB", randomXPosition, 0, null);
             addProjectileToLevel(bomb);
         }
     }

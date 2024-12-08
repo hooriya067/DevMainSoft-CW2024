@@ -1,10 +1,10 @@
 package com.example.demo.actors.active.projectiles;
 
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.core.GameStateManager;
 import com.example.demo.levels.LevelParent;
 
-public class Meteor extends ActiveActorDestructible {
+public class Meteor extends ActiveActor {
 
     private static final String IMAGE_NAME = "meteor.png";
     private static final int IMAGE_HEIGHT = 50;

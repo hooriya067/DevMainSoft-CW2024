@@ -1,14 +1,17 @@
 package com.example.demo.actors.active;
 
-import javafx.scene.image.*;
+import com.example.demo.actors.active.destructible.Destructible;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import java.util.Objects;
 
-public abstract class ActiveActor extends ImageView {
+public abstract class ActiveActor extends ImageView implements Destructible {
+
 	private static final String IMAGE_LOCATION = "/com/example/demo/images/";
+	private boolean isDestroyed;
 
 	public ActiveActor(String imageName, int imageHeight, double initialXPos, double initialYPos) {
-		// Ensure that the image name provided actually resolves to a valid resource
 		try {
 			this.setImage(new Image(Objects.requireNonNull(getClass().getResource(IMAGE_LOCATION + imageName)).toExternalForm()));
 		} catch (NullPointerException e) {
@@ -18,18 +21,37 @@ public abstract class ActiveActor extends ImageView {
 		this.setLayoutY(initialYPos);
 		this.setFitHeight(imageHeight);
 		this.setPreserveRatio(true);
+		this.isDestroyed = false; // Initialize as not destroyed
 	}
 
+	public abstract void updatePosition(); // Movement logic specific to subclasses
+	public abstract void updateActor();
 
-	public abstract void
-	updatePosition();
-
-	protected void moveHorizontally(double horizontalMove) {
+	public void moveHorizontally(double horizontalMove) {
 		this.setTranslateX(getTranslateX() + horizontalMove);
 	}
 
-	protected void moveVertically(double verticalMove) {
+	public void moveVertically(double verticalMove) {
 		this.setTranslateY(getTranslateY() + verticalMove);
 	}
 
+	@Override
+	public void takeDamage() {
+		destroy(); // Default implementation for taking damage
+	}
+
+	@Override
+	public void destroy() {
+		isDestroyed = true;
+	}
+
+	public boolean isDestroyed() {
+		return isDestroyed;
+	}
+	protected void setDestroyed(boolean isDestroyed) {
+		this.isDestroyed = isDestroyed;
+	}
+
+
 }
+

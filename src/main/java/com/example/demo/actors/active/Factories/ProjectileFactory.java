@@ -2,7 +2,7 @@ package com.example.demo.actors.active.Factories;
 
 import com.example.demo.actors.active.projectiles.*;
 import com.example.demo.actors.user.UserPlane;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 
 public class ProjectileFactory {
 //
@@ -17,7 +17,7 @@ public class ProjectileFactory {
 //            default -> throw new IllegalArgumentException("Invalid projectile type: " + type);
 //        };
 //    }
-public static ActiveActorDestructible createProjectile(String type, double x, double y, Object... additionalParams) {
+public static ActiveActor createProjectile(String type, double x, double y, Object... additionalParams) {
     return switch (type.toUpperCase()) {
         case "USER_PROJECTILE" -> new UserProjectile(x, y);
         case "BOSS_PROJECTILE" -> new BossProjectile(y);

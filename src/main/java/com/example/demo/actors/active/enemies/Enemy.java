@@ -1,11 +1,11 @@
 package com.example.demo.actors.active.enemies;
 
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 
 public interface Enemy {
     void updatePosition();
     void updateActor();
-    ActiveActorDestructible fireProjectile();
+    ActiveActor fireProjectile();
     void takeDamage();
     void destroy();
 }

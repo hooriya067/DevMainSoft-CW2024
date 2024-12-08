@@ -3,7 +3,7 @@ import java.util.*;
 
 import com.example.demo.*;
 import com.example.demo.Managers.*;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Factories.UserPlaneFactory;
 import com.example.demo.actors.active.FighterPlane;
 import com.example.demo.actors.collectibles.ShieldImage;
@@ -154,7 +154,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 			AlertManager.getInstance().showAlert("Bullets are FINISHED!! Collect coins to buy more!");
 			return;
 		}
-		ActiveActorDestructible projectile = user.fireProjectile();
+		ActiveActor projectile = user.fireProjectile();
 		actorManager.addUserProjectile(projectile);
 	}
 
@@ -163,7 +163,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 		actorManager.getEnemyUnits().forEach(enemy -> spawnEnemyProjectile(((FighterPlane) enemy).fireProjectile()));
 	}
 
-	protected void spawnEnemyProjectile(ActiveActorDestructible projectile) {
+	protected void spawnEnemyProjectile(ActiveActor projectile) {
 		if (projectile != null) {
 			actorManager.addEnemyProjectile(projectile);
 		}
@@ -199,11 +199,11 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 		numberOfKills++;
 	}
 
-	protected void addEnemyUnit(ActiveActorDestructible enemy) {
+	protected void addEnemyUnit(ActiveActor enemy) {
 		actorManager.addEnemyUnit(enemy);
 	}
 
-	protected void addProjectileToLevel(ActiveActorDestructible projectile) {
+	protected void addProjectileToLevel(ActiveActor projectile) {
 		if (projectile != null) {
 			actorManager.addEnemyProjectile(projectile);
 		}

@@ -1,6 +1,6 @@
 package com.example.demo.actors.collectibles;
 
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.GameStateManager;
 import com.example.demo.levels.LevelFour;
@@ -8,7 +8,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 
-public class FlarePowerUp extends ActiveActorDestructible {
+public class FlarePowerUp extends ActiveActor {
 
     private static final String IMAGE_NAME = "flare_powerup.png";
     private static final int IMAGE_HEIGHT = 40;

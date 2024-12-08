@@ -1,6 +1,6 @@
 package com.example.demo.actors.active;
 
-public abstract class FighterPlane extends ActiveActorDestructible {
+public abstract class FighterPlane extends ActiveActor {
 
 	protected int health;
 	private double horizontalVelocity; // Add horizontal velocity property
@@ -20,7 +20,7 @@ public abstract class FighterPlane extends ActiveActorDestructible {
 		this.horizontalVelocity = horizontalVelocity;
 	}
 
-	public abstract ActiveActorDestructible fireProjectile();
+	public abstract ActiveActor fireProjectile();
 
 //		if (GameStateManager.isPaused) {
 //			return;

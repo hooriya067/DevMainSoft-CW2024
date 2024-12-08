@@ -3,7 +3,7 @@ package com.example.demo.actors.user;
 import com.example.demo.Managers.BulletSystemManager;
 import com.example.demo.Managers.SoundManager;
 import com.example.demo.actors.active.FighterPlane;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
 
 public class UserPlane extends FighterPlane {
@@ -54,7 +54,7 @@ public class UserPlane extends FighterPlane {
 	}
 
 	@Override
-	public ActiveActorDestructible fireProjectile() {
+	public ActiveActor fireProjectile() {
 		SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/userfire.mp3");
 		BulletSystemManager bulletManager = BulletSystemManager.getInstance();
 

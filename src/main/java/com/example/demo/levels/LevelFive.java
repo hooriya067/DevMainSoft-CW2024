@@ -2,7 +2,7 @@ package com.example.demo.levels;
 
 import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Factories.EnemyFactory;
 import com.example.demo.levels.view.LevelVeiwLevelFive;
 import com.example.demo.levels.view.LevelView;
@@ -47,7 +47,7 @@ public class LevelFive extends LevelParent {
             } else {
                 enemyType = "TYPEB";
             }
-            ActiveActorDestructible newEnemy = EnemyFactory.createEnemy(enemyType, getScreenWidth(), randomYPosition, this);
+            ActiveActor newEnemy = EnemyFactory.createEnemy(enemyType, getScreenWidth(), randomYPosition, this);
             addEnemyUnit(newEnemy); // Add the enemy to the level
         }
     }

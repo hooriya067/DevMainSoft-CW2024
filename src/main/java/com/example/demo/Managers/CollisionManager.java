@@ -1,6 +1,6 @@
 package com.example.demo.Managers;
 
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.collectibles.Coin;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.Updatable;
@@ -64,19 +64,19 @@ public class CollisionManager implements Updatable {
             level.getCoins().removeAll(coinsToRemove);
         });
     }
-    public void handleEnemyPenetration(List<ActiveActorDestructible> enemies) {
+    public void handleEnemyPenetration(List<ActiveActor> enemies) {
         double screenWidth = level.getScreenWidth();
-        for (ActiveActorDestructible enemy : enemies) {
+        for (ActiveActor enemy : enemies) {
             if (Math.abs(enemy.getTranslateX()) > screenWidth) {
                 enemy.destroy();
             }
         }
     }
 
-    private void handleCollisions(List<ActiveActorDestructible> actors1, List<ActiveActorDestructible> actors2) {
+    private void handleCollisions(List<ActiveActor> actors1, List<ActiveActor> actors2) {
         boolean isShieldActive = level.isShieldActive();
-        for (ActiveActorDestructible actor : actors2) {
-            for (ActiveActorDestructible otherActor : actors1) {
+        for (ActiveActor actor : actors2) {
+            for (ActiveActor otherActor : actors1) {
                 if (actor.getBoundsInParent().intersects(otherActor.getBoundsInParent())) {
                     if ((actor instanceof UserPlane && isShieldActive) || (otherActor instanceof UserPlane && isShieldActive)) {
                         handleShieldCollision(actor, otherActor);
@@ -88,7 +88,7 @@ public class CollisionManager implements Updatable {
         }
     }
 
-    private void handleShieldCollision(ActiveActorDestructible actor, ActiveActorDestructible otherActor) {
+    private void handleShieldCollision(ActiveActor actor, ActiveActor otherActor) {
         System.out.println("Shield absorbed collision! No damage to user.");
         if (!(actor instanceof UserPlane)) {
             actor.takeDamage();
@@ -98,7 +98,7 @@ public class CollisionManager implements Updatable {
         }
     }
 
-    private void handleRegularCollision(ActiveActorDestructible actor, ActiveActorDestructible otherActor) {
+    private void handleRegularCollision(ActiveActor actor, ActiveActor otherActor) {
         actor.takeDamage();
         otherActor.takeDamage();
 

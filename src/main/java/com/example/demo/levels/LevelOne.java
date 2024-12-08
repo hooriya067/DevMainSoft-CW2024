@@ -2,7 +2,7 @@ package com.example.demo.levels;
 
 import com.example.demo.levels.view.LevelView;
 import com.example.demo.levels.view.LevelViewLevelOne;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Factories.EnemyFactory;
 
 public class LevelOne extends LevelParent {
@@ -28,7 +28,7 @@ public class LevelOne extends LevelParent {
 		if (Math.random() < spawnProbability && getCurrentNumberOfEnemies() < TOTAL_ENEMIES) {
 			double randomYPosition = TOOLBAR_HEIGHT + (Math.random() * (getEnemyMaximumYPosition() - TOOLBAR_HEIGHT));
 			//Factory
-			ActiveActorDestructible newEnemy = EnemyFactory.createEnemy(
+			ActiveActor newEnemy = EnemyFactory.createEnemy(
 					"ENEMY1", getScreenWidth(), randomYPosition, this);
 			addEnemyUnit(newEnemy); // Add the new enemy to the level
 		}

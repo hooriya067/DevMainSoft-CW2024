@@ -4,7 +4,7 @@ import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.levels.view.LevelView;
 import com.example.demo.levels.view.LevelViewLevelThree;
-import com.example.demo.actors.active.ActiveActorDestructible;
+import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Formation;
 import com.example.demo.actors.active.Factories.EnemyFactory;
 import com.example.demo.actors.active.enemies.EnemyPlaneTypeA;
@@ -40,7 +40,7 @@ public class LevelThree extends LevelParent {
         if (Math.random() < spawnProbability && getCurrentNumberOfEnemies() < TOTAL_ENEMIES) {
             double randomYPosition = TOOLBAR_HEIGHT + (Math.random() * (getEnemyMaximumYPosition() - TOOLBAR_HEIGHT));
             String enemyType = Math.random() < 0.39 ? "TYPEA" : "TYPEB";
-            ActiveActorDestructible newEnemy = EnemyFactory.createEnemy(enemyType, getScreenWidth(), randomYPosition, this);
+            ActiveActor newEnemy = EnemyFactory.createEnemy(enemyType, getScreenWidth(), randomYPosition, this);
             addEnemyUnit(newEnemy);
         }
 
