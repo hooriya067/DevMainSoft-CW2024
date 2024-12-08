@@ -60,10 +60,11 @@ public abstract class LevelView {
 		this.pauseButtonDisplay = new PauseButtonDisplay();
 		this.pauseButtonDisplay.setPosition(PAUSE_BUTTON_X_POSITION, PAUSE_BUTTON_Y_POSITION);
 		// Coin counter label
-		this.coinCountLabel = new Label("Coins: 0");
+		this.coinCountLabel = new Label("\uD83D\uDCB0: 0");
+
 		this.coinCountLabel.setLayoutX(COIN_DISPLAY_X_POSITION);
-		this.coinCountLabel.setLayoutY(COIN_DISPLAY_Y_POSITION); // Move down by 20
-		this.coinCountLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: yellow;");
+		this.coinCountLabel.setLayoutY(COIN_DISPLAY_Y_POSITION);
+		this.coinCountLabel.setStyle("-fx-font-size: 25px; -fx-font-weight: bold; -fx-text-fill: yellow;");
 
 		this.powerUpButton = new PowerUpButton();
 		this.powerUpButton.setPosition(POWER_UP_BUTTON_X_POSITION, POWER_UP_BUTTON_Y_POSITION);
@@ -72,7 +73,7 @@ public abstract class LevelView {
 		shieldTimerLabel = new Label("");
 		shieldTimerLabel.setLayoutX(TIMER_X_POSITION);
 		shieldTimerLabel.setLayoutY(TIMER_Y_POSITION);
-		shieldTimerLabel.setStyle("-fx-font-size: 20px; -fx-text-fill: cyan;");
+		shieldTimerLabel.setStyle("-fx-font-size: 20px;-fx-font-weight: bold; -fx-text-fill: cyan;");
 		shieldTimerLabel.setVisible(false); // Initially hidden
 		root.getChildren().add(shieldTimerLabel);
 
@@ -109,7 +110,7 @@ public void AddUI(){
 	}
 
 	public void updateCoinCount(int newCoinCount) {
-		coinCountLabel.setText("Coins: " + newCoinCount);
+		coinCountLabel.setText("\uD83D\uDCB0 : " + newCoinCount);
 	}
 
 	private void showLabels() {

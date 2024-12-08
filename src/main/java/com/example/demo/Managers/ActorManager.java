@@ -40,7 +40,7 @@ public class ActorManager implements Updatable {
             System.err.println("Attempted to add a null enemy!");
             return;
         }
-        System.out.println("Adding enemy: " + unit); // Debug: Check enemy addition
+        // System.out.println("Adding enemy: " + unit); // Debug: Check enemy addition
         enemyUnits.add(unit);
         root.getChildren().add(unit);
     }

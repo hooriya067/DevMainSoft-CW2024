@@ -14,43 +14,61 @@ public class Meteor extends ActiveActorDestructible {
     private final LevelParent level;
 
     public Meteor(LevelParent level) {
-        super(IMAGE_NAME, IMAGE_HEIGHT, level.getScreenWidth() - 50, -50); // Start near top-right corner
+        // Randomize initial position along the right edge or slightly above the screen
+        super(IMAGE_NAME, IMAGE_HEIGHT,
+                level.getScreenWidth() - 50 + Math.random() * 100, // Random X near the right edge
+                Math.random() < 0.5 ? -50 : Math.random() * 100); // Random Y above the screen
         this.level = level;
         initializeDirection(); // Set up the diagonal movement
-        System.out.println("Meteor spawned at X: " + getTranslateX() + ", Y: " + getTranslateY());
+       // System.out.println("Meteor spawned at X: " + getTranslateX() + ", Y: " + getTranslateY());
     }
-
     private void initializeDirection() {
-        // Define target as the bottom-left corner of the screen
-        double targetX = 0; // Target is the left edge of the screen
-        double targetY = level.getScreenHeight(); // Bottom edge of the screen
+        // Set the spawn point to the left edge of the screen
+        double spawnX = -55; // Spawn just outside the left edge
+        double spawnY = Math.random() * level.getScreenHeight() * 0.5; // Random Y within the top 50% of the screen
+
+        // Set the meteor's position
+        setTranslateX(spawnX);
+        setTranslateY(spawnY);
+
+        // Define target point (top-right to bottom-right areas)
+        double targetX = Math.random() * (level.getScreenWidth() / 2) + level.getScreenWidth(); // Target is toward the right half
+        double targetY = level.getScreenHeight(); // Bottom of the screen
 
         // Calculate direction vector
-        directionX = targetX - getTranslateX(); // From current X to target X
-        directionY = targetY - getTranslateY(); // From current Y to target Y
+        directionX = targetX - spawnX;
+        directionY = targetY - spawnY;
 
         // Normalize the vector to ensure constant speed
         double magnitude = Math.sqrt(directionX * directionX + directionY * directionY);
-        directionX = (directionX / magnitude) * speed;
-        directionY = (directionY / magnitude) * speed;
+        if (magnitude > 0) { // Avoid division by zero
+            directionX = (directionX / magnitude) * speed;
+            directionY = (directionY / magnitude) * speed;
+        } else {
+            System.err.println("Invalid direction vector magnitude!");
+        }
 
-        System.out.println("Direction X: " + directionX + ", Direction Y: " + directionY);
+        // Debug logs for verification
+     //   System.out.println("Meteor spawned at X: " + getTranslateX() + ", Y: " + getTranslateY());
+     //   System.out.println("Meteor direction - X: " + directionX + ", Y: " + directionY);
     }
+
 
     @Override
     public void updateActor() {
         if (GameStateManager.getInstance().isGamePaused()) {
             return;
         }
+
+        // Update position based on the calculated direction
         setTranslateX(getTranslateX() + directionX);
         setTranslateY(getTranslateY() + directionY);
 
         // Remove meteor if it leaves the screen
-        if (getTranslateX() < 0 || getTranslateY() > level.getScreenHeight()) {
+        if (getTranslateX() < -50 || getTranslateY() > level.getScreenHeight()) { // Check for left or bottom edge
             destroy();
         }
     }
-
 
     @Override
     public void updatePosition() {

@@ -63,22 +63,22 @@ public class LevelManager {
     }
 
     private void goToLevelIntro(String levelName) {
-        try {
+//        try {
             currentLevelName = levelName; // Set the global current level name here
             LevelIntroScreen levelIntroScreen = new LevelIntroScreen(levelName, this);
             Scene introScene = levelIntroScreen.getScene();
             stage.setScene(introScene);
             BulletSystemManager.getInstance().setBulletsUsed(0);
-        } catch (IllegalArgumentException e) {
-            showErrorAlert(e);
-        }
+//        } catch (IllegalArgumentException e) {
+//            showErrorAlert(e);
+//        }
     }
     public void proceedToLevel(String levelName) {
         if (!levelName.equals(currentLevelName)) {
             throw new IllegalStateException("Level name mismatch. Expected: " + currentLevelName + ", Got: " + levelName);
         }
 
-        try {
+//        try {
             switch (levelName) {
                 case "LEVEL_ONE":
                     currentLevel = new LevelFive(stage.getHeight(), stage.getWidth());
@@ -104,9 +104,9 @@ public class LevelManager {
             Scene scene = currentLevel.initializeScenario();
             stage.setScene(scene);
             currentLevel.startGame();
-        } catch (IllegalArgumentException e) {
-            showErrorAlert(e);
-        }
+//        } catch (IllegalArgumentException e) {
+//            showErrorAlert(e);
+//        }
     }
     public void replayCurrentLevel() {
          if (currentLevelIndex > 0) {
