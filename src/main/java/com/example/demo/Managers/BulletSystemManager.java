@@ -12,7 +12,7 @@ public class BulletSystemManager {
 
     // Private constructor
     private BulletSystemManager() {
-        totalBullets = 100; // Initial bullet count 100
+        totalBullets = 100; // Initial bullet
         listeners = new ArrayList<>(); // Initialize the listeners list
     }
 
