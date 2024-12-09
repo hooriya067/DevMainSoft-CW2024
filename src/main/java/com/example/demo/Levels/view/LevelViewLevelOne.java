@@ -1,12 +1,12 @@
-package com.example.demo.levels.view;
+package com.example.demo.Levels.view;
 
 import com.example.demo.core.GameConfig;
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 
-public class LevelViewLevelOne extends LevelView {
+public class LevelViewLevelOne extends LevelViewParent {
     private Label killsLabel;
     public LevelViewLevelOne(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
         super(root, heartsToDisplay, screenWidth, screenHeight,levelParent);

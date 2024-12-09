@@ -1,23 +1,23 @@
 package com.example.demo.Managers;
 
 import com.example.demo.core.GameStateManager;
-import com.example.demo.levels.ControllableLevel;
+import com.example.demo.Levels.ControllableLevel;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 
+import java.awt.event.FocusEvent;
+
 public class InputHandlingManager {
-    private final ControllableLevel level; // Dependency on the interface
+    private final ControllableLevel level;
     public enum MovementMode {
         VERTICAL_ONLY, // UP and DOWN only
         FULL           // UP, DOWN, LEFT, RIGHT
     }
 
-   // private final LevelParent levelParent;
     private MovementMode movementMode;
 
     public InputHandlingManager(ControllableLevel level, MovementMode movementMode) {
         this.level = level;
-       //this.levelParent = levelParent;
         this.movementMode = movementMode;
     }
     public void setMovementMode(MovementMode movementMode) {
@@ -30,14 +30,16 @@ public class InputHandlingManager {
     }
 
     private void handleKeyPressed(KeyCode keyCode) {
-        if (GameStateManager.getInstance().isGamePaused()) {
-            return;
-        }
+        System.out.println("Key pressed: " + keyCode); // Log every key event
+
 
         switch (keyCode) {
             case UP -> level.getUser().moveUp();
             case DOWN -> level.getUser().moveDown();
-            case SPACE -> level.fireProjectile();
+            case SPACE ->{
+            if (!GameStateManager.getInstance().isGamePaused())
+                {level.fireProjectile();}
+            }
             case LEFT -> {
                 if (movementMode == MovementMode.FULL) {
                     level.getUser().moveLeft();
@@ -51,8 +53,9 @@ public class InputHandlingManager {
         }
     }
     private void handleKeyReleased(KeyCode keyCode) {
-        if (GameStateManager.getInstance().isGamePaused()) {
-            return; // Ignore input when the game is paused
+        if (GameStateManager.getInstance().isPaused) {
+            System.out.println("Key event received during pause: " + keyCode);
+return;
         }
 
         switch (keyCode) {

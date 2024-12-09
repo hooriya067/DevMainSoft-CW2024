@@ -11,9 +11,3 @@ public class BossProjectile extends Projectile {
 		super(IMAGE_NAME, IMAGE_HEIGHT, INITIAL_X_POSITION, initialYPos, HORIZONTAL_VELOCITY);
 	}
 }
-
-//ADDITIONS:-
-//
-//		- `updatePosition()`: Moves the projectile horizontally by a constant velocity (`HORIZONTAL_VELOCITY`), effectively updating its X position.
-//		- `updateActor()` : Calls `updatePosition()`, which means it also updates the position of the projectile.
-//	                     	This method is typically used as part of the game loop to refresh the state of the actor every frame.

@@ -1,5 +1,6 @@
 package com.example.demo.UI.menu;
 
+import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.SoundManager;
 import com.example.demo.core.GameConfig;
 import com.example.demo.core.GameStateManager;
@@ -30,6 +31,11 @@ public abstract class OnScreenMenu {
     }
 
     protected void displayOverlay(VBox menuContent) {
+        if (GameStateManager.getInstance().isGamePaused()) {
+            System.out.println("Game is already paused. Skipping overlay.");
+            return;
+        }
+
         SoundManager.getInstance().lowerBackgroundMusicVolume(0.2);
         if (overlayActive) {
             System.err.println(getClass().getSimpleName() + " menu is already active! overlayActive = true");
@@ -95,25 +101,7 @@ public abstract class OnScreenMenu {
             System.err.println("Unexpected root type for the scene.");
         }
     }
-    protected void showAlert(String message) {
-        Text alertText = new Text(message);
-        alertText.setFont(Font.font("Roboto", 22));
-        alertText.setStyle("-fx-fill: red; -fx-font-weight: bold;");
-
-        alertText.setLayoutX(GameConfig.SCREEN_WIDTH / 2 - 150);
-        alertText.setLayoutY(GameConfig.SCREEN_HEIGHT / 2 - 200);
-
-        if (stage.getScene().getRoot() instanceof Group) {
-            Group root = (Group) stage.getScene().getRoot();
-            root.getChildren().add(alertText);
-
-            FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), alertText);
-            fadeOut.setFromValue(1.0);
-            fadeOut.setToValue(0.0);
-            fadeOut.setOnFinished(e -> root.getChildren().remove(alertText));
-            fadeOut.play();
-        }
-    }
 
     protected abstract VBox createMenuContent();
+
 }

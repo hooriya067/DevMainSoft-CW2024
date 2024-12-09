@@ -4,7 +4,7 @@ import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.collectibles.Coin;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.Updatable;
-import com.example.demo.levels.ControllableLevel;
+import com.example.demo.Levels.ControllableLevel;
 import javafx.application.Platform;
 import javafx.scene.Node;
 

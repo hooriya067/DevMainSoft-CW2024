@@ -5,7 +5,7 @@ import com.example.demo.UI.buttons.NextButton;
 import com.example.demo.UI.buttons.PlayAgainButton;
 import com.example.demo.actors.collectibles.StarDisplay;
 import com.example.demo.core.StageManager;
-import com.example.demo.levels.LevelManager;
+import com.example.demo.Managers.LevelManager;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;

@@ -1,4 +1,4 @@
-package com.example.demo.levels.effects;
+package com.example.demo.Levels.effects;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

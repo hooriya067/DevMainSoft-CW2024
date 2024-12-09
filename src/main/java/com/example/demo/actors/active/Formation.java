@@ -22,7 +22,6 @@ public class Formation {
         }
     }
 
-    // Update positions for all units in V-shape
     public void updateFormationPosition() {
         if (!leaderDestroyed && leader != null && !leader.isDestroyed()) {
             double leaderX = leader.getTranslateX();
@@ -55,19 +54,6 @@ public class Formation {
             }
         }
     }
-
-    public void increaseFormationSize(double screenWidth, double initialY) {
-        int currentSize = formationUnits.size();
-        for (int i = 0; i < 3; i++) { // Add 3 new units
-            EnemyPlaneTypeA newUnit = new EnemyPlaneTypeA(
-                    screenWidth + 50 * (currentSize + i),
-                    initialY + 50,
-                    null // Pass null for LevelParent (adjust logic as needed)
-            );
-            formationUnits.add(newUnit);
-        }
-    }
-
     public boolean isLeaderDestroyed() {
         return leader != null && leader.isDestroyed();
     }

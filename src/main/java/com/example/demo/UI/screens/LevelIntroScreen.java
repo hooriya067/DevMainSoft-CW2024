@@ -1,7 +1,7 @@
 package com.example.demo.UI.screens;
 
 import com.example.demo.core.GameConfig;
-import com.example.demo.levels.LevelManager;
+import com.example.demo.Managers.LevelManager;
 import javafx.animation.Timeline;
 import javafx.animation.KeyFrame;
 import javafx.animation.TranslateTransition;

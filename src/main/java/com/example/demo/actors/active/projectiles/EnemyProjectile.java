@@ -11,8 +11,4 @@ public class EnemyProjectile extends Projectile {
 		super(IMAGE_NAME, IMAGE_HEIGHT, initialXPos, initialYPos, HORIZONTAL_VELOCITY);
 	}
 
-	@Override
-	public void updateActor() {
-		updatePosition();
-	}
 }

@@ -1,4 +1,4 @@
-package com.example.demo.levels;
+package com.example.demo.Levels;
 import java.util.*;
 
 import com.example.demo.*;
@@ -13,7 +13,7 @@ import com.example.demo.core.GameLoop;
 import com.example.demo.core.GameStateManager;
 import com.example.demo.core.StageManager;
 import com.example.demo.core.Updatable;
-import com.example.demo.levels.view.LevelView;
+import com.example.demo.Levels.view.LevelViewParent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
@@ -36,7 +36,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	private int numberOfKills;
 	private final ShieldImage userShield;
 
-	private final LevelView levelView;
+	private final LevelViewParent levelView;
 	private final CollisionManager collisionManager;
 	protected final InputHandlingManager inputHandler;
 	private final GameLoop gameLoop;
@@ -99,7 +99,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 
 	protected abstract void spawnEnemyUnits();
 
-	protected abstract LevelView instantiateLevelView();
+	protected abstract LevelViewParent instantiateLevelView();
 
 	@Override
 	public Scene initializeScenario() {
@@ -234,7 +234,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 		return numberOfKills;
 	}
 
-	public LevelView getLevelView() {
+	public LevelViewParent getLevelView() {
 		return levelView;
 	}
 
@@ -247,5 +247,6 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	private void updateNumberOfEnemies() {
 		currentNumberOfEnemies =    actorManager.getEnemyUnits().size();
 	}
+
 }
 

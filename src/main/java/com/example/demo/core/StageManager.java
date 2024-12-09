@@ -1,6 +1,6 @@
 package com.example.demo.core;
 
-import com.example.demo.levels.LevelManager;
+import com.example.demo.Managers.LevelManager;
 import javafx.stage.Stage;
 
 public class StageManager {

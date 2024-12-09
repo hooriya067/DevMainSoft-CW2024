@@ -1,12 +1,12 @@
-package com.example.demo.levels.view;
+package com.example.demo.Levels.view;
 
 import com.example.demo.core.GameConfig;
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 
-public class LevelViewLevelFour extends LevelView {
+public class LevelViewLevelFour extends LevelViewParent {
 
     public static final int SCREEN_WIDTH = 1300;
     public static final int SCREEN_HEIGHT = 750;

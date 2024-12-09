@@ -1,4 +1,4 @@
-package com.example.demo.levels;
+package com.example.demo.Levels;
 
 import com.example.demo.actors.collectibles.Coin;
 import com.example.demo.actors.user.UserPlane;

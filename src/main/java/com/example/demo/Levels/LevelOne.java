@@ -1,7 +1,7 @@
-package com.example.demo.levels;
+package com.example.demo.Levels;
 
-import com.example.demo.levels.view.LevelView;
-import com.example.demo.levels.view.LevelViewLevelOne;
+import com.example.demo.Levels.view.LevelViewParent;
+import com.example.demo.Levels.view.LevelViewLevelOne;
 import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Factories.EnemyFactory;
 
@@ -34,7 +34,7 @@ public class LevelOne extends LevelParent {
 		}
 	}
 	@Override
-	protected LevelView instantiateLevelView() {
+	protected LevelViewParent instantiateLevelView() {
 		return new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(), this);
 	}
 

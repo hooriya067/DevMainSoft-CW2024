@@ -1,12 +1,11 @@
-package com.example.demo.levels;
+package com.example.demo.Managers;
 
-import com.example.demo.Managers.BulletSystemManager;
-import com.example.demo.Managers.SoundManager;
 import com.example.demo.UI.screens.LevelCompletedScreen;
 import com.example.demo.UI.screens.LevelIntroScreen;
 import com.example.demo.UI.screens.WinImage;
 import com.example.demo.controller.Controller;
 import com.example.demo.core.StageManager;
+import com.example.demo.Levels.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;

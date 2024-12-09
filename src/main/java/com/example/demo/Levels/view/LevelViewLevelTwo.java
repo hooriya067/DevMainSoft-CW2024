@@ -1,18 +1,12 @@
-package com.example.demo.levels.view;
+package com.example.demo.Levels.view;
 
 import com.example.demo.Managers.AlertManager;
 import com.example.demo.actors.collectibles.ShieldImage;
-import com.example.demo.levels.LevelParent;
-import javafx.animation.FadeTransition;
-import javafx.animation.PauseTransition;
-import javafx.animation.ScaleTransition;
+import com.example.demo.Levels.LevelParent;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.util.Duration;
 
 
-
-public class LevelViewLevelTwo extends LevelView {
+public class LevelViewLevelTwo extends LevelViewParent {
 
 
 	private static final int SHIELD_X_POSITION = 1150;

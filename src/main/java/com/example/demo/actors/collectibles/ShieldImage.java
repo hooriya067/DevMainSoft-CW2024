@@ -21,7 +21,7 @@ public class ShieldImage extends ImageView {
 
 	public void showShield() {
 		this.setVisible(true);
-		this.toFront(); // Ensure the shield is rendered above other elements
+		this.toFront();
 	}
 	public void hideShield() {
 		this.setVisible(false);
@@ -31,8 +31,5 @@ public class ShieldImage extends ImageView {
 		this.setLayoutX(xPosition);
 		this.setLayoutY(yPosition);
 	}
-//	public static int getShieldSize() {
-//		return SHIELD_SIZE;
-//	}
 
 }

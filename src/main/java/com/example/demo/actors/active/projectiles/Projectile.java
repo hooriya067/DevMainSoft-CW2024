@@ -20,7 +20,7 @@ public class Projectile extends ActiveActor {
 
 	public void updatePosition() {
 		if (GameStateManager.getInstance().isGamePaused()) {
-			return;  // Skip updating position if paused
+			return;
 		}
 		moveHorizontally(horizontalVelocity);
 	}

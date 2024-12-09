@@ -1,7 +1,7 @@
 package com.example.demo.actors.active.enemies;
 
 import com.example.demo.actors.active.FighterPlane;
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.core.GameStateManager;
 

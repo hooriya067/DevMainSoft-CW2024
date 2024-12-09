@@ -2,7 +2,7 @@ package com.example.demo.actors.active.projectiles;
 
 import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.core.GameStateManager;
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 
 public class Meteor extends ActiveActor {
 
@@ -71,12 +71,10 @@ public class Meteor extends ActiveActor {
     }
 
     @Override
-    public void updatePosition() {
-        // Movement is handled in updateActor
-    }
+    public void updatePosition() {}
 
     @Override
     public void takeDamage() {
-        destroy(); // Meteors are destroyed on impact
+        destroy();
     }
 }

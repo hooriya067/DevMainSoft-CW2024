@@ -8,8 +8,8 @@ import com.example.demo.actors.active.Factories.ProjectileFactory;
 
 public class UserPlane extends FighterPlane {
 
-	private double yLowerBound;
-	private double toolbarHeight;
+	private final double yLowerBound;
+	private final double toolbarHeight;
 	private int verticalVelocity;
 	private int horizontalVelocity;
 	private int velocityMultiplier;
@@ -62,7 +62,7 @@ public class UserPlane extends FighterPlane {
 			BulletSystemManager.getInstance().incrementBulletsUsed();
 			double currentXPosition = getLayoutX() + getTranslateX() + getFitWidth() + 120;
 			double currentYPosition = getLayoutY() + getTranslateY() + 20;
-			return ProjectileFactory.createProjectile("USER_PROJECTILE", currentXPosition, currentYPosition, null);
+			return ProjectileFactory.createProjectile("USER_PROJECTILE", currentXPosition, currentYPosition, (Object) null);
 		} else {
 			return null;
 		}

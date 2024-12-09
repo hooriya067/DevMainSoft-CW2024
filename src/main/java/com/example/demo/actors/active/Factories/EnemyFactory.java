@@ -3,7 +3,7 @@ package com.example.demo.actors.active.Factories;
 import com.example.demo.actors.active.enemies.EnemyParent;
 import com.example.demo.actors.active.enemies.*;
 import com.example.demo.core.GameConfig;
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 
 public class EnemyFactory {
 

@@ -1,11 +1,14 @@
 package com.example.demo.UI.menu;
 
+import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.Managers.SoundManager;
 import com.example.demo.UI.screens.MainMenu;
 import com.example.demo.UI.buttons.MainMenuButton;
 import com.example.demo.UI.buttons.QuitButton;
 import com.example.demo.UI.buttons.ResumeButton;
+import com.example.demo.core.GameStateManager;
 import javafx.geometry.Pos;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -18,6 +21,7 @@ public class PauseMenu extends OnScreenMenu {
     public void displayOverlay() {
 
         VBox menuContent = createMenuContent();
+
         super.displayOverlay(menuContent);
     }
 
@@ -44,4 +48,5 @@ public class PauseMenu extends OnScreenMenu {
         menuBox.getChildren().addAll(mainMenuButton.getButton(), resumeButton.getButton(), quitButton.getButton());
         return menuBox;
     }
+
 }

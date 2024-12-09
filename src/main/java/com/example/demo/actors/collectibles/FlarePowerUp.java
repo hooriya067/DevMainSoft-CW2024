@@ -1,9 +1,8 @@
 package com.example.demo.actors.collectibles;
 
 import com.example.demo.actors.active.ActiveActor;
-import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.GameStateManager;
-import com.example.demo.levels.LevelFour;
+import com.example.demo.Levels.LevelFour;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -20,7 +19,7 @@ public class FlarePowerUp extends ActiveActor {
         this.levelFour = levelFour;
     }
 
-    public void activate(UserPlane userPlane) {
+    public void activate() {
         // Activate flare to reveal hidden enemies for a duration
         levelFour.revealStealthEnemies(true);
         Timeline flareTimeline = new Timeline(new KeyFrame(Duration.seconds(FLARE_DURATION), event -> levelFour.revealStealthEnemies(false)));

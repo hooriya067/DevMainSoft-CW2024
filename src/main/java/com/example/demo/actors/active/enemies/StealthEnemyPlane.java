@@ -1,6 +1,6 @@
 package com.example.demo.actors.active.enemies;
 
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.actors.active.ActiveActor;
@@ -14,15 +14,15 @@ public class StealthEnemyPlane extends EnemyParent {
     private static final int IMAGE_HEIGHT = 50;
     private static final int PLANE_HEALTH = 3;
     private static final double INITIAL_VELOCITY = -3.0;
-    private static final double DETECTION_RADIUS = 200.0; // Distance at which the plane becomes visible
-    private static final double FIRE_RATE = 0.001; // Lower firing rate for stealth planes
+    private static final double DETECTION_RADIUS = 200.0;
+    private static final double FIRE_RATE = 0.001;
     private boolean isVisible;
     private Timeline visibilityCheckTimeline;
 
     public StealthEnemyPlane(double initialX, double initialY, LevelParent levelParent) {
         super(IMAGE_NAME, IMAGE_HEIGHT, initialX, initialY, PLANE_HEALTH, levelParent);
         setHorizontalVelocity(INITIAL_VELOCITY);
-        isVisible = false; // Initially invisible
+        isVisible = false;
         setVisible(isVisible);
         initializeVisibilityCheck();
     }

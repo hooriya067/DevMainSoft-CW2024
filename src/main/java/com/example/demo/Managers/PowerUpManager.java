@@ -1,6 +1,6 @@
 package com.example.demo.Managers;
 
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -26,7 +26,7 @@ public class PowerUpManager {
     public boolean purchaseExtraLife() {
         if (CoinSystemManager.getInstance().subtractCoins(2)) {
             levelParent.getUser().addHealth(1); // Update user health
-            levelParent.getLevelView().addHeart(); // Notify LevelView
+            levelParent.getLevelView().addHeart(); // Notify LevelViewParent
             return true;
         }
         return false;

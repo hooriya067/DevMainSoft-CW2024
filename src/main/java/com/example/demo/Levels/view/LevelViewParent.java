@@ -1,4 +1,4 @@
-package com.example.demo.levels.view;
+package com.example.demo.Levels.view;
 
 
 import com.example.demo.Managers.BulletSystemManager;
@@ -12,7 +12,7 @@ import com.example.demo.UI.screens.GameOverImage;
 import com.example.demo.actors.collectibles.HeartDisplay;
 import com.example.demo.core.GameConfig;
 import com.example.demo.core.StageManager;
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -20,7 +20,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public abstract class LevelView {
+public abstract class LevelViewParent {
 
 	private static final double HEART_DISPLAY_X_POSITION = 5;
 	private static final double HEART_DISPLAY_Y_POSITION = 25;
@@ -46,7 +46,7 @@ public abstract class LevelView {
 	private final LevelParent levelParent; // Reference to the parent level
 	private Label bulletCountLabel;
 
-	public LevelView(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
+	public LevelViewParent(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
 
 		this.root=root;
 		this.levelParent = levelParent;

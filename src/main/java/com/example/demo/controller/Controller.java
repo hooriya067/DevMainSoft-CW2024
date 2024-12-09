@@ -6,7 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.example.demo.MyObserver;
-import com.example.demo.levels.LevelManager;
+import com.example.demo.Managers.LevelManager;
 
 public class Controller implements MyObserver { // Implementing MyObserver to get notified when the player wins a level
 

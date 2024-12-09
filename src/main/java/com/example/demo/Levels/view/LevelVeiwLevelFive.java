@@ -1,14 +1,13 @@
-package com.example.demo.levels.view;
+package com.example.demo.Levels.view;
 
 import com.example.demo.core.GameConfig;
-import com.example.demo.levels.LevelParent;
-import com.example.demo.levels.effects.Cloud;
-import com.example.demo.levels.effects.RainEffect;
+import com.example.demo.Levels.LevelParent;
+import com.example.demo.Levels.effects.Cloud;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
 
-public class LevelVeiwLevelFive extends LevelView {
+public class LevelVeiwLevelFive extends LevelViewParent {
 
     private Label killsLabel;
     private final Cloud cloud1;
@@ -55,7 +54,7 @@ public class LevelVeiwLevelFive extends LevelView {
     @Override
     public void AddUI() {
         super.AddUI();
-        showClouds(); // Add clouds to the UI
+        showClouds();
     }
     protected void showClouds() {
         cloud1.getContainer().toFront();

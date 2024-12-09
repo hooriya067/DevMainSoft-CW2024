@@ -48,10 +48,5 @@ public abstract class ActiveActor extends ImageView implements Destructible {
 	public boolean isDestroyed() {
 		return isDestroyed;
 	}
-	protected void setDestroyed(boolean isDestroyed) {
-		this.isDestroyed = isDestroyed;
-	}
-
-
 }
 

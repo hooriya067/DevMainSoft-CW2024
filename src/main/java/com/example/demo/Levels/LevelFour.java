@@ -1,5 +1,5 @@
 
-package com.example.demo.levels;
+package com.example.demo.Levels;
 
 import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
@@ -10,8 +10,8 @@ import com.example.demo.actors.active.Factories.EnemyFactory;
 import com.example.demo.actors.active.enemies.StealthEnemyPlane;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
 import com.example.demo.core.GameStateManager;
-import com.example.demo.levels.view.LevelView;
-import com.example.demo.levels.view.LevelViewLevelFour;
+import com.example.demo.Levels.view.LevelViewParent;
+import com.example.demo.Levels.view.LevelViewLevelFour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class LevelFour extends LevelParent {
         this.inputHandler.setMovementMode(InputHandlingManager.MovementMode.FULL);
         stealthEnemies = new ArrayList<>();
         AlertManager.getInstance().showInfoAlert(
-                "Enemies are Hidden!! 💀", // Add the skull emoji here
+                "Enemies are Hidden!! 💀",
                 screenWidth,
                 screenHeight
         );
@@ -86,7 +86,7 @@ public class LevelFour extends LevelParent {
         List<FlarePowerUp> toRemove = new ArrayList<>();
         for (FlarePowerUp powerUp : powerUps) {
             if (powerUp.getBoundsInParent().intersects(getUser().getBoundsInParent())) {
-                powerUp.activate(getUser()); // Activate the flare
+                powerUp.activate(); // Activate the flare
                 toRemove.add(powerUp); // Mark for removal after activation
             }
         }
@@ -98,7 +98,7 @@ public class LevelFour extends LevelParent {
 
 
     @Override
-    protected LevelView instantiateLevelView() {
+    protected LevelViewParent instantiateLevelView() {
         return new LevelViewLevelFour(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(), this);
     }
 

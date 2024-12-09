@@ -22,12 +22,6 @@ public abstract class FighterPlane extends ActiveActor {
 
 	public abstract ActiveActor fireProjectile();
 
-//		if (GameStateManager.isPaused) {
-//			return;
-//		}
-
-
-
 	@Override
 	public void takeDamage() {
 		health--;

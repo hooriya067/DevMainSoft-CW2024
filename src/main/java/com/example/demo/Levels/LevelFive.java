@@ -1,11 +1,11 @@
-package com.example.demo.levels;
+package com.example.demo.Levels;
 
 import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Factories.EnemyFactory;
-import com.example.demo.levels.view.LevelVeiwLevelFive;
-import com.example.demo.levels.view.LevelView;
+import com.example.demo.Levels.view.LevelVeiwLevelFive;
+import com.example.demo.Levels.view.LevelViewParent;
 import javafx.animation.Timeline;
 
 public class LevelFive extends LevelParent {
@@ -62,7 +62,7 @@ public class LevelFive extends LevelParent {
 //    }
 
     @Override
-    protected LevelView instantiateLevelView() {
+    protected LevelViewParent instantiateLevelView() {
         return new LevelVeiwLevelFive(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(), this);
     }
 
@@ -80,8 +80,8 @@ public class LevelFive extends LevelParent {
     protected void updateSceneFurther() {
         super.updateSceneFurther();
       //  misc();
-        ((LevelVeiwLevelFive) getLevelView()).updateClouds(); // Update clouds via LevelVeiwLevelFive
-        stopLevel(); // Stop level if conditions are met
+        ((LevelVeiwLevelFive) getLevelView()).updateClouds();
+        stopLevel();
     }
 
 //    protected void misc() {

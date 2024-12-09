@@ -4,7 +4,7 @@ import com.example.demo.Managers.SoundManager;
 import com.example.demo.core.GameConfig;
 import com.example.demo.UI.screens.MainMenu;
 import com.example.demo.core.StageManager;
-import com.example.demo.levels.LevelManager;
+import com.example.demo.Managers.LevelManager;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

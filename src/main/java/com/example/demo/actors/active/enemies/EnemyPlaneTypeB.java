@@ -1,6 +1,6 @@
 package com.example.demo.actors.active.enemies;
 
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 import com.example.demo.actors.active.Factories.ProjectileFactory;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.actors.active.ActiveActor;

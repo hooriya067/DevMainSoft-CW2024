@@ -16,7 +16,7 @@ public class StarDisplay {
     private static final String STAR_IMAGE_NAME = "/com/example/demo/images/star.png";
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/finalstar_container.png"; // Your custom container image
     private static final int STAR_HEIGHT = 50;
-    private final VBox container; // Main container for the background image and text
+    private final VBox container;
 
     public StarDisplay(double xPosition, double yPosition, int starsToDisplay) {
         container = new VBox();

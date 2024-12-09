@@ -12,8 +12,8 @@ public class HeartDisplay {
 	private static final int HEART_HEIGHT = 50;
 	private static final int INDEX_OF_FIRST_ITEM = 0;
 	private HBox container;
-	private double containerXPosition;
-	private double containerYPosition;
+	private final double containerXPosition;
+	private final double containerYPosition;
 	private int numberOfHeartsToDisplay;
 
 	public HeartDisplay(double xPosition, double yPosition, int heartsToDisplay) {
@@ -45,15 +45,13 @@ public class HeartDisplay {
 			container.getChildren().remove(INDEX_OF_FIRST_ITEM);
 	}
 	public void addHeart() {
-		// Dynamically create a new heart
 		ImageView newHeart = new ImageView(new Image(
 				Objects.requireNonNull(getClass().getResource(HEART_IMAGE_NAME)).toExternalForm()
 		));
 
-		newHeart.setFitHeight(HEART_HEIGHT); // Match the size of other hearts
+		newHeart.setFitHeight(HEART_HEIGHT);
 		newHeart.setPreserveRatio(true);
 
-		// Add the new heart to the HBox container
 		container.getChildren().add(newHeart);
 
 		// Update the number of hearts being displayed

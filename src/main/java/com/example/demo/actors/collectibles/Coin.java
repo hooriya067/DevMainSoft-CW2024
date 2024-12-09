@@ -1,6 +1,6 @@
 package com.example.demo.actors.collectibles;
 
-import com.example.demo.levels.LevelParent;
+import com.example.demo.Levels.LevelParent;
 import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.core.GameStateManager;
 import javafx.animation.FadeTransition;
@@ -28,7 +28,7 @@ public class Coin extends ActiveActor {
     @Override
     public void updatePosition() {
         if (GameStateManager.getInstance().isGamePaused()) {
-            return; // Skip updating position if paused
+            return;
         }
         moveHorizontally(HORIZONTAL_VELOCITY);
         if (getTranslateX() < 0) {
@@ -55,8 +55,4 @@ public class Coin extends ActiveActor {
         fadeOut.play();
     }
 
-    @Override
-    public void takeDamage() {
-        destroy();
-    }
 }

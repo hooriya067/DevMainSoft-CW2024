@@ -5,7 +5,7 @@ import com.example.demo.actors.user.UserPlane;
 public class GameStateManager {
 
     private static GameStateManager instance;
-    private boolean isPaused;
+    public boolean isPaused;
 
     private GameStateManager() {
         this.isPaused = false;

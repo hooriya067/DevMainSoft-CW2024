@@ -12,8 +12,8 @@ module com.example.demo {
     opens com.example.demo.actors.active.enemies to javafx.fxml;
     opens com.example.demo.actors.active.projectiles to javafx.fxml;
     opens com.example.demo.actors.user to javafx.fxml;
-    opens com.example.demo.levels to javafx.fxml;
-    opens com.example.demo.levels.view to javafx.fxml;
+    opens com.example.demo.Levels to javafx.fxml;
+    opens com.example.demo.Levels.view to javafx.fxml;
     opens com.example.demo.UI.menu to javafx.fxml;
     opens com.example.demo.UI.buttons to javafx.fxml;
     opens com.example.demo.UI.screens to javafx.fxml;

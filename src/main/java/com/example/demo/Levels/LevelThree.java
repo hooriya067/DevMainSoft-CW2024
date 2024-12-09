@@ -1,16 +1,14 @@
-package com.example.demo.levels;
+package com.example.demo.Levels;
 
-import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
-import com.example.demo.levels.view.LevelView;
-import com.example.demo.levels.view.LevelViewLevelThree;
+import com.example.demo.Levels.view.LevelViewParent;
+import com.example.demo.Levels.view.LevelViewLevelThree;
 import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Formation;
 import com.example.demo.actors.active.Factories.EnemyFactory;
 import com.example.demo.actors.active.enemies.EnemyPlaneTypeA;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class LevelThree extends LevelParent {
 
@@ -26,10 +24,7 @@ public class LevelThree extends LevelParent {
     public LevelThree(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         this.inputHandler.setMovementMode(InputHandlingManager.MovementMode.FULL);
-        AlertManager.getInstance().showInfoAlert("Left and Right Moves \n  allowed now!",
-                screenWidth,
-                screenHeight
-        );
+        ((LevelViewLevelThree) getLevelView()).infoAlerts();
     }
 
     @Override
@@ -65,7 +60,7 @@ public class LevelThree extends LevelParent {
         }
     }
     @Override
-    protected LevelView instantiateLevelView() {
+    protected LevelViewParent instantiateLevelView() {
         return new LevelViewLevelThree(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(),this);
     }
     @Override
@@ -87,4 +82,4 @@ public class LevelThree extends LevelParent {
     public int calculateOptimalBullets() {
         return (KILLS_TO_ADVANCE/2)*2+KILLS_TO_ADVANCE/2;
     }
-}
+  }
