@@ -30,10 +30,7 @@ public class InputHandlingManager {
     }
 
     private void handleKeyPressed(KeyCode keyCode) {
-        System.out.println("Key pressed: " + keyCode); // Log every key event
-
-
-        switch (keyCode) {
+                switch (keyCode) {
             case UP -> level.getUser().moveUp();
             case DOWN -> level.getUser().moveDown();
             case SPACE ->{
@@ -54,8 +51,7 @@ public class InputHandlingManager {
     }
     private void handleKeyReleased(KeyCode keyCode) {
         if (GameStateManager.getInstance().isPaused) {
-            System.out.println("Key event received during pause: " + keyCode);
-return;
+          return;
         }
 
         switch (keyCode) {

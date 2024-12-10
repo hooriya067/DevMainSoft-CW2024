@@ -1,11 +1,9 @@
 package com.example.demo.UI.menu;
 
-import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.SoundManager;
 import com.example.demo.core.GameConfig;
 import com.example.demo.core.GameStateManager;
 import com.example.demo.core.StageManager;
-import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
@@ -14,19 +12,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public abstract class OnScreenMenu {
+public abstract class InGameMenuParent {
     Stage stage = StageManager.getStage();
     private StackPane overlayLayout;
     private boolean overlayActive = false;
 
-    public OnScreenMenu(Stage stage) {
+    public InGameMenuParent(Stage stage) {
         if (stage == null) {
-            throw new IllegalArgumentException("Stage cannot be null in OnScreenMenu.");
+            throw new IllegalArgumentException("Stage cannot be null in InGameMenuParent.");
         }
     }
 

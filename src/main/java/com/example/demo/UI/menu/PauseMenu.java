@@ -1,18 +1,14 @@
 package com.example.demo.UI.menu;
 
-import com.example.demo.Managers.InputHandlingManager;
-import com.example.demo.Managers.SoundManager;
 import com.example.demo.UI.screens.MainMenu;
 import com.example.demo.UI.buttons.MainMenuButton;
 import com.example.demo.UI.buttons.QuitButton;
 import com.example.demo.UI.buttons.ResumeButton;
-import com.example.demo.core.GameStateManager;
 import javafx.geometry.Pos;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class PauseMenu extends OnScreenMenu {
+public class PauseMenu extends InGameMenuParent {
 
     public PauseMenu(Stage stage) {
         super(stage);

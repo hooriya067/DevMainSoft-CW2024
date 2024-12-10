@@ -2,7 +2,6 @@ package com.example.demo.UI.menu;
 
 import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.PowerUpManager;
-import com.example.demo.Managers.SoundManager;
 import com.example.demo.core.GameStateManager;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -13,7 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class PowerUpMenu extends OnScreenMenu {
+public class PowerUpMenu extends InGameMenuParent {
 
     public PowerUpMenu(Stage stage) {
         super(stage);
