@@ -2,7 +2,7 @@ package com.example.demo.actors.active.projectiles;
 
 import com.example.demo.core.GameStateManager;
 
-public class BombProjectile extends Projectile {
+public class BombProjectile extends ProjectileParent {
 
     private static final String IMAGE_NAME = "bomb_projectile.png";
     private static final int IMAGE_HEIGHT = 35;

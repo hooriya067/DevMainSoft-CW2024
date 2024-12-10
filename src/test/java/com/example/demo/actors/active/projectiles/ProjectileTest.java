@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProjectileTest {
 
-    private Projectile projectile;
+    private ProjectileParent projectile;
     @BeforeAll
     static void initToolkit() {
         Platform.startup(() -> {
@@ -20,8 +20,8 @@ class ProjectileTest {
     }
     @BeforeEach
     void setup() {
-        // Initialize the Projectile instance
-        projectile = new Projectile("dummy.jpg", 30, 100, 200, 5.0);
+        // Initialize the ProjectileParent instance
+        projectile = new ProjectileParent("dummy.jpg", 30, 100, 200, 5.0);
     }
 
     @Test
@@ -41,7 +41,7 @@ class ProjectileTest {
 
         // Assert: Verify horizontal movement
         double newX = projectile.getLayoutX() + projectile.getTranslateX();
-        assertTrue(newX > initialX, "Projectile should move horizontally.");
+        assertTrue(newX > initialX, "ProjectileParent should move horizontally.");
     }
 
     @Test
@@ -60,7 +60,7 @@ class ProjectileTest {
 
             // Assert: Verify no movement occurred
             double newX = projectile.getLayoutX() + projectile.getTranslateX();
-            assertEquals(initialX, newX, "Projectile should not move when the game is paused.");
+            assertEquals(initialX, newX, "ProjectileParent should not move when the game is paused.");
         }
     }
 
@@ -70,6 +70,6 @@ class ProjectileTest {
         projectile.takeDamage();
 
         // Assert: Verify the projectile is destroyed
-        assertTrue(projectile.isDestroyed(), "Projectile should be destroyed after taking damage.");
+        assertTrue(projectile.isDestroyed(), "ProjectileParent should be destroyed after taking damage.");
     }
 }

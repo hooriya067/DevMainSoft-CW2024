@@ -1,6 +1,6 @@
 package com.example.demo.actors.active.projectiles;
 
-public class UserProjectile extends Projectile {
+public class UserProjectile extends ProjectileParent {
 
 	private static final String IMAGE_NAME = "userfire.png";
 	private static final int IMAGE_HEIGHT = 20;

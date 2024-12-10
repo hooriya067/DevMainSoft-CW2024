@@ -1,6 +1,6 @@
 package com.example.demo.actors.active.projectiles;
 
-public class EnemyProjectileLevelThree extends Projectile {
+public class EnemyProjectileLevelThree extends ProjectileParent {
 
     private static final String IMAGE_NAME = "enemyfire2.png"; // Custom image for Level 3
     private static final int IMAGE_HEIGHT = 25; // Set a different height if needed

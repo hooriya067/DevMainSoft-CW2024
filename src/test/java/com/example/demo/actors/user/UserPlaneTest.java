@@ -130,7 +130,7 @@ class UserPlaneTest {
             ActiveActor projectile = userPlane.fireProjectile();
 
             //  Verify projectile creation and sound effect
-            assertNotNull(projectile, "Projectile should be created if bullets are available");
+            assertNotNull(projectile, "ProjectileParent should be created if bullets are available");
             verify(soundManager, times(1)).playSoundEffect(anyString());
 
             // verify Simulate no bullets available

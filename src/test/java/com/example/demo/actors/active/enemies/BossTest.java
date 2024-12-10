@@ -100,7 +100,7 @@ class BossTest {
             if (projectile != null) {
                 assertEquals(actualProjectile, projectile, "The created projectile should match the actual implementation.");
             } else {
-                assertNull(projectile, "Projectile may not be created based on fire rate.");
+                assertNull(projectile, "ProjectileParent may not be created based on fire rate.");
             }
         }
     }

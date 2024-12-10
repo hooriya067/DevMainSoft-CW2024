@@ -3,7 +3,7 @@ package com.example.demo.actors.active.projectiles;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.GameStateManager;
 
-public class HomingMissile extends Projectile {
+public class HomingMissile extends ProjectileParent {
 
     private static final String IMAGE_NAME = "HomingMissile.png";
     private static final int IMAGE_HEIGHT = 30;

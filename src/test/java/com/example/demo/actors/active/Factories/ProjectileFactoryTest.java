@@ -22,7 +22,7 @@ class ProjectileFactoryTest {
         ActiveActor projectile = ProjectileFactory.createProjectile("USER_PROJECTILE", 100, 200);
 
         // Assert: Verify the projectile is of the correct type
-        assertNotNull(projectile, "Projectile should not be null");
+        assertNotNull(projectile, "ProjectileParent should not be null");
         assertTrue(projectile instanceof UserProjectile, "Created projectile should be an instance of UserProjectile");
     }
 
@@ -32,7 +32,7 @@ class ProjectileFactoryTest {
         ActiveActor projectile = ProjectileFactory.createProjectile("BOSS_PROJECTILE", 0, 300);
 
         // Assert: Verify the projectile is of the correct type
-        assertNotNull(projectile, "Projectile should not be null");
+        assertNotNull(projectile, "ProjectileParent should not be null");
         assertTrue(projectile instanceof BossProjectile, "Created projectile should be an instance of BossProjectile");
     }
 
@@ -42,7 +42,7 @@ class ProjectileFactoryTest {
         ActiveActor projectile = ProjectileFactory.createProjectile("BOMB", 150, 250);
 
         // Assert: Verify the projectile is of the correct type
-        assertNotNull(projectile, "Projectile should not be null");
+        assertNotNull(projectile, "ProjectileParent should not be null");
         assertTrue(projectile instanceof BombProjectile, "Created projectile should be an instance of BombProjectile");
     }
 
@@ -52,7 +52,7 @@ class ProjectileFactoryTest {
         ActiveActor projectile = ProjectileFactory.createProjectile("ENEMY_PROJECTILE", 50, 150);
 
         // Assert: Verify the projectile is of the correct type
-        assertNotNull(projectile, "Projectile should not be null");
+        assertNotNull(projectile, "ProjectileParent should not be null");
         assertTrue(projectile instanceof EnemyProjectile, "Created projectile should be an instance of EnemyProjectile");
     }
 
@@ -62,7 +62,7 @@ class ProjectileFactoryTest {
         ActiveActor projectile = ProjectileFactory.createProjectile("ENEMY_PROJECTILE_LEVEL_THREE", 200, 300);
 
         // Assert: Verify the projectile is of the correct type
-        assertNotNull(projectile, "Projectile should not be null");
+        assertNotNull(projectile, "ProjectileParent should not be null");
         assertTrue(projectile instanceof EnemyProjectileLevelThree, "Created projectile should be an instance of EnemyProjectileLevelThree");
     }
 
@@ -75,7 +75,7 @@ class ProjectileFactoryTest {
         ActiveActor projectile = ProjectileFactory.createProjectile("HOMING_MISSILE", 100, 200, mockUserPlane);
 
         // Assert: Verify the projectile is of the correct type
-        assertNotNull(projectile, "Projectile should not be null");
+        assertNotNull(projectile, "ProjectileParent should not be null");
         assertTrue(projectile instanceof HomingMissile, "Created projectile should be an instance of HomingMissile");
     }
 
