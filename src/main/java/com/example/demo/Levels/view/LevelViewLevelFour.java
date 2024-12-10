@@ -10,24 +10,17 @@ public class LevelViewLevelFour extends LevelViewParent {
 
     public static final int SCREEN_WIDTH = 1300;
     public static final int SCREEN_HEIGHT = 750;
-    private final Group root;
-    private final double screenWidth;
-    private final double screenHeight;
     private Label killsLabel;
 
-    public LevelViewLevelFour(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
-        super(root, heartsToDisplay, screenWidth, screenHeight,levelParent);
-        this.root = root;
-        this.screenWidth =  SCREEN_WIDTH;
-        this.screenHeight =  SCREEN_HEIGHT;
-
-    }
+    public LevelViewLevelFour(Group root, int heartsToDisplay, LevelParent levelParent) {
+        super(root, heartsToDisplay,levelParent);
+       }
 
 
     @Override
     protected void initializeWinningParameter() {
         killsLabel = new Label("Kills: 0");
-        killsLabel.setLayoutX(GameConfig.SCREEN_WIDTH / 2 - 100);
+        killsLabel.setLayoutX((double) GameConfig.SCREEN_WIDTH / 2 - 100);
         killsLabel.setLayoutY(20);
 
         // CSS for styling

@@ -35,7 +35,7 @@ public class LevelOne extends LevelParent {
 	}
 	@Override
 	protected LevelViewParent instantiateLevelView() {
-		return new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(), this);
+		return new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, this);
 	}
 
 	protected boolean userHasReachedKillTarget() {

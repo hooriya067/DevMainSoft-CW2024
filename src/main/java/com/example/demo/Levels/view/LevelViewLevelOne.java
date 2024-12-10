@@ -8,14 +8,14 @@ import javafx.scene.control.Label;
 
 public class LevelViewLevelOne extends LevelViewParent {
     private Label killsLabel;
-    public LevelViewLevelOne(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
-        super(root, heartsToDisplay, screenWidth, screenHeight,levelParent);
+    public LevelViewLevelOne(Group root, int heartsToDisplay, LevelParent levelParent) {
+        super(root, heartsToDisplay,levelParent);
 
     }
     @Override
     protected void initializeWinningParameter() {
         killsLabel = new Label("Kills: 0");
-        killsLabel.setLayoutX(GameConfig.SCREEN_WIDTH / 2 - 100); // Adjust position
+        killsLabel.setLayoutX((double) GameConfig.SCREEN_WIDTH / 2 - 100); // Adjust position
         killsLabel.setLayoutY(20);
         killsLabel.setStyle(
                 "-fx-font-size: 30px;" +              // Larger font size for better visibility

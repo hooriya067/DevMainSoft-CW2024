@@ -14,7 +14,7 @@ public class LevelVeiwLevelFive extends LevelViewParent {
     private final Cloud cloud2;
   //  private final RainEffect rainEffect;
     public LevelVeiwLevelFive(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
-        super(root, heartsToDisplay, screenWidth, screenHeight, levelParent);
+        super(root, heartsToDisplay, levelParent);
 
         double buffer = 200; // Set buffer for movement boundaries
         cloud1 = new Cloud(screenWidth - 800, 0, false, buffer, 400);

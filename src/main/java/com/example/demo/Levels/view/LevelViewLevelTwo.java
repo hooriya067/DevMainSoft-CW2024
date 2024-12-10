@@ -19,7 +19,7 @@ public class LevelViewLevelTwo extends LevelViewParent {
 
 
 	public LevelViewLevelTwo(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
-		super(root, heartsToDisplay, screenWidth, screenHeight, levelParent);
+		super(root, heartsToDisplay, levelParent);
 		this.root = root;
 		this.screenWidth = getLevelParent().getScreenWidth(); // Assign after superclass call
 		this.screenHeight = screenHeight;

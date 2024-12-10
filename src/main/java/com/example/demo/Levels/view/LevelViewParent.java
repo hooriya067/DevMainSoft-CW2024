@@ -36,7 +36,7 @@ public abstract class LevelViewParent {
 	private final Group root;
 	private final Label coinCountLabel;
 	private final PowerUpButton powerUpButton;
-	private Label shieldTimerLabel;
+	private final Label shieldTimerLabel;
 	private Timeline shieldTimer;
 	private static final double TIMER_X_POSITION = 580;
 	private static final double TIMER_Y_POSITION = 100;
@@ -44,9 +44,9 @@ public abstract class LevelViewParent {
 	private final HeartDisplay heartDisplay;
 	private final PauseButtonDisplay pauseButtonDisplay;
 	private final LevelParent levelParent; // Reference to the parent level
-	private Label bulletCountLabel;
+	private final Label bulletCountLabel;
 
-	public LevelViewParent(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
+	public LevelViewParent(Group root, int heartsToDisplay, LevelParent levelParent) {
 
 		this.root=root;
 		this.levelParent = levelParent;

@@ -42,24 +42,4 @@ public class GameLoop {
         timeline.stop();
     }
 
-    //    public void removeUpdatable(Updatable updatable) {
-//        updatables.remove(updatable);
-//    }
-//
-//    public void clearUpdatables() {
-//        updatables.clear();
-//    }
-
-//
-//    public void pause() {
-//        timeline.pause();
-//    }
-//
-//    public void resume() {
-//        timeline.play();
-//    }
-//
-//    public boolean isRunning() {
-//        return timeline.getStatus() == Timeline.Status.RUNNING;
-//    }
 }

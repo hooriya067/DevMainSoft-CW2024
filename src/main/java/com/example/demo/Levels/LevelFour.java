@@ -99,7 +99,7 @@ public class LevelFour extends LevelParent {
 
     @Override
     protected LevelViewParent instantiateLevelView() {
-        return new LevelViewLevelFour(getRoot(), PLAYER_INITIAL_HEALTH, getScreenWidth(), getScreenHeight(), this);
+        return new LevelViewLevelFour(getRoot(), PLAYER_INITIAL_HEALTH, this);
     }
 
 

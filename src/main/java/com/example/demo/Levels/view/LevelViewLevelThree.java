@@ -11,13 +11,11 @@ import javafx.util.Duration;
 
 public class LevelViewLevelThree extends LevelViewParent {
     private Label killsLabel;
-    private final Group root;
     private final double screenWidth;
     private final double screenHeight;
 
     public LevelViewLevelThree(Group root, int heartsToDisplay, double screenWidth, double screenHeight, LevelParent levelParent) {
-        super(root, heartsToDisplay, screenWidth, screenHeight,levelParent);
-        this.root = root;
+        super(root, heartsToDisplay,levelParent);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
     }
@@ -25,7 +23,7 @@ public class LevelViewLevelThree extends LevelViewParent {
     @Override
     protected void initializeWinningParameter() {
         killsLabel = new Label("Kills: 0");
-        killsLabel.setLayoutX(GameConfig.SCREEN_WIDTH / 2 - 100); // Adjust position to better center the label
+        killsLabel.setLayoutX((double) GameConfig.SCREEN_WIDTH / 2 - 100); // Adjust position to better center the label
         killsLabel.setLayoutY(20);
 
         // Apply CSS to make the label bold, with shadow and more appealing font style

@@ -13,8 +13,6 @@ public class Main extends Application {
 	private static final String TITLE = "Sky Strike Saga";
 
 	@Override
-//	public void start(Stage stage) throws ClassNotFoundException, NoSuchMethodException, SecurityException,
-//			InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 	public void start(Stage stage) throws SecurityException, IllegalArgumentException {
 
 		// Set the stage in the StageManager
