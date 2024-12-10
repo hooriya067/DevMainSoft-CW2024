@@ -6,8 +6,7 @@ import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.core.GameStateManager;
 
 public abstract class EnemyParent extends FighterPlane implements Enemy {
-    protected int health;
-    protected LevelParent levelParent;
+       protected LevelParent levelParent;
 
     public EnemyParent(String imageName, int imageHeight, double initialX, double initialY, int health, LevelParent levelParent) {
         super(imageName, imageHeight, initialX, initialY, health);

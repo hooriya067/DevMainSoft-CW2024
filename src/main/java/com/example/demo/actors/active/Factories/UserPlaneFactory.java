@@ -37,9 +37,6 @@ public class UserPlaneFactory {
         initialHealth = health;
     }
 
-    public static void setVelocity(int vertical, int horizontal) {
-        verticalVelocity = vertical;
-        horizontalVelocity = horizontal;
-    }
+
 
 }

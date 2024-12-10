@@ -10,8 +10,10 @@ public abstract class ActiveActor extends ImageView implements Destructible {
 
 	private static final String IMAGE_LOCATION = "/com/example/demo/images/";
 	private boolean isDestroyed;
+	private final String imageName; // Add a field for imageName
 
 	public ActiveActor(String imageName, int imageHeight, double initialXPos, double initialYPos) {
+		this.imageName = imageName; // Assign imageName
 		try {
 			this.setImage(new Image(Objects.requireNonNull(getClass().getResource(IMAGE_LOCATION + imageName)).toExternalForm()));
 		} catch (NullPointerException e) {
@@ -22,6 +24,10 @@ public abstract class ActiveActor extends ImageView implements Destructible {
 		this.setFitHeight(imageHeight);
 		this.setPreserveRatio(true);
 		this.isDestroyed = false; // Initialize as not destroyed
+	}
+
+	public String getImageName() { // Add a getter for imageName
+		return imageName;
 	}
 
 	public abstract void updatePosition(); // Movement logic specific to subclasses
@@ -49,4 +55,3 @@ public abstract class ActiveActor extends ImageView implements Destructible {
 		return isDestroyed;
 	}
 }
-

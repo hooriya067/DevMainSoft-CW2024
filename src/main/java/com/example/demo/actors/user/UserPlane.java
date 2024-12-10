@@ -27,6 +27,7 @@ public class UserPlane extends FighterPlane {
 		this.velocityMultiplier = 0;
 		this.horizontalVelocityMultiplier = 0;
 	}
+
 	@Override
 	public void updatePosition() {
 		if (isMoving()) {
@@ -68,17 +69,40 @@ public class UserPlane extends FighterPlane {
 		}
 	}
 
-	public void moveUp() { velocityMultiplier = -1; }
-	public void moveDown() { velocityMultiplier = 1; }
-	public void stopVerticalMovement() { velocityMultiplier = 0; }
-	public void moveLeft() { horizontalVelocityMultiplier = -1; }
-	public void moveRight() { horizontalVelocityMultiplier = 1; }
-	public void stopHorizontalMovement() { horizontalVelocityMultiplier = 0; }
+	public void moveUp() {
+		velocityMultiplier = -1;
+	}
+
+	public void moveDown() {
+		velocityMultiplier = 1;
+	}
+
+	public void stopVerticalMovement() {
+		velocityMultiplier = 0;
+	}
+
+	public void moveLeft() {
+		horizontalVelocityMultiplier = -1;
+	}
+
+	public void moveRight() {
+		horizontalVelocityMultiplier = 1;
+	}
+
+	public void stopHorizontalMovement() {
+		horizontalVelocityMultiplier = 0;
+	}
 
 	private boolean isMoving() {
 		return velocityMultiplier != 0 || horizontalVelocityMultiplier != 0;
 	}
+
 	public void addHealth(int amount) {
 		health += amount;
+	}
+
+	// Getter method for horizontal velocity
+	public double getVerticalVelocity() {
+		return verticalVelocity;
 	}
 }
