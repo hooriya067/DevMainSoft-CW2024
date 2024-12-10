@@ -120,7 +120,7 @@ public class LevelIntroScreen {
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case ENTER:
-                    levelManager.proceedToLevel(levelName);
+                 startLevel();
                     break;
                 default:
                     break;
@@ -128,6 +128,10 @@ public class LevelIntroScreen {
         });
 
         return scene;
+    }
+
+    public void startLevel() {
+        levelManager.proceedToLevel(levelName);
     }
 
     private String getLevelObjective(String levelName) {
