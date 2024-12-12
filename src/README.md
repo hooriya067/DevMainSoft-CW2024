@@ -26,7 +26,7 @@
 ## Implemented and Working Properly
 
 ### *Gameplay Features*
-
+---
 ### <u>Level Progression</u>
 
 **Level 1: Introduction**
@@ -41,7 +41,7 @@
 
 **Level 3: Enhanced Gameplay with Formations**
 - Adds a new layer of complexity with V-shaped enemy formations led by a tougher leader enemy, destroying the leader scatters the whole enemy formation, forcing players to adapt their strategy.
-- Introduces slower-moving planes with higher life that shoot homing missiles.
+- Introduces slower-moving planes with higher life that shoot homing missiles.Homing Missiles are deadly projectiles that follow the user movement.
 - Improves player maneuverability with left-right movement, allowing greater control.
 
 **Level 4: Stealth and Hazard Mechanics**
@@ -55,21 +55,37 @@
 - Starts with a dramatic "SHOWDOWN!!" text, creating a cinematic transition into the level.
 - A final battle requires players to navigate through enemies from all previous levels during rain and meteor shower.
 - While the "SHOWDOWN!!" text and kill counter are functional, the meteor storm mechanic and rain effects require debugging for consistent diagonal movement.
+---
+### <u>Dynamic User Tracking System</u>
+- **Overview:**
+    - The system ensures real-time monitoring and updates of key player resources like coins and bullets throughout the game, providing seamless integration with gameplay elements.
 
+- **Features:**
+    - **Coin Tracking:**
+        - Managed by the `CoinSystemManager`, coins increment dynamically when collected and persist across levels.
+        - UI elements reflect real-time updates, ensuring players are always aware of their current balance.
+    - **Bullet Tracking:**
+        - Handled by the `BulletSystemManager`, tracking bullets fired and remaining.
+        - Players can purchase additional bullets, with the UI dynamically displaying updates.
+
+- **Gameplay Impact:**
+    - Promotes strategic decision-making by balancing resource usage and collection.
+    - Provides immediate feedback via real-time updates, enhancing immersion and player engagement.
 ### <u>Coin System</u>
-
+Managed by the `CoinSystemManage` class
 The in-game currency mechanism allows players to collect and use coins strategically during gameplay:
 
 - **Persistence Across Levels:** Coins collected in one level carry over to subsequent levels using a singleton `CoinSystemManager` class.
 - **Dynamic Updates:** The coin count dynamically updates in the UI whenever coins are collected or spent.
 - **Integration with Power-Ups:** Coins are spent on purchasing power-ups that provide critical gameplay advantages. Power-ups include extra lives, shields, and additional bullets, offering players strategic choices to enhance their survivability and effectiveness.
+- **Integration with Customisation System:** Coins are also used to buy Customised planes with higher health and higher speeds, giving user an advantage over the enemies.
 
 **Gameplay Impact:**
 The Coin System encourages players to balance offensive actions with coin collection, rewarding those who prioritize gathering resources for future challenges.
-
+---
 ### <u>Power-Up Management</u>
 
-Managed by the `PowerUpManager` class, the system allows players to spend their collected coins on valuable upgrades during gameplay.
+Managed by the `PowerUpManager` class, the system allows players to spend their collected coins on valuable upgrades during gameplay that can help them and get them advantage over enemies.
 
 **Available Power-Ups:**
 
@@ -91,11 +107,11 @@ Managed by the `PowerUpManager` class, the system allows players to spend their 
     - **Integration:** Dynamic bullet tracking in the UI ensures players are aware of their remaining ammunition.
 
 **Gameplay Impact:**
-The Power-Up System enhances player strategy by offering upgrades tailored to their immediate needs. Whether increasing health for endurance, activating a shield for safety, or replenishing bullets for offense, these power-ups allow players to adapt their approach to the game's challenges effectively.
+The Power-Up System enhances player strategy by offering upgrades tailored to their immediate needs. Whether increasing health for endurance, activating a shield for safety, or replenishing bullets for offense, these power-ups allow players to adapt their approach to the game's challenges effectively. 
+---
 ### <u>Customization System</u>
-
+Managed by  `CustomizationScreen` class.
 The Customization System provides players with the opportunity to personalize their gameplay experience by selecting unique planes with varying attributes. This system integrates seamlessly with the game's mechanics, encouraging players to earn and spend coins strategically.
-
 1.<u> **Plane Selection:**</u>
     - Players can choose from multiple plane designs displayed in a visually appealing gallery.
     - Each plane has unique attributes:<br><br>
@@ -127,6 +143,7 @@ The Customization System provides players with the opportunity to personalize th
     - The Customization System also takes use of `AlertManager` to alert the player if enough coins are not present.
 **Gameplay Impact:**
 The Customization System incentivizes players to collect coins and make strategic decisions about plane selection. By offering tangible gameplay benefits like enhanced speed and health, it enriches the player's experience and adds depth to the game's progression system.
+---
 ### <u>Star System</u>
 
 Evaluates player performance in each level by rewarding stars based on efficiency, particularly focusing on bullet usage. It serves as a measure of skill and provides an incentive for players to optimize their gameplay.
@@ -146,7 +163,7 @@ Evaluates player performance in each level by rewarding stars based on efficienc
     - The `StarDisplay` class visually represents stars during level completion and the game’s win screen.
     - Features animated stars and a label displaying the number of stars earned for each level.
     - Final stars are prominently displayed on the game completion screen, giving players a sense of accomplishment.
-
+    - After every Play again option in Win Page and Gameover, Bullet count is set back to The original bullet count as new game starts. Howverin level complete screen, same bullet count is maintained and passed on as user doesnt reset the whole game but just voluntarily wants to play same level again.
 **Gameplay Impact:**
 The Star System encourages players to adopt a more strategic approach to gameplay, minimizing bullet usage while maximizing efficiency. It serves as a reward mechanism, motivating players to replay levels to achieve higher star ratings and perfect their performance.
 
@@ -296,11 +313,11 @@ The Star System encourages players to adopt a more strategic approach to gamepla
         - **Coin Collection:** A rewarding chime that accompanies the "+1" animation.
         - **Winning Levels:** A celebratory tune that plays during level completion and the final victory screen.
         - **Game Over screen:** A Game Over voiceover when user loses.
-
+---
 ## *Level Aesthetics*
 
-### Interactive Backgrounds:
-      Backgrounds in later levels feature subtle animations like moving clouds.
+### <u>Interactive Backgrounds </u>
+- Background in later levels feature subtle animations like moving clouds.
 
 ### <u> Alerts and Animations</u>
 
@@ -335,7 +352,7 @@ The Star System encourages players to adopt a more strategic approach to gamepla
     - A fade-out effect is applied to the explosion image, ensuring it smoothly disappears after 1 second, blending seamlessly into the gameplay.
 ---
 ## *Features Implemented but Not Working Properly*
-
+---
 ### <u>Meteor Behaviour in Level Five</u>
 
 - **Current Status:** Meteors were introduced as a dynamic obstacle in Level Five. They are designed to spawn from the top-right corner of the screen and travel diagonally across the battlefield.
@@ -355,7 +372,13 @@ The Star System encourages players to adopt a more strategic approach to gamepla
     - **Layering:** The rain container might be positioned incorrectly, rendering raindrops behind other elements.
 
 ---
+### <u>Heart Display for Customised Planes</u>
 
+- **Implementation:**The customisation and coin system work perfectly,completely in sync with eachother. The additional plane faetures also get added perfectly.
+- **Current Status:**Everything works like it should but extra hearts from advanced playersa are overlapping with UI elements like kill count a bit, causing a bit of UI overlapping, but kill no. still seen perfectly.
+
+
+---
 ## *Features Not Implemented*
 
 ### <u>Online Profiles</u>
@@ -381,14 +404,6 @@ The Star System encourages players to adopt a more strategic approach to gamepla
 
 ---
 
-### <u>Paid Customization Planes</u>
-
-- **Description:**
-    - The plan was to make new planes unlockable using stars earned in the game. Players would need to collect coins, spend them on power-ups, and optimize their gameplay to minimize bullet usage and maximize star earnings. These stars would then be used to purchase planes in the Customization Screen.
-- **Reason for Omission:**
-    - **Star System Dependency:** This feature required the star system to be fully integrated, which is tied to the player's performance in completing levels efficiently.
-    - **Persistent Storage:** To track which planes players had unlocked, data persistence across sessions was necessary, requiring a login system or local storage, neither of which was implemented due to project scope limitations.
-    - **Time Constraints:** Balancing gameplay, designing new plane models, and integrating the star-to-customization workflow were all time-intensive tasks that couldn't be completed within the given timeframe.
 
 ---
 ## *New Java Classes*
@@ -646,7 +661,7 @@ The Star System encourages players to adopt a more strategic approach to gamepla
 
 - **CustomizationScreen:**
     - **Location:** `com.example.demo.UI.screens.CustomizationScreen`
-    - **Description:** Allows players to customize planes, offering options for visuals and initial attributes like health.Has a confirm button for user to confirm the plane and move forward.
+    - **Description:** Allows players to customize planes, offering options for visuals and initial attributes like health.Checks the user's coins availibility and manages customisation accordingly.Has a confirm button for user to confirm the plane and move forward.
 
 - **InstructionScreen:**
     - **Location:** `com.example.demo.UI.screens.InstructionScreen`
