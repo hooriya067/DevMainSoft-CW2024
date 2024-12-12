@@ -28,7 +28,7 @@ class UserPlaneTest {
 
     @BeforeEach
     void setup() {
-        userPlane = UserPlaneFactory.createUserPlane(); // Create UserPlane
+        userPlane = UserPlaneFactory.getUserPlane(); // Create UserPlane
 
         if (userPlane == null) {
             throw new RuntimeException("UserPlane creation failed!"); // Add debug error if null

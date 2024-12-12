@@ -44,7 +44,7 @@ public class Boss extends EnemyParent {
 	 * @param levelParent   the parent level to which the boss belongs.
 	 */
 	public Boss(double initialX, double initialY, int screenHeight, LevelParent levelParent) {
-		super(IMAGE_NAME, 50, initialX, initialY, 2, levelParent);
+		super(IMAGE_NAME, 50, initialX, initialY, 15, levelParent);
 		this.screenHeight = screenHeight;
 		this.movePattern = new ArrayList<>();
 		this.isShielded = false;

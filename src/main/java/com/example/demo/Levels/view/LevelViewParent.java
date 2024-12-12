@@ -161,6 +161,7 @@ public abstract class LevelViewParent {
 	public LevelViewParent(Group root, int heartsToDisplay, LevelParent levelParent) {
 		this.root = root;
 		this.levelParent = levelParent;
+
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
 		this.gameOverImage = new GameOverImage(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		this.pauseButtonDisplay = new PauseButtonDisplay();

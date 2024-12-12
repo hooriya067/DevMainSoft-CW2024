@@ -4,7 +4,7 @@ import com.example.demo.Levels.view.LevelViewParent;
 import com.example.demo.Levels.view.LevelViewLevelOne;
 import com.example.demo.actors.active.ActiveActor;
 import com.example.demo.actors.active.Factories.EnemyFactory;
-
+import com.example.demo.actors.active.Factories.UserPlaneFactory;
 /**
  * Represents the first level of the game.
  * It introduces basic enemy mechanics and lays the foundation for the player to get accustomed to the gameplay.
@@ -22,8 +22,8 @@ public class LevelOne extends LevelParent {
 
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background01.png";
 	private static final int TOTAL_ENEMIES = 5;
-	private static final int KILLS_TO_ADVANCE = 2;
-	private static final int PLAYER_INITIAL_HEALTH = 5;
+	private static final int KILLS_TO_ADVANCE = 10;
+
 	private static final double TOOLBAR_HEIGHT = 90;
 
 	/**
@@ -33,7 +33,7 @@ public class LevelOne extends LevelParent {
 	 * @param screenWidth  the width of the game screen.
 	 */
 	public LevelOne(double screenHeight, double screenWidth) {
-		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
+		super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, UserPlaneFactory.getInitialHealth());
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class LevelOne extends LevelParent {
 	 */
 	@Override
 	protected LevelViewParent instantiateLevelView() {
-		return new LevelViewLevelOne(getRoot(), PLAYER_INITIAL_HEALTH, this);
+		return new LevelViewLevelOne(getRoot(), UserPlaneFactory.getInitialHealth() , this);
 	}
 
 	/**

@@ -1,94 +1,87 @@
 package com.example.demo.actors.active.Factories;
 
-
-import com.example.demo.Managers.CoinSystemManager;
 import com.example.demo.actors.user.UserPlane;
 
 import java.util.Map;
-/**
- * The {@code UserPlaneFactory} class provides a centralized mechanism for creating a user-controlled plane
- * with customizable properties such as image, health, and movement bounds. This class adheres to the Factory
- * design pattern to encapsulate the creation logic for user planes.
- */
+
 public class UserPlaneFactory {
 
-    /**
-     * Default image name for the user plane.
-     */
     private static String imageName = "userplane1.png";
-
-    /**
-     * Default initial X and Y coordinates for the user plane.
-     */
     private static double initialX = 5.0;
     private static double initialY = 300.0;
-
-    /**
-     * Default initial health for the user plane.
-     */
     private static int initialHealth = 10;
 
-    /**
-     * Default movement bounds for the user plane.
-     */
-    private static double yLowerBound = 600.0;
-    private static double toolbarHeight = 70.0;
-
-    /**
-     * Default vertical and horizontal movement speeds for the user plane.
-     */
-    private static int verticalVelocity = 15;
-    private static int horizontalVelocity = 15;
-
-    /**
-     * Map containing image names and their corresponding heights for different user planes.
-     */
-    private static final Map<String, Integer> planeSizes = Map.of(
-            "userplane1.png", 80,
-            "userplane2.png", 120,
-            "userplane3.png", 50
+    private static final Map<String, Integer> planePrices = Map.of(
+            "userplane1.png", 0,  // Default plane
+            "userplane2.png", 5,
+            "userplane3.png", 6
     );
-//    private static final Map<String, Integer> planeCosts = Map.of(
-//            "userplane1.png", 0,
-//            "userplane2.png", 5,
-//            "userplane3.png", 6
-//    );
-//
-//    public static boolean purchasePlane(String planeName) {
-//        int planeCost = planeCosts.getOrDefault(planeName, 0);
-//        if (CoinSystemManager.getInstance().subtractCoins(planeCost)) {
-//            setImageName(planeName);
-//            return true;
-//        }
-//        return false;
-//    }
+
+    private static final Map<String, Map<String, Integer>> planeAttributes = Map.of(
+            "userplane1.png", Map.of("health", 5, "velocity", 10, "size", 80),
+            "userplane2.png", Map.of("health", 7, "velocity", 20, "size", 120),
+            "userplane3.png", Map.of("health", 9, "velocity", 25, "size", 50)
+    );
+
+    private static UserPlane userPlane;
 
     /**
-     * Creates a {@link UserPlane} object based on the current factory settings.
-     *
-     * @return a new instance of {@link UserPlane} configured with the current factory parameters.
+     * Initializes the user plane based on the selected attributes.
      */
-    public static UserPlane createUserPlane() {
-        int imageHeight = planeSizes.getOrDefault(imageName, 80); // Default size if not mapped
-        return new UserPlane(imageName, imageHeight, initialX, initialY, initialHealth,
-                yLowerBound, toolbarHeight, verticalVelocity, horizontalVelocity);
+    public static void initializeUserPlane() {
+        Map<String, Integer> attributes = planeAttributes.getOrDefault(imageName, Map.of());
+        initialHealth = attributes.getOrDefault("health", 5);
+        int velocity = attributes.getOrDefault("velocity", 15);
+        int size = attributes.getOrDefault("size", 80);
+
+        userPlane = new UserPlane(imageName, size, initialX, initialY, initialHealth, 600.0, 70.0, velocity, velocity);
+        System.out.println("User plane initialized with health: " + initialHealth);
     }
 
     /**
-     * Sets a new image name for the user plane.
+     * Retrieves the initialized user plane.
      *
-     * @param newImageName the new image name to set.
+     * @return the user plane instance
+     */
+    public static UserPlane getUserPlane() {
+        if (userPlane == null) {
+            initializeUserPlane();
+        }
+        return userPlane;
+    }
+
+    /**
+     * Sets the image name for the user plane.
+     *
+     * @param newImageName the new image name to set
      */
     public static void setImageName(String newImageName) {
         imageName = newImageName;
     }
 
     /**
-     * Sets a new initial health value for the user plane.
+     * Retrieves the price of the selected plane.
      *
-     * @param health the new health value to set.
+     * @param plane the name of the plane image
+     * @return the price of the plane
      */
-    public static void setInitialHealth(int health) {
-        initialHealth = health;
+    public static int getPlanePrice(String plane) {
+        return planePrices.getOrDefault(plane, 0);
+    }
+
+    /**
+     * Retrieves attributes of the specified plane.
+     *
+     * @param plane the name of the plane image
+     * @return a map of attributes (health, velocity, size)
+     */
+    public static Map<String, Integer> getPlaneAttributes(String plane) {
+        return planeAttributes.getOrDefault(plane, Map.of());
+    }
+    public static int getInitialHealth() {
+        return planeAttributes.getOrDefault(imageName, Map.of("health", 5)).getOrDefault("health", 5);
+    }
+
+    public static void setInitialHealth(int i) { initialHealth = i;
     }
 }

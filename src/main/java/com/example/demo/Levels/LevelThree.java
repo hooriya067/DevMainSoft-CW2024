@@ -21,6 +21,7 @@ import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.Levels.view.LevelViewParent;
 import com.example.demo.Levels.view.LevelViewLevelThree;
 import com.example.demo.actors.active.ActiveActor;
+import com.example.demo.actors.active.Factories.UserPlaneFactory;
 import com.example.demo.actors.active.Formation;
 import com.example.demo.actors.active.Factories.EnemyFactory;
 import com.example.demo.actors.active.enemies.EnemyPlaneTypeA;
@@ -40,7 +41,7 @@ public class LevelThree extends LevelParent {
     /**
      * The initial health of the player for this level.
      */
-    private static final int PLAYER_INITIAL_HEALTH = 5;
+    private static final int PLAYER_INITIAL_HEALTH = UserPlaneFactory.getInitialHealth() ;
 
     /**
      * The maximum number of enemy units allowed on screen at one time.
@@ -50,7 +51,7 @@ public class LevelThree extends LevelParent {
     /**
      * The number of kills required to advance to the next level.
      */
-    private static final int KILLS_TO_ADVANCE = 4;
+    private static final int KILLS_TO_ADVANCE = 10;
 
     /**
      * The height of the toolbar in the game.

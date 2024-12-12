@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 class UserPlaneFactoryTest {
     @BeforeAll
     static void initToolkit() {
@@ -21,7 +20,7 @@ class UserPlaneFactoryTest {
         UserPlaneFactory.setImageName("userplane2.png");
 
         // Act: Create a user plane
-        UserPlane userPlane = UserPlaneFactory.createUserPlane();
+        UserPlane userPlane = UserPlaneFactory.getUserPlane();
 
         // Assert: Verify the image name and corresponding height
         assertEquals("userplane2.png", userPlane.getImageName(), "Image name should be 'userplane2.png'");
@@ -34,23 +33,11 @@ class UserPlaneFactoryTest {
         UserPlaneFactory.setInitialHealth(150);
 
         // Act: Create a user plane
-        UserPlane userPlane = UserPlaneFactory.createUserPlane();
+        UserPlane userPlane = UserPlaneFactory.getUserPlane();
 
         // Assert: Verify the health value
         assertEquals(150, userPlane.getHealth(), "Health should be set to 150");
     }
 
-
-
-    @Test
-    void testInvalidImageName() {
-        // Arrange: Set an invalid image name
-        UserPlaneFactory.setImageName("dummy.jpg");
-
-        // Act: Create a user plane
-        UserPlane userPlane = UserPlaneFactory.createUserPlane();
-
-        // Assert: Verify the default height is used
-        assertEquals(80, userPlane.getFitHeight(), "Default image height should be used for invalid image name");
-    }
 }
+

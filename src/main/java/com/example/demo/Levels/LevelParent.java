@@ -67,7 +67,7 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	protected final InputHandlingManager inputHandler;
 	private final GameLoop gameLoop;
 	private final ActorManager actorManager;
-
+	private int playerInitialHealth;
 	private MyObserver myObserver;
 
 	/**
@@ -80,9 +80,10 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	 */
 	public LevelParent(String backgroundImageName, double screenHeight, double screenWidth, int playerInitialHealth) {
 		this.root = new Group();
+		this.playerInitialHealth = playerInitialHealth;
 		this.scene = new Scene(root, screenWidth, screenHeight);
-		UserPlaneFactory.setInitialHealth(playerInitialHealth);
-		this.user = UserPlaneFactory.createUserPlane();
+		UserPlaneFactory.initializeUserPlane();
+		this.user = UserPlaneFactory.getUserPlane();
 		this.actorManager = new ActorManager(root);
 		CollisionManager collisionManager = new CollisionManager(this, actorManager);
 		this.inputHandler = new InputHandlingManager(this, InputHandlingManager.MovementMode.VERTICAL_ONLY);

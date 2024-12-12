@@ -3,6 +3,7 @@ package com.example.demo.Levels;
 import com.example.demo.Managers.AlertManager;
 import com.example.demo.Managers.InputHandlingManager;
 import com.example.demo.actors.active.ActiveActor;
+import com.example.demo.actors.active.Factories.UserPlaneFactory;
 import com.example.demo.actors.collectibles.FlarePowerUp;
 import com.example.demo.actors.active.enemies.EnemyParent;
 import com.example.demo.actors.active.Factories.EnemyFactory;
@@ -36,12 +37,34 @@ import java.util.List;
  */
 public class LevelFour extends LevelParent {
 
+    /**
+     * Path to the background image for this level.
+     */
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/BG4.jpg";
-    private static final int PLAYER_INITIAL_HEALTH = 5;
-    private static final int TOTAL_ENEMIES = 5;
-    private static final int KILLS_TO_ADVANCE = 2;
 
+    /**
+     * Initial health of the player's plane, retrieved dynamically from {@link UserPlaneFactory}.
+     */
+    private static final int PLAYER_INITIAL_HEALTH = UserPlaneFactory.getInitialHealth();
+
+    /**
+     * Maximum number of enemy units allowed on screen simultaneously.
+     */
+    private static final int TOTAL_ENEMIES = 5;
+
+    /**
+     * Number of kills required to advance to the next level.
+     */
+    private static final int KILLS_TO_ADVANCE = 15;
+
+    /**
+     * List to hold stealth enemies currently in the level.
+     */
     private List<StealthEnemyPlane> stealthEnemies;
+
+    /**
+     * List of collectible flare power-ups currently available in the level.
+     */
     private final List<FlarePowerUp> powerUps = new ArrayList<>();
 
     /**
@@ -73,7 +96,6 @@ public class LevelFour extends LevelParent {
             EnemyParent newStealthEnemy = EnemyFactory.createEnemy("STEALTH", getScreenWidth(), randomYPosition, this);
             addEnemyUnit(newStealthEnemy);
 
-            // Ensure stealth enemies are added to the dedicated list
             if (newStealthEnemy instanceof StealthEnemyPlane) {
                 stealthEnemies.add((StealthEnemyPlane) newStealthEnemy);
             }
@@ -87,7 +109,7 @@ public class LevelFour extends LevelParent {
         if (GameStateManager.getInstance().isGamePaused()) {
             return;
         }
-        double spawnProbability = 0.01; // Adjust this value for bomb frequency
+        double spawnProbability = 0.01;
         if (Math.random() < spawnProbability) {
             double randomXPosition = Math.random() * getScreenWidth();
             ActiveActor bomb = ProjectileFactory.createProjectile("BOMB", randomXPosition, 0, null);
@@ -102,9 +124,9 @@ public class LevelFour extends LevelParent {
         if (GameStateManager.getInstance().isGamePaused()) {
             return;
         }
-        double spawnProbability = 0.03; // Adjust this value to change the frequency of flare power-ups
+        double spawnProbability = 0.03;
         if (Math.random() < spawnProbability) {
-            double randomXPosition = Math.random() * getScreenWidth(); // Random X position for the flare
+            double randomXPosition = Math.random() * getScreenWidth();
             FlarePowerUp flarePowerUp = new FlarePowerUp(randomXPosition, 0, this);
             powerUps.add(flarePowerUp);
             getRoot().getChildren().add(flarePowerUp);

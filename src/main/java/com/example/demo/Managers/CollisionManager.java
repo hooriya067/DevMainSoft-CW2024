@@ -20,8 +20,13 @@ import com.example.demo.actors.collectibles.Coin;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.core.Updatable;
 import com.example.demo.Levels.ControllableLevel;
+import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.util.Duration;
+import javafx.scene.image.ImageView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -176,8 +181,45 @@ public class CollisionManager implements Updatable {
         actor.takeDamage();
         otherActor.takeDamage();
 
+        // Display explosion effect at the collision point
+        if (actor.isDestroyed() || otherActor.isDestroyed()) {
+            double collisionX = (actor.getLayoutX() + actor.getTranslateX() + otherActor.getLayoutX() + otherActor.getTranslateX()) / 2;
+            double collisionY = (actor.getLayoutY() + actor.getTranslateY() + otherActor.getLayoutY() + otherActor.getTranslateY()) / 2;
+            showExplosionEffect(collisionX, collisionY);
+        }
+
         if (actor.isDestroyed()) {
             level.incrementKillCount();
         }
+
     }
+
+    /**
+     * Displays an explosion effect at the specified position.
+     *
+     * @param x the X-coordinate of the explosion
+     * @param y the Y-coordinate of the explosion
+     */
+    private void showExplosionEffect(double x, double y) {
+        // Load the explosion image
+        Image explosionImage = new Image(getClass().getResource("/com/example/demo/images/explosion.png").toExternalForm());
+        ImageView explosionView = new ImageView(explosionImage);
+
+        // Set explosion image properties
+        explosionView.setFitWidth(100);
+        explosionView.setPreserveRatio(true);
+        explosionView.setLayoutX(x - 20);
+        explosionView.setLayoutY(y - 50);
+
+        // Add explosion to the game root
+        Platform.runLater(() -> level.getRoot().getChildren().add(explosionView));
+
+        // Create a fade-out animation
+        FadeTransition fade = new FadeTransition(Duration.seconds(1), explosionView);
+        fade.setFromValue(1.0);
+        fade.setToValue(0.0);
+        fade.setOnFinished(e -> Platform.runLater(() -> level.getRoot().getChildren().remove(explosionView)));
+        fade.play();
+    }
+
 }
