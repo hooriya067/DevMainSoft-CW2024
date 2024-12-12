@@ -16,7 +16,9 @@ import javafx.scene.control.Label;
  * shield mechanics.
  */
 public class LevelTwo extends LevelParent {
-
+	/**
+	 * Background iMAGE loader for the level.
+	 */
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background2.png";
 
 	/**

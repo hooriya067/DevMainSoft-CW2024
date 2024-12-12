@@ -1,5 +1,20 @@
+
+package com.example.demo.UI.screens;
+
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.control.Button;
+import javafx.scene.effect.BoxBlur;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+
+import javafx.stage.Stage;
+
+import java.util.List;
+import java.util.Objects;
 /**
- * The {@code InstructionScreen} class represents a screen that displays an instructional slideshow for the game.
+ * The {@link InstructionScreen} class represents a screen that displays an instructional slideshow for the game.
  * Users can navigate through multiple slides using navigation arrows and return to the main menu with a close button.
  *
  * <p><b>Features:</b></p>
@@ -17,24 +32,17 @@
  *     <li>{@link #updateSlide()}: Updates the slide view to display the current slide.</li>
  * </ul>
  */
-package com.example.demo.UI.screens;
-
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.control.Button;
-import javafx.scene.effect.BoxBlur;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
-import java.util.List;
-import java.util.Objects;
-
 public class InstructionScreen extends Group {
+    /**
+     * The index of the current slide being displayed in the slideshow.
+     * Used to navigate through the instructional slides.
+     */
+    private int currentSlideIndex = 0;
 
-    private int currentSlideIndex = 0; // Tracks the current slide index
+    /**
+     * List of image file paths representing the instructional slides.
+     * Each string corresponds to a slide image in the instruction manual.
+     */
     private final List<String> slideImages = List.of(
             "/com/example/demo/images/instruction_manual/1.png",
             "/com/example/demo/images/instruction_manual/2.png",
@@ -46,7 +54,11 @@ public class InstructionScreen extends Group {
             "/com/example/demo/images/instruction_manual/8.png"
     );
 
-    private ImageView slideView; // The view displaying the current slide
+    /**
+     * The {@code ImageView} displaying the current slide in the slideshow.
+     * Updates dynamically as users navigate between slides.
+     */
+    private ImageView slideView;
 
     /**
      * Constructs an {@code InstructionScreen} with a blurred background, slide navigation, and a close button.

@@ -1,5 +1,19 @@
+
+package com.example.demo.UI.menu;
+
+import com.example.demo.Managers.AlertManager;
+import com.example.demo.Managers.PowerUpManager;
+import com.example.demo.core.GameStateManager;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 /**
- * The {@code PowerUpMenu} class represents an in-game menu for purchasing power-ups.
+ * The {@link PowerUpMenu} class represents an in-game menu for purchasing power-ups.
  * Players can select from options like extra life, shield, or additional bullets.
  * This menu pauses the game and allows players to enhance their gameplay with power-ups.
  *
@@ -19,20 +33,6 @@
  *     <li>{@link GameStateManager}: Manages the game's state (paused or active).</li>
  * </ul>
  */
-package com.example.demo.UI.menu;
-
-import com.example.demo.Managers.AlertManager;
-import com.example.demo.Managers.PowerUpManager;
-import com.example.demo.core.GameStateManager;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
 public class PowerUpMenu extends InGameMenuParent {
 
     /**

@@ -1,5 +1,13 @@
+
+package com.example.demo.UI.buttons;
+
+import com.example.demo.Managers.SoundManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.util.Objects;
 /**
- * The {@code SoundButton} class represents a button for controlling the game's sound.
+ * The {@link  SoundButton} class represents a button for controlling the game's sound.
  * It allows users to toggle sound on and off with a visual representation.
  *
  * <p><b>Features:</b></p>
@@ -21,20 +29,31 @@
  *     <li>{@link SoundManager}: Manages the sound system of the game.</li>
  * </ul>
  */
-package com.example.demo.UI.buttons;
-
-import com.example.demo.Managers.SoundManager;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.util.Objects;
 
 public class SoundButton {
 
+    /**
+     * The {@code ImageView} displaying the current state of the sound button (on or off).
+     */
     private final ImageView soundButtonImage;
-    private boolean isMuted; // Tracks the current state of the sound
+
+    /**
+     * Tracks whether the sound is currently muted.
+     */
+    private boolean isMuted;
+
+    /**
+     * The {@code Image} displayed when the sound is turned on.
+     */
     private final Image soundOnImage;
+
+    /**
+     * The {@code Image} displayed when the sound is turned off.
+     */
     private final Image soundOffImage;
+
+    // Constructor and methods here
+
 
     /**
      * Constructs a {@code SoundButton} with default images for sound on and off states.

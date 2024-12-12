@@ -1,3 +1,22 @@
+
+package com.example.demo.UI.screens;
+
+import com.example.demo.UI.buttons.*;
+import com.example.demo.controller.Controller;
+import com.example.demo.core.GameConfig;
+import com.example.demo.core.GameStateManager;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.util.Objects;
 /**
  * The {@code MainMenu} class represents the main menu screen of the game.
  * It provides navigation options to start the game, customize the plane, view instructions, and quit the application.
@@ -24,29 +43,25 @@
  *     <li>{@link GameStateManager}: Manages the game's state (paused/resumed).</li>
  * </ul>
  */
-package com.example.demo.UI.screens;
-
-import com.example.demo.UI.buttons.*;
-import com.example.demo.controller.Controller;
-import com.example.demo.core.GameConfig;
-import com.example.demo.core.GameStateManager;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
-import java.util.Objects;
-
+/**
+ * The {@code MainMenu} class represents the main menu screen of the game.
+ * It provides a graphical interface for navigating to different parts of the game,
+ * such as starting a new game, accessing instructions, or customizing settings.
+ *
+ * <p>This class serves as the entry point for user interaction before the game begins.</p>
+ */
 public class MainMenu {
 
+    /**
+     * The width of the main menu screen, derived from {@link GameConfig#SCREEN_WIDTH}.
+     */
     private static final double MENU_WIDTH = GameConfig.SCREEN_WIDTH;
+
+    /**
+     * The height of the main menu screen, derived from {@link GameConfig#SCREEN_HEIGHT}.
+     */
     private static final double MENU_HEIGHT = GameConfig.SCREEN_HEIGHT;
+
 
     /**
      * Constructs a {@code MainMenu} instance and initializes its elements.

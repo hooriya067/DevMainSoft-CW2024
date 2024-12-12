@@ -1,7 +1,7 @@
 package com.example.demo.core;
 
 /**
- * The {@code GameConfig} class provides configuration constants for the game's screen dimensions.
+ * The {@link GameConfig} class provides configuration constants for the game's screen dimensions.
  *
  * <p>
  * This class centralizes the configuration of game-wide settings, such as screen width and height,
@@ -9,7 +9,11 @@ package com.example.demo.core;
  * values were hardcoded in multiple locations, improving maintainability and scalability.
  * </p>
  */
+
 public class GameConfig {
+/**
+ *class configuration
+ */
 
     /**
      * The width of the game screen in pixels.
@@ -20,4 +24,5 @@ public class GameConfig {
      * The height of the game screen in pixels.
      */
     public static final int SCREEN_HEIGHT = 750;
+
 }

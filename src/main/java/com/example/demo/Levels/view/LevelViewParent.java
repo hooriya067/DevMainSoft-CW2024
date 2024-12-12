@@ -1,23 +1,4 @@
-/**
- * The {@code LevelViewParent} class serves as the base class for managing the UI and visual elements
- * of a game level. It includes support for heart displays, coin counters, bullet counters,
- * power-up buttons, pause functionality, and shield timers.
- *
- * <p>This class has been extensively modified to include additional features and functionalities
- * for improved gameplay experience.</p>
- *
- * <p><b>References:</b></p>
- * <ul>
- *     <li>{@link LevelParent}: Provides the core level functionality this class interacts with.</li>
- *     <li>{@link HeartDisplay}: Manages the display and updates of player health as hearts.</li>
- *     <li>{@link PauseButtonDisplay}: Displays the pause button and handles its interaction.</li>
- *     <li>{@link PowerUpButton}: Manages the display and interaction of the power-up button.</li>
- *     <li>{@link CoinSystemManager}: Updates and tracks the coin count displayed to the player.</li>
- *     <li>{@link BulletSystemManager}: Tracks and updates the bullet count for the player.</li>
- *     <li>{@link GameOverImage}: Displays the game over image when the player loses.</li>
- *     <li>{@link StageManager}: Provides access to the primary stage for UI overlays like pause or power-up menus.</li>
- * </ul>
- */
+
 package com.example.demo.Levels.view;
 
 import com.example.demo.Managers.BulletSystemManager;
@@ -36,9 +17,27 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-
+/**
+ * The {@link  LevelViewParent} class serves as the base class for managing the UI and visual elements
+ * of a game level. It includes support for heart displays, coin counters, bullet counters,
+ * power-up buttons, pause functionality, and shield timers.
+ *
+ * <p>This class has been extensively modified to include additional features and functionalities
+ * for improved gameplay experience.</p>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link LevelParent}: Provides the core level functionality this class interacts with.</li>
+ *     <li>{@link HeartDisplay}: Manages the display and updates of player health as hearts.</li>
+ *     <li>{@link PauseButtonDisplay}: Displays the pause button and handles its interaction.</li>
+ *     <li>{@link PowerUpButton}: Manages the display and interaction of the power-up button.</li>
+ *     <li>{@link CoinSystemManager}: Updates and tracks the coin count displayed to the player.</li>
+ *     <li>{@link BulletSystemManager}: Tracks and updates the bullet count for the player.</li>
+ *     <li>{@link GameOverImage}: Displays the game over image when the player loses.</li>
+ *     <li>{@link StageManager}: Provides access to the primary stage for UI overlays like pause or power-up menus.</li>
+ * </ul>
+ */
 public abstract class LevelViewParent {
 
 	/**
@@ -204,6 +203,9 @@ public abstract class LevelViewParent {
 				bulletCountLabel
 		);
 	}
+	/**
+	 * Adds all UI functions collectively to level parents update scenario
+	 */
 	public void AddUI(){
 		initializeWinningParameter();
 		showHeartDisplay();
@@ -221,6 +223,10 @@ public abstract class LevelViewParent {
 	public void updateBulletCount(int newBulletCount) {
 		bulletCountLabel.setText("Bullets🔫: " + newBulletCount);
 	}
+	/**
+	 * shows users heart health count display.
+	 *
+	 */
 	protected void showHeartDisplay() {
 		heartDisplay.getContainer().toFront();
 	}

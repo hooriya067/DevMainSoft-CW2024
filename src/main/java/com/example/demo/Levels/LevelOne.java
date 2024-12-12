@@ -20,11 +20,36 @@ import com.example.demo.actors.active.Factories.UserPlaneFactory;
  */
 public class LevelOne extends LevelParent {
 
+	/**
+	 * The file path for the background image used in Level One.
+	 * This image is displayed as the level's background.
+	 */
 	private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/background01.png";
+
+	/**
+	 * The total number of enemies that can appear in Level One.
+	 * This value limits the maximum number of enemies spawned simultaneously.
+	 */
 	private static final int TOTAL_ENEMIES = 5;
+
+	/**
+	 * The number of kills required to advance to the next level.
+	 * This value represents the primary objective for completing Level One.
+	 */
 	private static final int KILLS_TO_ADVANCE = 10;
 
+	/**
+	 * The height of the toolbar area in pixels.
+	 * This area is reserved for UI components and is used to calculate spawn positions.
+	 */
 	private static final double TOOLBAR_HEIGHT = 90;
+
+/**
+ * Constructs a new {@code LevelOne} instance with the specified screen dimensions.
+ *
+ * @param screenHeight the height of the game screen in pixels.
+ * @param screenWidth  the width of the game screen in pixels.
+ */
 
 	/**
 	 * Constructs a new {@code LevelOne} instance with the specified screen dimensions.

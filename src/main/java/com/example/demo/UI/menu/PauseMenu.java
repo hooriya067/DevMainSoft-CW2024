@@ -1,24 +1,4 @@
-/**
- * The {@code PauseMenu} class represents the in-game pause menu.
- * It allows the player to navigate back to the main menu, resume the game, or quit the application.
- * This class extends {@link InGameMenuParent} to leverage core overlay functionalities.
- *
- * <p><b>Features:</b></p>
- * <ul>
- *     <li>Displays a menu overlay with options to resume, quit, or navigate to the main menu.</li>
- *     <li>Leverages buttons such as {@link MainMenuButton}, {@link ResumeButton}, and {@link QuitButton} for user actions.</li>
- *     <li>Pauses the game and dims the background when displayed.</li>
- * </ul>
- *
- * <p><b>References:</b></p>
- * <ul>
- *     <li>{@link InGameMenuParent}: Base class providing core overlay functionalities.</li>
- *     <li>{@link MainMenu}: Represents the main menu screen of the game.</li>
- *     <li>{@link MainMenuButton}: Button for navigating to the main menu.</li>
- *     <li>{@link ResumeButton}: Button for resuming the game.</li>
- *     <li>{@link QuitButton}: Button for quitting the application.</li>
- * </ul>
- */
+
 package com.example.demo.UI.menu;
 
 import com.example.demo.UI.screens.MainMenu;
@@ -28,7 +8,26 @@ import com.example.demo.UI.buttons.ResumeButton;
 import javafx.geometry.Pos;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+/**
+ * The {@link PauseMenu} class represents the in-game pause menu.
+ * It provides options for resuming gameplay, navigating to the main menu,
+ * and quitting the game.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Pause overlay with dimmed background.</li>
+ *     <li>Buttons for resuming, quitting, and returning to the main menu.</li>
+ *     <li>Handles game state transitions.</li>
+ * </ul>
+  * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link InGameMenuParent}: Base class providing core overlay functionalities.</li>
+ *     <li>{@link MainMenu}: Represents the main menu screen of the game.</li>
+ *     <li>{@link MainMenuButton}: Button for navigating to the main menu.</li>
+ *     <li>{@link ResumeButton}: Button for resuming the game.</li>
+ *     <li>{@link QuitButton}: Button for quitting the application.</li>
+ * </ul>
+ */
 public class PauseMenu extends InGameMenuParent {
 
     /**

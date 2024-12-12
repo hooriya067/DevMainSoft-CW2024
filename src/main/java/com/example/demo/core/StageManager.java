@@ -4,7 +4,7 @@ import com.example.demo.Managers.LevelManager;
 import javafx.stage.Stage;
 
 /**
- * The {@code StageManager} class provides a centralized mechanism for managing the global {@link Stage}
+ * The {@link StageManager} class provides a centralized mechanism for managing the global {@link Stage}
  * instance and the {@link LevelManager} in the application. It ensures a single source of truth for accessing
  * and modifying the stage and level manager throughout the game.
  *

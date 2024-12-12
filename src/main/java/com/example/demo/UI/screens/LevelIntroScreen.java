@@ -1,21 +1,4 @@
-/**
- * The {@code LevelIntroScreen} class provides an introductory screen for each game level.
- * It includes visual animations, a background gradient, level objectives, and a prompt to start the level.
- *
- * <p><b>Features:</b></p>
- * <ul>
- *     <li>Animated entry of a text bubble displaying the level name and objectives.</li>
- *     <li>Customizable objectives for different levels.</li>
- *     <li>Interactive elements such as a quit button and a prompt to start the level.</li>
- *     <li>Typing effect for displaying level objectives.</li>
- * </ul>
- *
- * <p><b>References:</b></p>
- * <ul>
- *     <li>{@link GameConfig}: Provides game-wide configurations like screen width and height.</li>
- *     <li>{@link LevelManager}: Manages level progression and transitions.</li>
- * </ul>
- */
+
 package com.example.demo.UI.screens;
 
 import com.example.demo.core.GameConfig;
@@ -40,18 +23,44 @@ import javafx.util.Duration;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-
+/**
+ * The {@link  LevelIntroScreen} class provides an introductory screen for each game level.
+ * It includes visual animations, a background gradient, level objectives, and a prompt to start the level.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Animated entry of a text bubble displaying the level name and objectives.</li>
+ *     <li>Customizable objectives for different levels.</li>
+ *     <li>Interactive elements such as a quit button and a prompt to start the level.</li>
+ *     <li>Typing effect for displaying level objectives.</li>
+ * </ul>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link GameConfig}: Provides game-wide configurations like screen width and height.</li>
+ *     <li>{@link LevelManager}: Manages level progression and transitions.</li>
+ * </ul>
+ */
 public class LevelIntroScreen {
-
+    /**
+     * The name of the level being introduced.
+     * This value is used to display the level name on the introduction screen.
+     */
     private final String levelName;
+
+    /**
+     * The manager responsible for handling level transitions and gameplay flow.
+     * It coordinates actions like starting the level or returning to the menu.
+     */
     private final LevelManager levelManager;
 
     /**
      * Constructs a {@code LevelIntroScreen}.
      *
-     * @param levelName     the name of the level
-     * @param levelManager  the manager responsible for handling level transitions
+     * @param levelName     the name of the level to be displayed on the intro screen
+     * @param levelManager  the manager responsible for controlling level transitions and interactions
      */
+
     public LevelIntroScreen(String levelName, LevelManager levelManager) {
         this.levelName = levelName;
         this.levelManager = levelManager;

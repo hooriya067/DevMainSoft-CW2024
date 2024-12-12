@@ -26,7 +26,7 @@ public class QuitButton extends ButtonParent {
     }
     /**
      * Sets the game to be closed when the quit button is clicked.
-
+* @param stage the current stage to close
      */
     public void setOnQuit(Stage stage) {
         setOnClick(stage::close);

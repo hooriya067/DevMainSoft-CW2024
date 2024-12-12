@@ -1,5 +1,22 @@
+
+package com.example.demo.UI.screens;
+
+import com.example.demo.Managers.StarManager;
+import com.example.demo.UI.buttons.NextButton;
+import com.example.demo.UI.buttons.PlayAgainButton;
+import com.example.demo.actors.collectibles.StarDisplay;
+import com.example.demo.core.StageManager;
+import com.example.demo.Managers.LevelManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+import java.util.Objects;
 /**
- * The {@code LevelCompletedScreen} class represents the UI screen displayed upon completing a game level.
+ * The {@link LevelCompletedScreen} class represents the UI screen displayed upon completing a game level.
  * It provides visual feedback, including the number of stars earned for the level, and buttons to proceed
  * to the next level or replay the current one.
  *
@@ -19,27 +36,24 @@
  *     <li>{@link LevelManager}: Provides information about the current level.</li>
  * </ul>
  */
-package com.example.demo.UI.screens;
-
-import com.example.demo.Managers.StarManager;
-import com.example.demo.UI.buttons.NextButton;
-import com.example.demo.UI.buttons.PlayAgainButton;
-import com.example.demo.actors.collectibles.StarDisplay;
-import com.example.demo.core.StageManager;
-import com.example.demo.Managers.LevelManager;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-
-import java.util.Objects;
-
 public class LevelCompletedScreen extends Pane {
 
+    /**
+     * Represents the path to the "Level Completed" image resource.
+     * This image is displayed as an overlay when a level is completed.
+     */
     private static final String IMAGE_NAME = "/com/example/demo/images/levelcompleted.png";
+
+    /**
+     * Specifies the width of the "Level Completed" image in pixels.
+     * The width is used to resize the image while maintaining its aspect ratio.
+     */
     private static final double IMAGE_WIDTH = 550;
+
+    /**
+     * Represents the vertical offset for positioning the "Level Completed" image.
+     * This offset determines how far down the image is placed from the top of the screen.
+     */
     private static final double IMAGE_Y_OFFSET = 200;
 
     /**

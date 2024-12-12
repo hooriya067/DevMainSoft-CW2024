@@ -9,7 +9,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 
 /**
- * The {@code Main} class serves as the entry point for the application.
+ * The {@link   Main} class serves as the entry point for the application.
  * It initializes the primary {@link Stage}, sets global configurations, and
  * launches the main menu of the game.
  *
@@ -26,7 +26,13 @@ import javafx.stage.Stage;
  * @see SoundManager
  */
 public class Main extends Application {
-
+/**
+ * Default constructor.
+ * <p>
+ * This constructor is automatically provided by the JavaFX {@link Application} class and does not require explicit implementation.
+ * It is responsible for setting up the primary stage and initializing the game environment in the {@link #start(Stage)} method.
+ * </p>
+ */
 	/**
 	 * The title of the game window.
 	 */

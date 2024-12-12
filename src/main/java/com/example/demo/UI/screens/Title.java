@@ -1,5 +1,12 @@
+
+package com.example.demo.UI.screens;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.util.Objects;
 /**
- * The {@code Title} class represents the title graphic for the game's main menu or other screens.
+ * The {@link Title} class represents the title graphic for the game's main menu or other screens.
  * It encapsulates the logic for loading and displaying the title image with predefined dimensions.
  *
  * <p><b>Features:</b></p>
@@ -16,18 +23,15 @@
  * // Add titleImage to the UI layout
  * }</pre>
  */
-package com.example.demo.UI.screens;
-
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.util.Objects;
-
 public class Title {
+    /**
+     * The {@link ImageView} that holds and displays the title image.
+     * This image serves as the visual representation of the title on the screen.
+     */
     private final ImageView titleImage;
 
     /**
-     * Constructs a {@code Title} object and initializes the title image.
+     * Constructs a {@link Title} object and initializes the title image.
      * The image is loaded from the specified resource path and resized to fit predefined dimensions.
      */
     public Title() {

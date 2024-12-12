@@ -4,7 +4,7 @@ import com.example.demo.actors.active.projectiles.*;
 import com.example.demo.actors.user.UserPlane;
 import com.example.demo.actors.active.ActiveActor;
 /**
- * The {@code ProjectileFactory} class provides a centralized mechanism for creating various types of projectiles
+ * The {@link ProjectileFactory} class provides a centralized mechanism for creating various types of projectiles
  * in the game. It utilizes the Factory design pattern to create projectiles based on the specified type.
  */
 public class ProjectileFactory {

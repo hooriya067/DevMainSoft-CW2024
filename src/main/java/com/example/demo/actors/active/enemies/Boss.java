@@ -7,8 +7,6 @@ import com.example.demo.actors.active.ActiveActor;
 import java.util.*;
 import java.util.function.Consumer;
 
-
-
 /**
  * The {@code Boss} class represents a powerful enemy in the game with advanced behaviors such as movement patterns,
  * shield activation, and firing projectiles. It extends {@link EnemyParent} to inherit common enemy functionalities
@@ -16,23 +14,84 @@ import java.util.function.Consumer;
  */
 public class Boss extends EnemyParent {
 
+	/**
+	 * Offset for the Y-coordinate of fired projectiles.
+	 */
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
+
+	/**
+	 * The image name representing the boss.
+	 */
 	private static final String IMAGE_NAME = "bossplane.png";
-	private static final double BOSS_FIRE_RATE = .04;
-	private static final double BOSS_SHIELD_PROBABILITY = .002;
+
+	/**
+	 * Probability for the boss to fire a projectile in each frame.
+	 */
+	private static final double BOSS_FIRE_RATE = 0.04;
+
+	/**
+	 * Probability for the boss to activate its shield in each frame.
+	 */
+	private static final double BOSS_SHIELD_PROBABILITY = 0.002;
+
+	/**
+	 * Number of movements in a single cycle of the movement pattern.
+	 */
 	private static final int MOVE_FREQUENCY_PER_CYCLE = 5;
+
+	/**
+	 * Maximum number of consecutive frames the boss can move in the same direction.
+	 */
 	private static final int MAX_FRAMES_WITH_SAME_MOVE = 10;
+
+	/**
+	 * Maximum number of frames the boss can have its shield activated.
+	 */
 	private static final int MAX_FRAMES_WITH_SHIELD = 150;
+
+	/**
+	 * Height of the boss image.
+	 */
 	private static final int IMAGE_HEIGHT = 50;
+
+	/**
+	 * Height of the toolbar in the game.
+	 */
 	private static final int TOOLBAR_HEIGHT = 90;
 
+	/**
+	 * The height of the game screen.
+	 */
 	private final int screenHeight;
+
+	/**
+	 * The list representing the movement pattern of the boss.
+	 */
 	private final List<Integer> movePattern;
+
+	/**
+	 * Flag indicating whether the boss's shield is currently active.
+	 */
 	private boolean isShielded;
+
+	/**
+	 * Counter for consecutive moves in the same direction.
+	 */
 	private int consecutiveMovesInSameDirection;
+
+	/**
+	 * Index of the current move in the movement pattern.
+	 */
 	private int indexOfCurrentMove;
+
+	/**
+	 * Counter for frames with the shield activated.
+	 */
 	private int framesWithShieldActivated;
 
+	/**
+	 * Listener for health change events.
+	 */
 	private Consumer<Integer> healthChangeListener;
 
 	/**
@@ -44,7 +103,7 @@ public class Boss extends EnemyParent {
 	 * @param levelParent   the parent level to which the boss belongs.
 	 */
 	public Boss(double initialX, double initialY, int screenHeight, LevelParent levelParent) {
-		super(IMAGE_NAME, 50, initialX, initialY, 15, levelParent);
+		super(IMAGE_NAME, IMAGE_HEIGHT, initialX, initialY, 15, levelParent);
 		this.screenHeight = screenHeight;
 		this.movePattern = new ArrayList<>();
 		this.isShielded = false;
@@ -107,6 +166,11 @@ public class Boss extends EnemyParent {
 		}
 	}
 
+	/**
+	 * Retrieves the lower boundary for the boss's movement.
+	 *
+	 * @return the lower boundary as an integer.
+	 */
 	private int getLowerBound() {
 		return (int) (levelParent.getScreenHeight() - IMAGE_HEIGHT - 70);
 	}
@@ -193,4 +257,3 @@ public class Boss extends EnemyParent {
 		return currentMove;
 	}
 }
-

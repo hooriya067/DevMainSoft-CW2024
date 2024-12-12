@@ -19,6 +19,34 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
 import java.util.Objects;
+/**
+ * The {@code HeartDisplay} class manages the display of heart images on the game screen
+ * to visually represent the player's health. It allows for dynamic updates by adding or
+ * removing heart images as the player's health changes during gameplay.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Displays heart icons using an {@code HBox} container.</li>
+ *     <li>Supports adding hearts to increase health.</li>
+ *     <li>Supports removing hearts to decrease health.</li>
+ *     <li>Provides customizable initial position and number of hearts.</li>
+ * </ul>
+ *
+ * <p><b>Constants:</b></p>
+ * <ul>
+ *     <li>{@code HEART_IMAGE_NAME}: Specifies the file path for the heart image resource.</li>
+ *     <li>{@code HEART_HEIGHT}: Defines the height of each heart icon for consistent scaling.</li>
+ *     <li>{@code INDEX_OF_FIRST_ITEM}: Specifies the index of the first heart in the container for removal operations.</li>
+ * </ul>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link HBox}: Used as the container for arranging heart images.</li>
+ *     <li>{@link ImageView}: Used for rendering the heart images.</li>
+ * </ul>
+ *
+ * @since 1.0
+ */
 
 public class HeartDisplay {
 

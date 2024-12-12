@@ -1,5 +1,21 @@
+
+package com.example.demo.UI.screens;
+
+import com.example.demo.Managers.SoundManager;
+import com.example.demo.Managers.StarManager;
+import com.example.demo.UI.buttons.PlayAgainButton;
+import com.example.demo.UI.buttons.QuitButton;
+import com.example.demo.actors.collectibles.StarDisplay;
+import com.example.demo.controller.Controller;
+import com.example.demo.core.StageManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+
+import java.util.Objects;
 /**
- * The {@code WinImage} class represents the screen displayed when the player wins the game.
+ * The {@link WinImage} class represents the screen displayed when the player wins the game.
  * It includes the victory image, final stars display, and action buttons for replaying the game or quitting.
  *
  * <p><b>Features:</b></p>
@@ -24,28 +40,29 @@
  * WinImage winImage = new WinImage(stage.getWidth(), stage.getHeight());
  * stage.getScene().setRoot(winImage);
  * }</pre>
- */
-package com.example.demo.UI.screens;
+ */	/**
+	 * The {@code WinImage} class represents a visual overlay displayed when the player wins the game.
+	 * It contains a congratulatory image that is displayed on the screen.
+	 */
+	public class WinImage extends Pane {
 
-import com.example.demo.Managers.SoundManager;
-import com.example.demo.Managers.StarManager;
-import com.example.demo.UI.buttons.PlayAgainButton;
-import com.example.demo.UI.buttons.QuitButton;
-import com.example.demo.actors.collectibles.StarDisplay;
-import com.example.demo.controller.Controller;
-import com.example.demo.core.StageManager;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
+		/**
+		 * The path to the image resource used as the win overlay.
+		 */
+		private static final String IMAGE_NAME = "/com/example/demo/images/winimage.png";
 
-import java.util.Objects;
+		/**
+		 * The width of the win image in pixels.
+		 */
+		private static final double IMAGE_WIDTH = 500;
 
-public class WinImage extends Pane {
+		/**
+		 * The height of the win image in pixels.
+		 */
+		private static final double IMAGE_HEIGHT = 800;
 
-	private static final String IMAGE_NAME = "/com/example/demo/images/winimage.png";
-	private static final double IMAGE_WIDTH = 500;
-	private static final double IMAGE_HEIGHT = 800;
+		// Constructor and methods here
+
 
 	/**
 	 * Constructs a {@code WinImage} object and initializes its UI elements.

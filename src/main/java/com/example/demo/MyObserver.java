@@ -22,18 +22,20 @@
  *
  * <p><b>Implementation Example in {@link Controller}:</b></p>
  * <pre>{@code
- * public class Controller implements MyObserver {
- *     @Override
- *     public void onLevelWin(String nextLevel) {
- *         // Logic to transition to the next level
- *         System.out.println("Level won! Proceeding to: " + nextLevel);
- *         levelManager.goToNextLevel();
- *     }
- * }
- * }</pre>
  */
 package com.example.demo;
-
+/**
+ * The {@code MyObserver} interface defines a custom observer mechanism for monitoring and responding to
+ * level completion events in the game. Implementations of this interface should handle the actions
+ * required when a level is successfully completed, such as transitioning to the next level or
+ * displaying a completion screen.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Provides a single method, {@link #onLevelWin(String)}, to handle level completion.</li>
+ *     <li>Supports custom implementations for varied behaviors upon level success.</li>
+ * </ul>
+ */
 public interface MyObserver {
     /**
      * Invoked when a level is completed successfully.
@@ -42,3 +44,4 @@ public interface MyObserver {
      */
     void onLevelWin(String nextLevel);
 }
+

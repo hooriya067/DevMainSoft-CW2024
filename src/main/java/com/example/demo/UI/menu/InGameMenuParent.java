@@ -41,10 +41,26 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Abstract base class for in-game menu overlays.
+ * Handles overlay display, game state management, and background music adjustments.
+ */
 public abstract class InGameMenuParent {
 
+    /**
+     * The primary stage of the application.
+     * Retrieved from {@link StageManager}.
+     */
     protected final Stage stage = StageManager.getStage();
+
+    /**
+     * The layout container for the overlay.
+     */
     private StackPane overlayLayout;
+
+    /**
+     * Tracks whether the overlay is currently active.
+     */
     private boolean overlayActive = false;
 
     /**

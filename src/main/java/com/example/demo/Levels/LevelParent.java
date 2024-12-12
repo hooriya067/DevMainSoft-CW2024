@@ -48,26 +48,112 @@ import java.util.Objects;
  */
 public abstract class LevelParent implements ControllableLevel, Updatable {
 
+	/**
+	 * Adjustment value for the screen height in pixels.
+	 * Used to calculate the maximum Y-coordinate for spawning enemies and other elements.
+	 */
 	private static final double SCREEN_HEIGHT_ADJUSTMENT = 150;
+
+	/**
+	 * Delay in milliseconds for each game loop frame.
+	 * This value controls the update interval for the game logic.
+	 */
 	private static final int MILLISECOND_DELAY = 50;
+
+	/**
+	 * Height of the toolbar area in pixels.
+	 * Reserved for displaying UI components like health bars and score counters.
+	 */
 	private static final int TOOLBAR_HEIGHT = 100;
 
+	/**
+	 * The height of the game screen in pixels.
+	 * Specifies the vertical resolution for the current level.
+	 */
 	private final double screenHeight;
+
+	/**
+	 * The width of the game screen in pixels.
+	 * Specifies the horizontal resolution for the current level.
+	 */
 	private final double screenWidth;
+
+	/**
+	 * The maximum Y-coordinate for spawning enemies in the level.
+	 * Calculated based on the screen height and the {@code SCREEN_HEIGHT_ADJUSTMENT}.
+	 */
 	private final double enemyMaximumYPosition;
 
+	/**
+	 * The root container for all elements in the level's scene.
+	 * Acts as the main group for adding UI components, game objects, and background elements.
+	 */
 	private final Group root;
+
+	/**
+	 * The user-controlled plane instance.
+	 * Represents the player's main character or unit in the game.
+	 */
 	protected final UserPlane user;
+
+	/**
+	 * The scene object for the current level.
+	 * Manages the graphical interface and interactions for the level.
+	 */
 	private final Scene scene;
+
+	/**
+	 * The background image for the level.
+	 * Provides the visual backdrop for the current gameplay environment.
+	 */
 	protected final ImageView background;
+
+	/**
+	 * The number of enemies killed by the player in the level.
+	 * Tracks progress towards the kill target required to complete the level.
+	 */
 	private int numberOfKills;
+
+	/**
+	 * The shield image representing the player's active shield.
+	 * Displays a visual effect when the shield is active.
+	 */
 	private final ShieldImage userShield;
 
+	/**
+	 * The view object for the current level.
+	 * Manages UI components and overlays specific to the level.
+	 */
 	private final LevelViewParent levelView;
+
+	/**
+	 * The input handler for managing player controls.
+	 * Processes user inputs like movement and firing projectiles.
+	 */
 	protected final InputHandlingManager inputHandler;
+
+	/**
+	 * The game loop responsible for updating game state at regular intervals.
+	 * Manages timing and frame updates for the level.
+	 */
 	private final GameLoop gameLoop;
+
+	/**
+	 * The actor manager for handling game objects.
+	 * Centralizes the creation, updating, and removal of actors in the level.
+	 */
 	private final ActorManager actorManager;
+
+	/**
+	 * The initial health of the player's plane.
+	 * Specifies the starting health for the user-controlled plane.
+	 */
 	private int playerInitialHealth;
+
+	/**
+	 * An observer instance for monitoring level events.
+	 * Allows external components to respond to changes in the level's state.
+	 */
 	private MyObserver myObserver;
 
 	/**
@@ -214,7 +300,8 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	/**
 	 * Additional scene updates to be implemented in specific levels.
 	 */
-	protected void updateSceneFurther() {}
+	protected void updateSceneFurther() {
+	}
 
 	/**
 	 * Initializes the background with proper dimensions and focus traversal.
@@ -330,45 +417,102 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 
 	// Getters for core level properties
 
+	/**
+	 * Retrieves the user-controlled plane in the level.
+	 *
+	 * @return the {@link UserPlane} controlled by the player.
+	 */
 	public UserPlane getUser() {
 		return user;
 	}
 
+	/**
+	 * Retrieves the root {@link Group} node for the level.
+	 *
+	 * @return the root {@link Group} containing all UI and game elements.
+	 */
 	@Override
 	public Group getRoot() {
 		return root;
 	}
 
+	/**
+	 * Retrieves the current number of active enemy units in the level.
+	 *
+	 * @return the count of active enemies.
+	 */
 	protected int getCurrentNumberOfEnemies() {
 		return actorManager.getEnemyUnits().size();
 	}
 
+	/**
+	 * Retrieves the maximum Y-position for enemy movement in the level.
+	 *
+	 * @return the maximum allowable Y-coordinate for enemies.
+	 */
 	protected double getEnemyMaximumYPosition() {
 		return enemyMaximumYPosition;
 	}
 
+	/**
+	 * Retrieves the width of the game screen.
+	 *
+	 * @return the screen width in pixels.
+	 */
 	public double getScreenWidth() {
 		return screenWidth;
 	}
 
+	/**
+	 * Retrieves the height of the game screen.
+	 *
+	 * @return the screen height in pixels.
+	 */
 	public double getScreenHeight() {
 		return screenHeight;
 	}
 
+	/**
+	 * Retrieves the number of kills made by the player in the level.
+	 *
+	 * @return the number of kills.
+	 */
 	public int getNumberOfKills() {
 		return numberOfKills;
 	}
 
+	/**
+	 * Retrieves the {@link LevelViewParent} object associated with the level.
+	 *
+	 * @return the level's {@link LevelViewParent}, managing its UI elements.
+	 */
 	public LevelViewParent getLevelView() {
 		return levelView;
 	}
+
+	/**
+	 * Checks if the shield is currently active for the user-controlled plane.
+	 *
+	 * @return {@code true} if the shield is active; {@code false} otherwise.
+	 */
 	public boolean isShieldActive() {
 		return userShield != null && userShield.isVisible();
 	}
+
+	/**
+	 * Retrieves a list of collectible coins present in the level.
+	 *
+	 * @return a {@link List} of {@link Coin} objects available in the level.
+	 */
 	public List<Coin> getCoins() {
 		return actorManager.getCoins();
 	}
 
+	/**
+	 * Retrieves the {@link ShieldImage} object associated with the user-controlled plane.
+	 *
+	 * @return the {@link ShieldImage} object representing the player's shield.
+	 */
 	public ShieldImage getUserShield() {
 		return userShield;
 	}

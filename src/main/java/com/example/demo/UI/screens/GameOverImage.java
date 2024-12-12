@@ -1,3 +1,19 @@
+
+package com.example.demo.UI.screens;
+
+import com.example.demo.Managers.BulletSystemManager;
+import com.example.demo.UI.buttons.PlayAgainButton;
+import com.example.demo.UI.buttons.QuitButton;
+import com.example.demo.controller.Controller;
+import com.example.demo.core.StageManager;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+import java.util.Objects;
 /**
  * The {@code GameOverImage} class represents a graphical overlay displayed when the game is over.
  * It includes a "Game Over" image, a dimmed background, and buttons for "Play Again" and "Quit".
@@ -18,25 +34,16 @@
  *     <li>{@link StageManager}: Provides the {@link javafx.stage.Stage} for the game window.</li>
  * </ul>
  */
-package com.example.demo.UI.screens;
-
-import com.example.demo.Managers.BulletSystemManager;
-import com.example.demo.UI.buttons.PlayAgainButton;
-import com.example.demo.UI.buttons.QuitButton;
-import com.example.demo.controller.Controller;
-import com.example.demo.core.StageManager;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.stage.Stage;
-
-import java.util.Objects;
-
 public class GameOverImage extends Pane {
 
+	/**
+	 * Path to the "Game Over" image resource.
+	 */
 	private static final String IMAGE_NAME = "/com/example/demo/images/gameover.png";
+
+	/**
+	 * Width of the "Game Over" image.
+	 */
 	private static final double IMAGE_WIDTH = 600;
 
 	/**
@@ -58,6 +65,7 @@ public class GameOverImage extends Pane {
 		gameOverImage.setFitWidth(IMAGE_WIDTH);
 		gameOverImage.setPreserveRatio(true);
 
+		// Center the "Game Over" image on the screen
 		double gameOverX = (screenWidth - IMAGE_WIDTH) / 2;
 		double gameOverY = screenHeight / 200;
 		gameOverImage.setLayoutX(gameOverX);

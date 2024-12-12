@@ -23,11 +23,30 @@ import javafx.scene.input.KeyCode;
 public class InputHandlingManager {
 
     /**
-     * Enum representing different movement modes.
+     * Enum representing different movement modes for user input handling.
+     *
+     * <p>This enum is used to define the scope of movement for the user-controlled plane
+     * in the game. Each mode specifies the allowed directions for movement, which can be
+     * restricted to vertical movement or expanded to full directional control.</p>
      */
     public enum MovementMode {
-        VERTICAL_ONLY, // UP and DOWN only
-        FULL           // UP, DOWN, LEFT, RIGHT
+        /**
+         * Allows movement in vertical directions only (UP and DOWN).
+         *
+         * <p>This mode restricts user input to the vertical axis, typically used in levels
+         * where horizontal movement is either unnecessary or would detract from the gameplay
+         * mechanics.</p>
+         */
+        VERTICAL_ONLY,
+
+        /**
+         * Allows full movement in all four directions (UP, DOWN, LEFT, and RIGHT).
+         *
+         * <p>This mode provides the user with complete control over the plane's movement
+         * on both the vertical and horizontal axes, enabling more complex gameplay
+         * scenarios.</p>
+         */
+        FULL
     }
 
     /**
