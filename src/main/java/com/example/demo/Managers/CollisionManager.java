@@ -162,12 +162,15 @@ public class CollisionManager implements Updatable {
      * @param otherActor the second actor involved in the collision
      */
     private void handleShieldCollision(ActiveActor actor, ActiveActor otherActor) {
-        System.out.println("Shield absorbed collision! No damage to user.");
         if (!(actor instanceof UserPlane)) {
             actor.takeDamage();
         }
         if (!(otherActor instanceof UserPlane)) {
             otherActor.takeDamage();
+        }
+
+        if (actor.isDestroyed()) {
+            level.incrementKillCount();
         }
     }
 
