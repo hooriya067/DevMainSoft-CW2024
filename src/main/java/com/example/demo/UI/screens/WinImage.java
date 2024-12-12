@@ -1,3 +1,30 @@
+/**
+ * The {@code WinImage} class represents the screen displayed when the player wins the game.
+ * It includes the victory image, final stars display, and action buttons for replaying the game or quitting.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Displays a win image centered on the screen.</li>
+ *     <li>Shows the player's final star count, calculated by {@link StarManager}.</li>
+ *     <li>Provides buttons for replaying the game or exiting the application.</li>
+ * </ul>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link StarManager}: Used to calculate the player's final stars.</li>
+ *     <li>{@link PlayAgainButton}: Button for replaying the game from the beginning.</li>
+ *     <li>{@link QuitButton}: Button for closing the application.</li>
+ *     <li>{@link Controller}: Handles the initialization and launching of the game.</li>
+ *     <li>{@link SoundManager}: Plays background music for the win screen.</li>
+ * </ul>
+ *
+ * <p><b>Usage:</b></p>
+ * <pre>{@code
+ * Stage stage = StageManager.getStage();
+ * WinImage winImage = new WinImage(stage.getWidth(), stage.getHeight());
+ * stage.getScene().setRoot(winImage);
+ * }</pre>
+ */
 package com.example.demo.UI.screens;
 
 import com.example.demo.Managers.SoundManager;
@@ -10,10 +37,6 @@ import com.example.demo.core.StageManager;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -24,9 +47,16 @@ public class WinImage extends Pane {
 	private static final double IMAGE_WIDTH = 500;
 	private static final double IMAGE_HEIGHT = 800;
 
+	/**
+	 * Constructs a {@code WinImage} object and initializes its UI elements.
+	 *
+	 * @param screenWidth  the width of the screen
+	 * @param screenHeight the height of the screen
+	 */
 	public WinImage(double screenWidth, double screenHeight) {
 		Stage stage = StageManager.getStage();
 
+		// Create and position the win image
 		ImageView winImage = new ImageView(
 				new Image(Objects.requireNonNull(getClass().getResource(IMAGE_NAME)).toExternalForm())
 		);
@@ -39,18 +69,21 @@ public class WinImage extends Pane {
 		winImage.setLayoutX(winImageX);
 		winImage.setLayoutY(winImageY);
 
-		// Display Final Stars
+		// Display the final stars earned
 		int finalStars = StarManager.getInstance().calculateFinalStars();
 		StarDisplay starDisplay = new StarDisplay(screenWidth / 2 - 125, screenHeight / 1.5, finalStars);
 
+		// Create the "Play Again" button
 		PlayAgainButton playAgainButton = new PlayAgainButton();
 		playAgainButton.getButton().setLayoutX((screenWidth / 2) - 600); // Set X position
 		playAgainButton.getButton().setLayoutY((screenHeight / 2) + 170); // Set Y position
 
+		// Create the "Quit" button
 		QuitButton quitButton = new QuitButton();
 		quitButton.getButton().setLayoutX((screenWidth / 2) + 300);
 		quitButton.getButton().setLayoutY((screenHeight / 2) + 170);
 
+		// Define actions for the buttons
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
 				SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
@@ -61,13 +94,10 @@ public class WinImage extends Pane {
 			}
 		});
 
-		quitButton.setOnClick(() -> {
-			stage.close(); // Exit the application
-		});
+		quitButton.setOnClick(stage::close);
 
 		// Add all elements to the Pane
-		getChildren().addAll( winImage, starDisplay.getContainer(), playAgainButton.getButton(), quitButton.getButton());
-
+		getChildren().addAll(winImage, starDisplay.getContainer(), playAgainButton.getButton(), quitButton.getButton());
 
 		// Bring the Win Image to the front
 		winImage.toFront();

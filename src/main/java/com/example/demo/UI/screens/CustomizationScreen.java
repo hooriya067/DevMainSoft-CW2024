@@ -1,3 +1,21 @@
+/**
+ * The {@code CustomizationScreen} class represents a screen in the game where players can select their desired plane
+ * from a set of available options. It provides a user-friendly interface with a visually appealing design, including
+ * a blurred background, selectable plane images, and a confirmation button.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Displays a selection screen with a blurred background and a styled selection box.</li>
+ *     <li>Allows players to choose a plane by clicking on an image, which visually highlights the selected plane.</li>
+ *     <li>Includes a confirmation button that triggers the customization completion process.</li>
+ *     <li>Integrates with {@link UserPlaneFactory} to set the selected plane image.</li>
+ * </ul>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link UserPlaneFactory}: Manages the user's selected plane image.</li>
+ * </ul>
+ */
 package com.example.demo.UI.screens;
 
 import javafx.geometry.Pos;
@@ -20,6 +38,12 @@ public class CustomizationScreen extends Group {
     private static final String IMAGE_LOCATION = "/com/example/demo/images/";
     private String selectedPlaneImage;
 
+    /**
+     * Constructs a {@code CustomizationScreen} and initializes the UI components.
+     *
+     * @param stage                 the {@link Stage} on which the screen is displayed
+     * @param onCustomizationComplete a {@link Runnable} action to be executed when the customization is complete
+     */
     public CustomizationScreen(Stage stage, Runnable onCustomizationComplete) {
         // Add blurred background
         Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResource(IMAGE_LOCATION + "background0.png")).toExternalForm());
@@ -33,14 +57,14 @@ public class CustomizationScreen extends Group {
         VBox greyBox = new VBox(20);
         greyBox.setStyle("-fx-background-color: rgba(50, 50, 50, 0.8); -fx-padding: 20; -fx-border-radius: 10;");
         greyBox.setMaxWidth(600);
-        greyBox.setLayoutX((stage.getWidth() - greyBox.getMaxWidth()) / 2+30);
+        greyBox.setLayoutX((stage.getWidth() - greyBox.getMaxWidth()) / 2 + 30);
         greyBox.setLayoutY(stage.getHeight() * 0.30);
         greyBox.setAlignment(Pos.CENTER);
 
         Label title = new Label("Select Your Plane");
         title.setStyle("-fx-font-size: 32px; -fx-text-fill: white; -fx-font-weight: bold;");
 
-    // Available planes
+        // Available planes
         List<String> planeImages = List.of(
                 "userplane1.png",
                 "userplane2.png",
@@ -51,7 +75,7 @@ public class CustomizationScreen extends Group {
         planeSelectionBox.setAlignment(Pos.CENTER);
         List<ImageView> planeViews = new ArrayList<>();
 
-    // Create clickable images
+        // Create clickable images
         for (String imageName : planeImages) {
             try {
                 String fullPath = Objects.requireNonNull(getClass().getResource(IMAGE_LOCATION + imageName)).toExternalForm();
@@ -68,7 +92,6 @@ public class CustomizationScreen extends Group {
                 });
                 planeViews.add(planeView);
 
-                // Add only the image to the container
                 planeContainer.getChildren().add(planeView);
                 planeSelectionBox.getChildren().add(planeContainer);
 
@@ -77,16 +100,22 @@ public class CustomizationScreen extends Group {
             }
         }
 
-
         // Confirm Button as an Image
         Image confirmImage = new Image(Objects.requireNonNull(getClass().getResource(IMAGE_LOCATION + "confirm_button.png")).toExternalForm());
         ImageView confirmImageView = getImageView(stage, onCustomizationComplete, confirmImage);
 
         greyBox.getChildren().addAll(title, planeSelectionBox);
-
         this.getChildren().addAll(backgroundImageView, greyBox, confirmImageView);
     }
 
+    /**
+     * Creates the confirmation button with the specified image and behavior.
+     *
+     * @param stage                 the {@link Stage} on which the button is displayed
+     * @param onCustomizationComplete the {@link Runnable} to execute on confirmation
+     * @param confirmImage          the {@link Image} for the confirmation button
+     * @return the {@link ImageView} representing the confirmation button
+     */
     private ImageView getImageView(Stage stage, Runnable onCustomizationComplete, Image confirmImage) {
         ImageView confirmImageView = new ImageView(confirmImage);
         confirmImageView.setFitWidth(300);
@@ -103,6 +132,12 @@ public class CustomizationScreen extends Group {
         return confirmImageView;
     }
 
+    /**
+     * Highlights the selected plane by applying a visual effect to the corresponding {@link ImageView}.
+     *
+     * @param planeViews   the list of all plane {@link ImageView}s
+     * @param selectedPlane the {@link ImageView} of the selected plane
+     */
     private void highlightSelectedPlane(List<ImageView> planeViews, ImageView selectedPlane) {
         for (ImageView planeView : planeViews) {
             planeView.setStyle("");
@@ -110,6 +145,11 @@ public class CustomizationScreen extends Group {
         selectedPlane.setStyle("-fx-effect: dropshadow(gaussian, yellow, 10, 0.5, 0, 0);");
     }
 
+    /**
+     * Updates the user's plane image in {@link UserPlaneFactory} with the selected plane.
+     *
+     * @param imageName the name of the selected plane image
+     */
     private void updateUserPlaneImage(String imageName) {
         UserPlaneFactory.setImageName(imageName);
     }

@@ -1,3 +1,24 @@
+/**
+ * The {@code PowerUpMenu} class represents an in-game menu for purchasing power-ups.
+ * Players can select from options like extra life, shield, or additional bullets.
+ * This menu pauses the game and allows players to enhance their gameplay with power-ups.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Provides options for purchasing power-ups like extra life, shield, and bullets.</li>
+ *     <li>Displays custom icons, labels, and prices for each power-up option.</li>
+ *     <li>Integrates with {@link PowerUpManager}, {@link AlertManager}, and {@link GameStateManager} for functionality.</li>
+ *     <li>Offers a "BACK" button to resume the game.</li>
+ * </ul>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link InGameMenuParent}: Base class providing core overlay functionalities.</li>
+ *     <li>{@link PowerUpManager}: Manages power-up purchases and their effects.</li>
+ *     <li>{@link AlertManager}: Displays alerts to players for feedback.</li>
+ *     <li>{@link GameStateManager}: Manages the game's state (paused or active).</li>
+ * </ul>
+ */
 package com.example.demo.UI.menu;
 
 import com.example.demo.Managers.AlertManager;
@@ -14,15 +35,30 @@ import javafx.stage.Stage;
 
 public class PowerUpMenu extends InGameMenuParent {
 
+    /**
+     * Constructs a {@code PowerUpMenu} with the specified stage.
+     *
+     * @param stage the {@link Stage} on which the power-up menu is displayed
+     */
     public PowerUpMenu(Stage stage) {
         super(stage);
     }
 
+    /**
+     * Displays the power-up menu overlay.
+     * Pauses the game and shows available power-up options.
+     */
     public void displayOverlay() {
         VBox menuContent = createMenuContent();
         super.displayOverlay(menuContent);
     }
 
+    /**
+     * Creates the content of the power-up menu.
+     * Includes options for purchasing extra life, shield, and bullets, as well as a back button.
+     *
+     * @return a {@link VBox} containing the menu's content
+     */
     @Override
     protected VBox createMenuContent() {
         VBox menuBox = new VBox(20);
@@ -37,15 +73,12 @@ public class PowerUpMenu extends InGameMenuParent {
         HBox powerUpBox = new HBox(30);
         powerUpBox.setAlignment(Pos.CENTER);
 
-
         // Health Power-Up
         VBox healthBox = createPowerUpButtonWithLabels("heart.png", "EXTRA LIFE", "10 Coins", () -> {
             if (PowerUpManager.getInstance().purchaseExtraLife()) {
                 removeOverlay();
                 GameStateManager.getInstance().resumeGame();
                 AlertManager.getInstance().showAlert("You are now One Heart Stronger!!!");
-                AlertManager.getInstance().showAlert("You are now One Heart Stronger!!!");
-
             } else {
                 AlertManager.getInstance().showAlert("Not Enough coins for Extra Health");
             }
@@ -61,29 +94,41 @@ public class PowerUpMenu extends InGameMenuParent {
                 AlertManager.getInstance().showAlert("You don't have enough coins OR Shield is already active.");
             }
         });
+
         // Bullets Power-Up
         VBox bulletsBox = createPowerUpButtonWithLabels("bulletbelt.png", "10 BULLETS", "30 Coins", () -> {
             if (PowerUpManager.getInstance().purchaseBullets()) {
                 removeOverlay();
                 GameStateManager.getInstance().resumeGame();
-                AlertManager.getInstance().showAlert("Bullets Reloaded succesfully Letssgo!");
+                AlertManager.getInstance().showAlert("Bullets Reloaded successfully Let’s go!");
             } else {
                 AlertManager.getInstance().showAlert("You don't have enough coins for Bullets Belts");
             }
         });
+
         powerUpBox.getChildren().addAll(healthBox, shieldBox, bulletsBox);
 
-
+        // Back button
         Button resumeButton = new Button("BACK");
         resumeButton.setStyle("-fx-font-size: 14px; -fx-text-fill: white; -fx-background-color: darkblue;");
         resumeButton.setOnAction(e -> {
             removeOverlay();
             startResumeCountdown();
         });
+
         menuBox.getChildren().addAll(title, powerUpBox, resumeButton);
         return menuBox;
     }
 
+    /**
+     * Creates a button with an icon, label, and price for a power-up option.
+     *
+     * @param imagePath the file path of the power-up icon
+     * @param label     the name of the power-up
+     * @param price     the price of the power-up
+     * @param action    the action to execute when the button is clicked
+     * @return a {@link VBox} containing the button and its associated labels
+     */
     private VBox createPowerUpButtonWithLabels(String imagePath, String label, String price, Runnable action) {
         ImageView icon = new ImageView(new Image(getClass().getResource("/com/example/demo/images/" + imagePath).toExternalForm()));
         icon.setFitWidth(60);

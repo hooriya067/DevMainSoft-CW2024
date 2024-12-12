@@ -1,3 +1,22 @@
+/**
+ * The {@code InstructionScreen} class represents a screen that displays an instructional slideshow for the game.
+ * Users can navigate through multiple slides using navigation arrows and return to the main menu with a close button.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Blurred background for better focus on the instructional slides.</li>
+ *     <li>Slide navigation with left and right arrow buttons.</li>
+ *     <li>Close button to exit the instructional screen and return to the main menu.</li>
+ * </ul>
+ *
+ * <p><b>Methods:</b></p>
+ * <ul>
+ *     <li>{@link #InstructionScreen(Stage, Runnable)}: Constructor to initialize the screen with navigation and close functionality.</li>
+ *     <li>{@link #showPreviousSlide()}: Displays the previous slide in the slideshow.</li>
+ *     <li>{@link #showNextSlide()}: Displays the next slide in the slideshow.</li>
+ *     <li>{@link #updateSlide()}: Updates the slide view to display the current slide.</li>
+ * </ul>
+ */
 package com.example.demo.UI.screens;
 
 import javafx.geometry.Pos;
@@ -15,7 +34,7 @@ import java.util.Objects;
 
 public class InstructionScreen extends Group {
 
-    private int currentSlideIndex = 0;
+    private int currentSlideIndex = 0; // Tracks the current slide index
     private final List<String> slideImages = List.of(
             "/com/example/demo/images/instruction_manual/1.png",
             "/com/example/demo/images/instruction_manual/2.png",
@@ -27,8 +46,14 @@ public class InstructionScreen extends Group {
             "/com/example/demo/images/instruction_manual/8.png"
     );
 
-    private ImageView slideView;
+    private ImageView slideView; // The view displaying the current slide
 
+    /**
+     * Constructs an {@code InstructionScreen} with a blurred background, slide navigation, and a close button.
+     *
+     * @param stage         the {@link Stage} on which the screen is displayed
+     * @param onBackToMenu  a {@link Runnable} action to execute when returning to the main menu
+     */
     public InstructionScreen(Stage stage, Runnable onBackToMenu) {
         // Blurred background
         Image backgroundImage = new Image(Objects.requireNonNull(getClass().getResource("/com/example/demo/images/background0.png")).toExternalForm());
@@ -40,7 +65,7 @@ public class InstructionScreen extends Group {
 
         // Slide container
         slideView = new ImageView();
-        slideView.setFitWidth(800); //slide size
+        slideView.setFitWidth(800); // Slide size
         slideView.setPreserveRatio(true);
         updateSlide();
 
@@ -75,6 +100,10 @@ public class InstructionScreen extends Group {
         this.getChildren().addAll(backgroundImageView, slideContainer, leftArrow, rightArrow, closeButton);
     }
 
+    /**
+     * Displays the previous slide in the slideshow.
+     * Ensures the slide index does not go below zero.
+     */
     private void showPreviousSlide() {
         if (currentSlideIndex > 0) {
             currentSlideIndex--;
@@ -82,6 +111,10 @@ public class InstructionScreen extends Group {
         }
     }
 
+    /**
+     * Displays the next slide in the slideshow.
+     * Ensures the slide index does not exceed the total number of slides.
+     */
     private void showNextSlide() {
         if (currentSlideIndex < slideImages.size() - 1) {
             currentSlideIndex++;
@@ -89,6 +122,10 @@ public class InstructionScreen extends Group {
         }
     }
 
+    /**
+     * Updates the current slide displayed in the {@link ImageView}.
+     * Retrieves the image path for the current slide index and sets it to the slide view.
+     */
     private void updateSlide() {
         String slidePath = slideImages.get(currentSlideIndex);
         slideView.setImage(new Image(Objects.requireNonNull(getClass().getResource(slidePath)).toExternalForm()));

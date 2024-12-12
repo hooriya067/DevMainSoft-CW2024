@@ -1,3 +1,20 @@
+/**
+ * The {@code AlertManager} class is a Singleton that provides utilities for displaying
+ * custom alerts and informational messages within the game. It handles animations,
+ * transitions, and dynamic positioning for a polished user experience.
+ *
+ * <p>This class integrates with the {@link StageManager} to dynamically retrieve
+ * the active scene root for displaying alerts. It supports standard alerts as well
+ * as informational alerts with animation sequences.</p>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link StageManager}: Retrieves the global stage for positioning alerts.</li>
+ *     <li>{@link javafx.animation}: Used for creating animations such as fade and scale transitions.</li>
+ *     <li>{@link javafx.scene.control.Label}: Used to display text for alerts.</li>
+ *     <li>{@link javafx.scene.Group}: The container to which alert elements are added.</li>
+ * </ul>
+ */
 package com.example.demo.Managers;
 
 import com.example.demo.core.StageManager;
@@ -14,12 +31,26 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+/**
+ * Manages and displays alert messages with animations and dynamic positioning.
+ */
 public class AlertManager {
 
-    private static AlertManager instance; // Singleton instance
+    /**
+     * Singleton instance of the AlertManager.
+     */
+    private static AlertManager instance;
 
-    private AlertManager() {} // Private constructor for Singleton
+    /**
+     * Private constructor to enforce Singleton pattern.
+     */
+    private AlertManager() {}
 
+    /**
+     * Retrieves the singleton instance of the AlertManager.
+     *
+     * @return the singleton instance
+     */
     public static AlertManager getInstance() {
         if (instance == null) {
             instance = new AlertManager();
@@ -27,43 +58,37 @@ public class AlertManager {
         return instance;
     }
 
+    /**
+     * Displays a standard alert message with animations and transitions.
+     *
+     * @param message the alert message to display
+     */
     public void showAlert(String message) {
-        // Retrieve the current root dynamically
-        Stage stage = StageManager.getStage(); // Assuming StageManager manages the global stage
+        Stage stage = StageManager.getStage();
         if (stage.getScene().getRoot() instanceof Group root) {
-            // Create a semi-transparent background
             Rectangle alertBox = new Rectangle(400, 100, Color.CYAN);
             alertBox.setArcWidth(40);
             alertBox.setArcHeight(50);
-            alertBox.setOpacity(0.2); // Slight transparency
+            alertBox.setOpacity(0.2);
 
-            // Create a message text
             Text alertText = new Text(message);
             alertText.setStyle("-fx-font-size: 18px; -fx-font-weight: bold; -fx-fill: red;");
-            alertText.setWrappingWidth(200); // Prevent text from exceeding box width
+            alertText.setWrappingWidth(200);
             alertText.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
-            alertText.setBoundsType(javafx.scene.text.TextBoundsType.VISUAL);
 
-            // Center text inside the alert box
             alertText.setLayoutX(alertBox.getWidth() / 2 - alertText.getLayoutBounds().getWidth() / 2);
             alertText.setLayoutY(alertBox.getHeight() / 2 - alertText.getLayoutBounds().getHeight() / 2);
 
-            // Create a container for the alert
-            Group alertOverlay = new Group();
-            alertOverlay.getChildren().addAll(alertBox, alertText);
-
-            // Add alert to the root
+            Group alertOverlay = new Group(alertBox, alertText);
             root.getChildren().add(alertOverlay);
 
-            // Position the alert slightly higher and to the left
-            double offsetX = 150; // Move left
-            double offsetY = 120; // Move up
+            double offsetX = 150;
+            double offsetY = 120;
             double centerX = stage.getScene().getWidth() / 2 - alertBox.getWidth() / 2 - offsetX;
             double centerY = stage.getScene().getHeight() / 2 - alertBox.getHeight() / 2 - offsetY;
             alertOverlay.setLayoutX(centerX);
             alertOverlay.setLayoutY(centerY);
 
-            // Add animations: expand slightly, then fade out
             ScaleTransition expand = new ScaleTransition(Duration.millis(200), alertOverlay);
             expand.setToX(1.1);
             expand.setToY(1.1);
@@ -77,13 +102,20 @@ public class AlertManager {
             fadeOut.setToValue(0.0);
 
             SequentialTransition sequence = new SequentialTransition(expand, shrink, fadeOut);
-            sequence.setOnFinished(e -> root.getChildren().remove(alertOverlay)); // Remove after fade out
+            sequence.setOnFinished(e -> root.getChildren().remove(alertOverlay));
             sequence.play();
         } else {
             System.err.println("Root is not a Group. Unable to display alert.");
         }
     }
-    // New method for informational alerts with animations
+
+    /**
+     * Displays an informational alert with animations and a timed sequence.
+     *
+     * @param message      the informational message to display
+     * @param screenWidth  the width of the screen for positioning the alert
+     * @param screenHeight the height of the screen for positioning the alert
+     */
     public void showInfoAlert(String message, double screenWidth, double screenHeight) {
         Platform.runLater(() -> {
             Stage stage = StageManager.getStage();
@@ -91,12 +123,10 @@ public class AlertManager {
                 Label infoLabel = new Label(message);
                 infoLabel.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: red;");
 
-                // Position the label dynamically at the center of the screen
-                infoLabel.setLayoutX(screenWidth / 2 - 150); // Adjust X to center
-                infoLabel.setLayoutY(screenHeight / 2 - 50); // Adjust Y to center
+                infoLabel.setLayoutX(screenWidth / 2 - 150);
+                infoLabel.setLayoutY(screenHeight / 2 - 50);
                 root.getChildren().add(infoLabel);
 
-                // Scale Transition for the "pop-up" effect
                 ScaleTransition scaleUp = new ScaleTransition(Duration.seconds(0.5), infoLabel);
                 scaleUp.setFromX(1.0);
                 scaleUp.setFromY(1.0);
@@ -109,30 +139,26 @@ public class AlertManager {
                 scaleDown.setToX(1.0);
                 scaleDown.setToY(1.0);
 
-                // Fade Transition for smooth fade-in and fade-out
                 FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), infoLabel);
                 fadeIn.setFromValue(0.0);
                 fadeIn.setToValue(1.0);
 
-                PauseTransition pause = new PauseTransition(Duration.seconds(3)); // Pause before fade out
+                PauseTransition pause = new PauseTransition(Duration.seconds(3));
 
                 FadeTransition fadeOut = new FadeTransition(Duration.seconds(0.5), infoLabel);
                 fadeOut.setFromValue(1.0);
                 fadeOut.setToValue(0.0);
-                // Remove label after the animation sequence
                 fadeOut.setOnFinished(event -> root.getChildren().remove(infoLabel));
 
-                // Play animations sequentially
                 fadeIn.setOnFinished(event -> scaleUp.play());
                 scaleUp.setOnFinished(event -> scaleDown.play());
                 scaleDown.setOnFinished(event -> pause.play());
                 pause.setOnFinished(event -> fadeOut.play());
 
-                fadeIn.play(); // Start animation sequence
-
+                fadeIn.play();
             } else {
                 System.err.println("Root is not a Group. Unable to display informational alert.");
             }
         });
-
-}}
+    }
+}

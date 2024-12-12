@@ -4,6 +4,7 @@ import com.example.demo.Levels.view.LevelViewParent;
 import com.example.demo.Levels.view.LevelViewLevelTwo;
 import com.example.demo.actors.active.enemies.Boss;
 import com.example.demo.actors.active.Factories.EnemyFactory;
+import com.example.demo.core.GameConfig;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 public class LevelTwo extends LevelParent {
@@ -24,17 +25,14 @@ public class LevelTwo extends LevelParent {
 		initializeWinningParameter();
 	}
 	protected void initializeWinningParameter() {
-		bossHealthLabel = new Label("Boss Health: 20");
-		bossHealthLabel.setLayoutX(getScreenWidth() / 2 - 100);
-		bossHealthLabel.setLayoutY(20);
-
+		bossHealthLabel = new Label("Boss Health \uD83D\uDC79: 20");
+		bossHealthLabel.setLayoutX((double) GameConfig.SCREEN_WIDTH / 2-40 );
+		bossHealthLabel.setLayoutY(30);
 		bossHealthLabel.setStyle(
-				"-fx-font-size: 30px;" +
+				"-fx-font-size: 25px;" +
 						"-fx-font-weight: bold;" +
-						"-fx-text-fill: linear-gradient(#ff0000, #ff5500);" +
-						"-fx-effect: dropshadow(gaussian, black, 8, 0.5, 3, 3);"
-		);
-
+						"-fx-text-fill: linear-gradient(#5A0000, #ff5500);" +
+						"-fx-effect: dropshadow(gaussian, black, 8, 0.5, 3, 3);");
 		getRoot().getChildren().add(bossHealthLabel);
 		bossHealthLabel.toFront();
 		System.out.println("Boss health label initialized and added to root.");
@@ -43,7 +41,7 @@ public class LevelTwo extends LevelParent {
 	protected void updateWinningParameter() {
 		if (boss != null && !boss.isDestroyed()) {
 			Platform.runLater(() -> {
-				bossHealthLabel.setText("Boss Health: " + boss.getHealth());
+				bossHealthLabel.setText("Boss Health\uD83D\uDC79: " + boss.getHealth());
 				bossHealthLabel.toFront();
 			});
 		}

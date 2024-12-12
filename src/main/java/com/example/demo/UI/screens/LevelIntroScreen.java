@@ -1,3 +1,21 @@
+/**
+ * The {@code LevelIntroScreen} class provides an introductory screen for each game level.
+ * It includes visual animations, a background gradient, level objectives, and a prompt to start the level.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Animated entry of a text bubble displaying the level name and objectives.</li>
+ *     <li>Customizable objectives for different levels.</li>
+ *     <li>Interactive elements such as a quit button and a prompt to start the level.</li>
+ *     <li>Typing effect for displaying level objectives.</li>
+ * </ul>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link GameConfig}: Provides game-wide configurations like screen width and height.</li>
+ *     <li>{@link LevelManager}: Manages level progression and transitions.</li>
+ * </ul>
+ */
 package com.example.demo.UI.screens;
 
 import com.example.demo.core.GameConfig;
@@ -24,116 +42,104 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
 public class LevelIntroScreen {
+
     private final String levelName;
     private final LevelManager levelManager;
 
+    /**
+     * Constructs a {@code LevelIntroScreen}.
+     *
+     * @param levelName     the name of the level
+     * @param levelManager  the manager responsible for handling level transitions
+     */
     public LevelIntroScreen(String levelName, LevelManager levelManager) {
         this.levelName = levelName;
         this.levelManager = levelManager;
     }
 
+    /**
+     * Creates and returns the {@link Scene} for the level intro screen.
+     *
+     * @return the level intro {@code Scene}
+     */
     public Scene getScene() {
-        // Root group
         Group root = new Group();
 
-        // Background gradient (blue sky color)
+        // Background gradient
         Rectangle gradientBackground = new Rectangle(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        gradientBackground.setFill(
-                new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                        new Stop(0, Color.web("#8793eb")),  // Sky Blue
-                        new Stop(1, Color.web("#87CEEB"))   // Same Sky Blue
-                )
-        );
+        gradientBackground.setFill(new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
+                new Stop(0, Color.web("#8793eb")), new Stop(1, Color.web("#87CEEB"))));
 
-        // Dim Overlay
+        // Dim overlay
         Rectangle dimOverlay = new Rectangle(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         dimOverlay.setFill(Color.BLACK);
         dimOverlay.setOpacity(0.3);
 
-        // Quit Button (top-right corner)
+        // Quit button
         Text quitButton = new Text("Quit");
         quitButton.setFill(Color.RED);
         quitButton.setFont(Font.font("Roboto", FontWeight.BOLD, 30));
-        quitButton.setX(GameConfig.SCREEN_WIDTH - 100); // Position in top-right
-        quitButton.setY(50); // Slight padding from top
+        quitButton.setX(GameConfig.SCREEN_WIDTH - 100);
+        quitButton.setY(50);
         quitButton.setOnMouseClicked(e -> System.exit(0));
 
-        // Bubble Box for All Text
+        // Text bubble
         StackPane textBubble = new StackPane();
-        Rectangle bubbleBackground = new Rectangle(GameConfig.SCREEN_WIDTH - 100, GameConfig.SCREEN_HEIGHT - 200, Color.web("#0000FF", 0.3)); // Larger translucent blue
-        bubbleBackground.setArcWidth(50); // Softer rounded corners
+        Rectangle bubbleBackground = new Rectangle(GameConfig.SCREEN_WIDTH - 100, GameConfig.SCREEN_HEIGHT - 200, Color.web("#0000FF", 0.3));
+        bubbleBackground.setArcWidth(50);
         bubbleBackground.setArcHeight(50);
         bubbleBackground.setStroke(Color.WHITE);
         bubbleBackground.setStrokeType(StrokeType.INSIDE);
-        bubbleBackground.setStrokeWidth(3); // Slightly thicker stroke
+        bubbleBackground.setStrokeWidth(3);
+        bubbleBackground.setEffect(new DropShadow(15, Color.AQUA));
 
-        // Add glowing effect to bubble
-        DropShadow bubbleShadow = new DropShadow();
-        bubbleShadow.setOffsetX(0);
-        bubbleShadow.setOffsetY(0);
-        bubbleShadow.setColor(Color.AQUA);
-        bubbleShadow.setRadius(15);
-        bubbleBackground.setEffect(bubbleShadow);
-
-        // Bubble Content
-        VBox bubbleContent = new VBox(20); // Increased spacing between elements
+        VBox bubbleContent = new VBox(20);
         bubbleContent.setAlignment(Pos.CENTER);
-
-        // Title Label (Level Name)
         Label titleLabel = new Label("Level: " + levelName);
         titleLabel.setStyle("-fx-font-size: 36px; -fx-font-weight: bold; -fx-text-fill: white;");
-
-        // Objective Label
         Label objectiveLabel = new Label();
         objectiveLabel.setStyle("-fx-font-size: 28px; -fx-text-fill: #FFDB58;");
-
-        // Press Enter Text
         Label pressEnterLabel = new Label("Press ENTER to Continue");
         pressEnterLabel.setStyle("-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: white;");
 
         bubbleContent.getChildren().addAll(titleLabel, objectiveLabel, pressEnterLabel);
         textBubble.getChildren().addAll(bubbleBackground, bubbleContent);
         textBubble.setAlignment(Pos.CENTER);
-
-        // Center the bubble
         textBubble.setLayoutX((GameConfig.SCREEN_WIDTH - bubbleBackground.getWidth()) / 2);
-        textBubble.setLayoutY(-bubbleBackground.getHeight()); // Position bubble just above the screen
-
-
+        textBubble.setLayoutY(-bubbleBackground.getHeight());
 
         root.getChildren().addAll(gradientBackground, dimOverlay, quitButton, textBubble);
 
-
-// Animate the bubble from its starting position to the center
+        // Animate the bubble
         TranslateTransition dropdown = new TranslateTransition(Duration.seconds(1), textBubble);
-        dropdown.setFromY(textBubble.getLayoutY()); // Use its absolute starting position
-        dropdown.setToY(GameConfig.SCREEN_HEIGHT / 2 + 250); // Bring it further down
-
-
-        dropdown.setOnFinished(event -> {
-            // Start typing effect after dropdown
-            startTypingEffect(objectiveLabel, getLevelObjective(levelName));
-        });
+        dropdown.setFromY(textBubble.getLayoutY());
+        dropdown.setToY(GameConfig.SCREEN_HEIGHT / 2 + 250);
+        dropdown.setOnFinished(event -> startTypingEffect(objectiveLabel, getLevelObjective(levelName)));
         dropdown.play();
 
         Scene scene = new Scene(root, GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
         scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ENTER:
-                 startLevel();
-                    break;
-                default:
-                    break;
+            if (e.getCode() == javafx.scene.input.KeyCode.ENTER) {
+                startLevel();
             }
         });
 
         return scene;
     }
 
+    /**
+     * Proceeds to start the level by calling the {@link LevelManager}.
+     */
     public void startLevel() {
         levelManager.proceedToLevel(levelName);
     }
 
+    /**
+     * Retrieves the objective text for the given level name.
+     *
+     * @param levelName the name of the level
+     * @return the objective text for the level
+     */
     private String getLevelObjective(String levelName) {
         switch (levelName) {
             case "LEVEL_ONE":
@@ -142,7 +148,7 @@ public class LevelIntroScreen {
                         "BEWARE OF ENEMY FIRES";
             case "LEVEL_TWO":
                 return "In this Step, Defeat the Boss plane.\n" +
-                        "The boss plane is stronger and bigger!!" +
+                        "The boss plane is stronger and bigger!!\n" +
                         "Boss has 20 lives so beware!!\n" +
                         "BOSS'S SHIELD PROTECTS HIM!!";
             case "LEVEL_THREE":
@@ -152,9 +158,9 @@ public class LevelIntroScreen {
                         "Kill 10 Enemies before a homing missile finds you!\n" +
                         "LEFT RIGHT movement is allowed from this level";
             case "LEVEL_FOUR":
-                return "DARK NIGHT HAS FALLEN!!" +
+                return "DARK NIGHT HAS FALLEN!!\n" +
                         "Enemies are hidden under their sheaths!!\n" +
-                        "But don't worry, Flare Power-ups coming\n " +
+                        "But don't worry, Flare Power-ups coming\n" +
                         "from the sky can help you see them.\n" +
                         "But BEWARE the flare you catch might\n" +
                         " just be a bomb!";
@@ -163,12 +169,17 @@ public class LevelIntroScreen {
                         "ALL Enemies are attacking youuu\n" +
                         "Meteors are coming downnn\n" +
                         "BEWARE\n";
-
             default:
                 return "Objective: Unknown level.";
         }
     }
 
+    /**
+     * Starts a typing effect to display the level objective text.
+     *
+     * @param label the label to display the text
+     * @param text  the text to display
+     */
     private void startTypingEffect(Label label, String text) {
         Timeline timeline = new Timeline();
         final StringBuilder displayedText = new StringBuilder();

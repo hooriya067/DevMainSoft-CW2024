@@ -1,3 +1,20 @@
+/**
+ * The {@code LevelManager} class manages the flow of levels within the game.
+ * It handles transitions between levels, starting levels, replaying levels, and displaying the
+ * final win screen. This class ensures smooth navigation between levels and integrates with
+ * other components like {@link Controller}, {@link LevelParent}, and UI screens.
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link StageManager}: Provides access to the global stage for scene transitions.</li>
+ *     <li>{@link Controller}: Observes level transitions and manages game logic at the controller level.</li>
+ *     <li>{@link LevelParent}: Serves as the base class for all levels, providing common functionalities.</li>
+ *     <li>{@link LevelIntroScreen}: Displays the introductory screen for a level.</li>
+ *     <li>{@link LevelCompletedScreen}: Displays the level completion screen with options to proceed or replay.</li>
+ *     <li>{@link WinImage}: Displays the final win screen upon completing all levels.</li>
+ *     <li>{@link SoundManager}: Manages background music and sound effects for level transitions.</li>
+ * </ul>
+ */
 package com.example.demo.Managers;
 
 import com.example.demo.UI.screens.LevelCompletedScreen;
@@ -10,22 +27,45 @@ import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Group;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the flow of levels within the game, including transitions, replays, and level introductions.
+ */
 public class LevelManager {
 
-    Stage stage = StageManager.getStage();
+    /**
+     * The global stage for scene transitions.
+     */
+    private final Stage stage = StageManager.getStage();
+
+    /**
+     * The sequence of levels in the game.
+     */
     private final List<String> levelSequence = new ArrayList<>();
+
+    /**
+     * The index of the current level in the sequence.
+     */
     private int currentLevelIndex = 0;
+
+    /**
+     * The current level being played.
+     */
     private LevelParent currentLevel;
+
+    /**
+     * The name of the current level.
+     */
     public String currentLevelName;
 
+    /**
+     * Constructs a {@code LevelManager} instance and initializes the level sequence.
+     *
+     * @param stage the global stage for the game
+     */
     public LevelManager(Stage stage) {
-
-
-        // Add levels to the sequence
         levelSequence.add("LEVEL_ONE");
         levelSequence.add("LEVEL_TWO");
         levelSequence.add("LEVEL_THREE");
@@ -33,13 +73,18 @@ public class LevelManager {
         levelSequence.add("LEVEL_FIVE");
     }
 
-    // Method to start the first level
+    /**
+     * Starts the first level in the sequence.
+     */
     public void startFirstLevel() {
         if (!levelSequence.isEmpty()) {
             goToLevelIntro(levelSequence.get(currentLevelIndex));
         }
     }
 
+    /**
+     * Proceeds to the next level or displays the final win screen if all levels are completed.
+     */
     public void goToNextLevel() {
         Scene currentScene = stage.getScene();
         if (currentLevelIndex + 1 < levelSequence.size()) {
@@ -47,13 +92,14 @@ public class LevelManager {
             SoundManager.getInstance().stopBackgroundMusic();
             SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/levelcomplete.mp3");
             SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
-                        LevelCompletedScreen levelCompletedPage;
-            levelCompletedPage = new LevelCompletedScreen(
+
+            LevelCompletedScreen levelCompletedPage = new LevelCompletedScreen(
                     stage.getWidth(),
                     stage.getHeight(),
-                    () -> goToLevelIntro(levelSequence.get(currentLevelIndex)), // Go to the intro screen for the next level
-                    () -> replayCurrentLevel()
+                    () -> goToLevelIntro(levelSequence.get(currentLevelIndex)),
+                    this::replayCurrentLevel
             );
+
             Group root = (Group) currentScene.getRoot();
             root.getChildren().add(levelCompletedPage);
         } else {
@@ -61,9 +107,14 @@ public class LevelManager {
         }
     }
 
+    /**
+     * Displays the level introduction screen for the specified level.
+     *
+     * @param levelName the name of the level to introduce
+     */
     private void goToLevelIntro(String levelName) {
         try {
-            currentLevelName = levelName; // Set the global current level name here
+            currentLevelName = levelName;
             LevelIntroScreen levelIntroScreen = new LevelIntroScreen(levelName, this);
             Scene introScene = levelIntroScreen.getScene();
             stage.setScene(introScene);
@@ -72,6 +123,12 @@ public class LevelManager {
             showErrorAlert(e);
         }
     }
+
+    /**
+     * Proceeds to the specified level.
+     *
+     * @param levelName the name of the level to load
+     */
     public void proceedToLevel(String levelName) {
         if (!levelName.equals(currentLevelName)) {
             throw new IllegalStateException("Level name mismatch. Expected: " + currentLevelName + ", Got: " + levelName);
@@ -106,17 +163,25 @@ public class LevelManager {
             showErrorAlert(e);
         }
     }
+
+    /**
+     * Replays the current level.
+     */
     public void replayCurrentLevel() {
-         if (currentLevelIndex > 0) {
-                currentLevelIndex--; // Decrement index to match the replayed level
-            }
-            proceedToLevel(levelSequence.get(currentLevelIndex));
+        if (currentLevelIndex > 0) {
+            currentLevelIndex--;
+        }
+        proceedToLevel(levelSequence.get(currentLevelIndex));
     }
 
+    /**
+     * Displays the final win screen upon completing all levels.
+     */
     public void showFinalWinScreen() {
         SoundManager.getInstance().stopBackgroundMusic();
-        SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/wingame.mp3");;
+        SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/wingame.mp3");
         SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
+
         javafx.scene.shape.Rectangle dimBackground = new javafx.scene.shape.Rectangle(stage.getWidth(), stage.getHeight());
         dimBackground.setFill(javafx.scene.paint.Color.BLACK);
         dimBackground.setOpacity(0.5);
@@ -139,10 +204,22 @@ public class LevelManager {
 
         winScreenRoot.toFront();
     }
+
+    /**
+     * Displays an error alert for the provided exception.
+     *
+     * @param e the exception to display
+     */
     private void showErrorAlert(Exception e) {
         System.out.println("Error: " + e.getMessage());
-
     }
+
+    /**
+     * Retrieves the name of the current level.
+     *
+     * @return the name of the current level
+     * @throws IllegalStateException if the level index is invalid
+     */
     public String getCurrentLevelName() {
         if (currentLevelIndex >= 0 && currentLevelIndex < levelSequence.size()) {
             return levelSequence.get(currentLevelIndex);
@@ -150,5 +227,4 @@ public class LevelManager {
             throw new IllegalStateException("Invalid level index: " + currentLevelIndex);
         }
     }
-
 }

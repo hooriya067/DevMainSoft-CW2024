@@ -1,4 +1,3 @@
-
 package com.example.demo.Levels;
 
 import com.example.demo.Managers.AlertManager;
@@ -16,21 +15,41 @@ import com.example.demo.Levels.view.LevelViewLevelFour;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The {@code LevelFour} class represents the fourth level in the game, introducing unique gameplay mechanics
+ * such as stealth enemies and collectible flare power-ups to enhance gameplay dynamics.
+ *
+ * <p>Extends {@link LevelParent} to leverage core level functionalities and provides new
+ * behaviors for stealth enemies and dynamic bomb/flare spawns.</p>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li><b>{@link LevelParent}</b> Provides the foundational structure and methods for level functionality.</li>
+ *     <li><b>{@link EnemyFactory}</b> Used to dynamically create different types of enemies, including stealth planes.</li>
+ *     <li><b>{@link StealthEnemyPlane}</b> Specific enemy type that remains hidden until revealed by flare power-ups.</li>
+ *     <li><b>{@link FlarePowerUp}:</b> Power-up that allows the player to reveal hidden enemies temporarily.</li>
+ *     <li><b>{@link ProjectileFactory}:</b> Used to create bomb projectiles dynamically during gameplay.</li>
+ *     <li><b>{@link AlertManager}:</b> Displays notifications to the player at the start of the level.</li>
+ *     <li><b>{@link GameStateManager}:</b> Manages game states such as paused or active to control gameplay flow.</li>
+ *     <li><b>{@link LevelViewLevelFour}</b> Custom view for the level that integrates UI elements.</li>
+ * </ul>
+ */
 public class LevelFour extends LevelParent {
 
     private static final String BACKGROUND_IMAGE_NAME = "/com/example/demo/images/BG4.jpg";
     private static final int PLAYER_INITIAL_HEALTH = 5;
     private static final int TOTAL_ENEMIES = 5;
-    private static final int KILLS_TO_ADVANCE =2;
-
+    private static final int KILLS_TO_ADVANCE = 2;
 
     private List<StealthEnemyPlane> stealthEnemies;
     private final List<FlarePowerUp> powerUps = new ArrayList<>();
 
-
-
-
-
+    /**
+     * Constructs a new {@code LevelFour} instance with specified screen dimensions.
+     *
+     * @param screenHeight the height of the game screen.
+     * @param screenWidth  the width of the game screen.
+     */
     public LevelFour(double screenHeight, double screenWidth) {
         super(BACKGROUND_IMAGE_NAME, screenHeight, screenWidth, PLAYER_INITIAL_HEALTH);
         this.inputHandler.setMovementMode(InputHandlingManager.MovementMode.FULL);
@@ -40,8 +59,11 @@ public class LevelFour extends LevelParent {
                 screenWidth,
                 screenHeight
         );
-
     }
+
+    /**
+     * Spawns enemy units with a probability and ensures stealth enemies are added to a dedicated list.
+     */
     @Override
     protected void spawnEnemyUnits() {
         double spawnProbability = 0.15; // Probability for spawning enemies
@@ -57,6 +79,10 @@ public class LevelFour extends LevelParent {
             }
         }
     }
+
+    /**
+     * Dynamically spawns bomb projectiles during gameplay based on a random probability.
+     */
     private void spawnBombs() {
         if (GameStateManager.getInstance().isGamePaused()) {
             return;
@@ -69,6 +95,9 @@ public class LevelFour extends LevelParent {
         }
     }
 
+    /**
+     * Spawns flare power-ups that can be collected by the player to reveal stealth enemies.
+     */
     private void spawnFlarePowerUp() {
         if (GameStateManager.getInstance().isGamePaused()) {
             return;
@@ -76,43 +105,59 @@ public class LevelFour extends LevelParent {
         double spawnProbability = 0.03; // Adjust this value to change the frequency of flare power-ups
         if (Math.random() < spawnProbability) {
             double randomXPosition = Math.random() * getScreenWidth(); // Random X position for the flare
-            FlarePowerUp flarePowerUp = new FlarePowerUp(randomXPosition, 0, this); // Flare starts from the top (Y = 0)
+            FlarePowerUp flarePowerUp = new FlarePowerUp(randomXPosition, 0, this);
             powerUps.add(flarePowerUp);
             getRoot().getChildren().add(flarePowerUp);
         }
     }
+
+    /**
+     * Handles collisions between the player and flare power-ups, activating the power-up effect.
+     */
     private void handlePowerUpCollisions() {
-        // Iterate through all power-ups to check if the user plane collects them
         List<FlarePowerUp> toRemove = new ArrayList<>();
         for (FlarePowerUp powerUp : powerUps) {
             if (powerUp.getBoundsInParent().intersects(getUser().getBoundsInParent())) {
-                powerUp.activate(); // Activate the flare
-                toRemove.add(powerUp); // Mark for removal after activation
+                powerUp.activate();
+                toRemove.add(powerUp);
             }
         }
-        // Remove collected power-ups from the list and root node
         powerUps.removeAll(toRemove);
         getRoot().getChildren().removeAll(toRemove);
     }
 
-
-
+    /**
+     * Instantiates the custom view for Level Four.
+     *
+     * @return the {@link LevelViewLevelFour} object for this level.
+     */
     @Override
     protected LevelViewParent instantiateLevelView() {
         return new LevelViewLevelFour(getRoot(), PLAYER_INITIAL_HEALTH, this);
     }
 
-
+    /**
+     * Checks if the player has reached the required kill target to advance.
+     *
+     * @return {@code true} if the player has reached the kill target; {@code false} otherwise.
+     */
     @Override
     protected boolean userHasReachedKillTarget() {
         return getNumberOfKills() >= KILLS_TO_ADVANCE;
     }
 
+    /**
+     * Updates power-ups to ensure their positions and interactions are handled.
+     */
     private void updatePowerUps() {
         for (FlarePowerUp powerUp : powerUps) {
-            powerUp.updateActor(); // Ensure that the position is updated
+            powerUp.updateActor();
         }
     }
+
+    /**
+     * Updates additional scene elements such as bombs and power-ups.
+     */
     @Override
     protected void updateSceneFurther() {
         super.updateSceneFurther();
@@ -121,7 +166,12 @@ public class LevelFour extends LevelParent {
         handlePowerUpCollisions();
         updatePowerUps();
     }
-    // Method to reveal stealth enemies
+
+    /**
+     * Reveals or hides stealth enemies based on the provided parameter.
+     *
+     * @param reveal {@code true} to reveal the stealth enemies; {@code false} to hide them.
+     */
     public void revealStealthEnemies(boolean reveal) {
         for (StealthEnemyPlane stealthEnemy : stealthEnemies) {
             if (!stealthEnemy.isDestroyed()) {
@@ -129,9 +179,14 @@ public class LevelFour extends LevelParent {
             }
         }
     }
+
+    /**
+     * Calculates the optimal number of bullets required to complete the level.
+     *
+     * @return the number of bullets as an integer.
+     */
     @Override
     public int calculateOptimalBullets() {
-        return KILLS_TO_ADVANCE*3;
+        return KILLS_TO_ADVANCE * 3;
     }
-   }
-
+}

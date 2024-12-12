@@ -1,3 +1,23 @@
+/**
+ * The {@code GameOverImage} class represents a graphical overlay displayed when the game is over.
+ * It includes a "Game Over" image, a dimmed background, and buttons for "Play Again" and "Quit".
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Displays a visually appealing "Game Over" image with a dimmed background.</li>
+ *     <li>Includes a "Play Again" button that resets the game to Level 1 with bullet count reset.</li>
+ *     <li>Provides a "Quit" button to close the game application.</li>
+ * </ul>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link PlayAgainButton}: Used for restarting the game.</li>
+ *     <li>{@link QuitButton}: Used for exiting the game.</li>
+ *     <li>{@link BulletSystemManager}: Resets the bullet count when restarting the game.</li>
+ *     <li>{@link Controller}: Handles the game flow when restarting.</li>
+ *     <li>{@link StageManager}: Provides the {@link javafx.stage.Stage} for the game window.</li>
+ * </ul>
+ */
 package com.example.demo.UI.screens;
 
 import com.example.demo.Managers.BulletSystemManager;
@@ -15,11 +35,19 @@ import javafx.stage.Stage;
 import java.util.Objects;
 
 public class GameOverImage extends Pane {
+
 	private static final String IMAGE_NAME = "/com/example/demo/images/gameover.png";
 	private static final double IMAGE_WIDTH = 600;
 
+	/**
+	 * Constructs a {@code GameOverImage} and initializes its components.
+	 *
+	 * @param screenWidth  the width of the screen
+	 * @param screenHeight the height of the screen
+	 */
 	public GameOverImage(double screenWidth, double screenHeight) {
 
+		// Create a dimmed background
 		Rectangle dimBackground = new Rectangle(screenWidth, screenHeight, Color.BLACK);
 		dimBackground.setOpacity(0.7); // Set transparency for dim effect
 
@@ -43,7 +71,7 @@ public class GameOverImage extends Pane {
 		// Set action for Play Again button
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
-				BulletSystemManager.getInstance().setBullets(100);//putting bullet count back
+				BulletSystemManager.getInstance().setBullets(100); // Reset bullet count
 				Stage stage = StageManager.getStage();
 				Controller gameController = new Controller(stage);
 				gameController.launchGame(); // Launch the game from Level 1

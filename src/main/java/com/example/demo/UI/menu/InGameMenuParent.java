@@ -1,3 +1,29 @@
+/**
+ * The {@code InGameMenuParent} class provides a base implementation for in-game menu overlays.
+ * This class is designed to pause the game and display a customizable menu overlay, offering
+ * functionalities like resuming the game with a countdown, adjusting background music volume,
+ * and managing the overlay lifecycle.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Displays an overlay menu while pausing the game.</li>
+ *     <li>Adjusts background music volume when the overlay is active.</li>
+ *     <li>Implements a countdown for resuming the game.</li>
+ *     <li>Abstract method for creating custom menu content.</li>
+ * </ul>
+ *
+ * <p><b>Usage:</b></p>
+ * This class should be extended by specific in-game menu implementations to provide custom menu content.
+ * The {@link #createMenuContent()} method must be implemented in subclasses.
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link SoundManager}: Handles sound adjustments.</li>
+ *     <li>{@link GameStateManager}: Manages the game's state (paused or active).</li>
+ *     <li>{@link GameConfig}: Provides screen dimensions and other game configurations.</li>
+ *     <li>{@link StageManager}: Provides access to the application's primary stage.</li>
+ * </ul>
+ */
 package com.example.demo.UI.menu;
 
 import com.example.demo.Managers.SoundManager;
@@ -16,16 +42,29 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public abstract class InGameMenuParent {
-    Stage stage = StageManager.getStage();
+
+    protected final Stage stage = StageManager.getStage();
     private StackPane overlayLayout;
     private boolean overlayActive = false;
 
+    /**
+     * Constructs an {@code InGameMenuParent} with the given stage.
+     *
+     * @param stage the {@link Stage} used to display the menu overlay
+     * @throws IllegalArgumentException if the stage is null
+     */
     public InGameMenuParent(Stage stage) {
         if (stage == null) {
             throw new IllegalArgumentException("Stage cannot be null in InGameMenuParent.");
         }
     }
 
+    /**
+     * Displays the overlay menu with the provided content.
+     * Pauses the game and dims the background.
+     *
+     * @param menuContent the {@link VBox} containing the menu's content
+     */
     protected void displayOverlay(VBox menuContent) {
         if (GameStateManager.getInstance().isGamePaused()) {
             System.out.println("Game is already paused. Skipping overlay.");
@@ -49,32 +88,35 @@ public abstract class InGameMenuParent {
         overlayLayout.getChildren().addAll(overlayBackground, menuContent);
         StackPane.setAlignment(menuContent, Pos.CENTER);
 
-        if (stage.getScene().getRoot() instanceof Group) {
-            Group currentRoot = (Group) stage.getScene().getRoot();
+        if (stage.getScene().getRoot() instanceof Group currentRoot) {
             if (!currentRoot.getChildren().contains(overlayLayout)) {
                 currentRoot.getChildren().add(overlayLayout);
             }
         }
     }
 
+    /**
+     * Removes the overlay menu and restores the game state.
+     */
     protected void removeOverlay() {
         if (overlayLayout == null) return;
 
-        if (overlayLayout.getParent() instanceof Group) {
+        if (overlayLayout.getParent() instanceof Group currentRoot) {
             SoundManager.getInstance().restoreBackgroundMusicVolume(0.5);
-            Group currentRoot = (Group) overlayLayout.getParent();
             currentRoot.getChildren().remove(overlayLayout);
             overlayActive = false;
         }
     }
 
+    /**
+     * Starts a countdown to resume the game, removing the overlay during the countdown.
+     */
     protected void startResumeCountdown() {
         removeOverlay();
         Label countdownLabel = new Label("3");
         countdownLabel.setStyle("-fx-font-size: 36px; -fx-text-fill: white; -fx-font-weight: bold;");
 
-        if (stage.getScene().getRoot() instanceof Group) {
-            Group root = (Group) stage.getScene().getRoot();
+        if (stage.getScene().getRoot() instanceof Group root) {
             root.getChildren().add(countdownLabel);
 
             countdownLabel.setLayoutX(GameConfig.SCREEN_WIDTH / 2 - 20);
@@ -98,6 +140,11 @@ public abstract class InGameMenuParent {
         }
     }
 
+    /**
+     * Creates the menu content for the overlay.
+     * This method must be implemented by subclasses to define the specific menu content.
+     *
+     * @return the {@link VBox} containing the menu's content
+     */
     protected abstract VBox createMenuContent();
-
 }

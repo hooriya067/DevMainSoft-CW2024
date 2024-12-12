@@ -1,3 +1,26 @@
+/**
+ * The {@code SoundButton} class represents a button for controlling the game's sound.
+ * It allows users to toggle sound on and off with a visual representation.
+ *
+ * <p><b>Features:</b></p>
+ * <ul>
+ *     <li>Displays an image representing the current sound state (on/off).</li>
+ *     <li>Handles click events to toggle sound state.</li>
+ *     <li>Integrates with {@link SoundManager} to control the sound system.</li>
+ * </ul>
+ *
+ * <p><b>Usage:</b></p>
+ * <pre>
+ *     SoundButton soundButton = new SoundButton();
+ *     soundButton.setPosition(100, 50); // Position on screen
+ *     root.getChildren().add(soundButton.getSoundButtonImage());
+ * </pre>
+ *
+ * <p><b>References:</b></p>
+ * <ul>
+ *     <li>{@link SoundManager}: Manages the sound system of the game.</li>
+ * </ul>
+ */
 package com.example.demo.UI.buttons;
 
 import com.example.demo.Managers.SoundManager;
@@ -7,11 +30,15 @@ import javafx.scene.image.ImageView;
 import java.util.Objects;
 
 public class SoundButton {
+
     private final ImageView soundButtonImage;
-    private boolean isMuted; // Track the current state of sound
+    private boolean isMuted; // Tracks the current state of the sound
     private final Image soundOnImage;
     private final Image soundOffImage;
 
+    /**
+     * Constructs a {@code SoundButton} with default images for sound on and off states.
+     */
     public SoundButton() {
         // Load the sound on and off images
         soundOnImage = new Image(Objects.requireNonNull(getClass().getResource("/com/example/demo/images/sound_unmute.png")).toExternalForm());
@@ -28,13 +55,30 @@ public class SoundButton {
         soundButtonImage.setOnMouseClicked(e -> toggleSound());
     }
 
+    /**
+     * Returns the {@link ImageView} representing the sound button.
+     *
+     * @return the {@link ImageView} for this button
+     */
     public ImageView getSoundButtonImage() {
         return soundButtonImage;
     }
+
+    /**
+     * Sets the position of the sound button on the screen.
+     *
+     * @param x the X coordinate
+     * @param y the Y coordinate
+     */
     public void setPosition(double x, double y) {
         getSoundButtonImage().setLayoutX(x);
         getSoundButtonImage().setLayoutY(y);
     }
+
+    /**
+     * Toggles the sound state between muted and unmuted.
+     * Updates the button's image and notifies the {@link SoundManager}.
+     */
     private void toggleSound() {
         isMuted = !isMuted; // Toggle the muted state
 

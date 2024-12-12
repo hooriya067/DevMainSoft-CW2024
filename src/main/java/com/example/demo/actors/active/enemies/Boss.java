@@ -9,8 +9,13 @@ import java.util.function.Consumer;
 
 
 
-
+/**
+ * The {@code Boss} class represents a powerful enemy in the game with advanced behaviors such as movement patterns,
+ * shield activation, and firing projectiles. It extends {@link EnemyParent} to inherit common enemy functionalities
+ * and adds unique capabilities like a shield and a customizable move pattern.
+ */
 public class Boss extends EnemyParent {
+
 	private static final double PROJECTILE_Y_POSITION_OFFSET = 75.0;
 	private static final String IMAGE_NAME = "bossplane.png";
 	private static final double BOSS_FIRE_RATE = .04;
@@ -29,6 +34,15 @@ public class Boss extends EnemyParent {
 	private int framesWithShieldActivated;
 
 	private Consumer<Integer> healthChangeListener;
+
+	/**
+	 * Constructs a {@code Boss} object with specified position, screen height, and a reference to the level it belongs to.
+	 *
+	 * @param initialX      the initial X-coordinate of the boss.
+	 * @param initialY      the initial Y-coordinate of the boss.
+	 * @param screenHeight  the height of the game screen.
+	 * @param levelParent   the parent level to which the boss belongs.
+	 */
 	public Boss(double initialX, double initialY, int screenHeight, LevelParent levelParent) {
 		super(IMAGE_NAME, 50, initialX, initialY, 2, levelParent);
 		this.screenHeight = screenHeight;
@@ -36,9 +50,19 @@ public class Boss extends EnemyParent {
 		this.isShielded = false;
 		initializeMovePattern();
 	}
+
+	/**
+	 * Retrieves the current health of the boss.
+	 *
+	 * @return the current health value.
+	 */
 	public int getHealth() {
 		return health;
 	}
+
+	/**
+	 * Reduces the boss's health if the shield is inactive. Triggers a health change listener if set.
+	 */
 	@Override
 	public void takeDamage() {
 		if (!isShieldActive()) {
@@ -48,15 +72,28 @@ public class Boss extends EnemyParent {
 			}
 		}
 	}
+
+	/**
+	 * Checks whether the boss's shield is currently active.
+	 *
+	 * @return {@code true} if the shield is active; {@code false} otherwise.
+	 */
 	public boolean isShieldActive() {
 		return isShielded;
 	}
+
+	/**
+	 * Updates the boss's behavior, including movement and shield status.
+	 */
 	@Override
 	public void updateActor() {
 		updatePosition();
 		updateShield();
 	}
 
+	/**
+	 * Updates the boss's position based on its movement pattern and ensures it stays within bounds.
+	 */
 	@Override
 	public void updatePositionWhenActive() {
 		double initialTranslateY = getTranslateY();
@@ -74,19 +111,31 @@ public class Boss extends EnemyParent {
 		return (int) (levelParent.getScreenHeight() - IMAGE_HEIGHT - 70);
 	}
 
-
+	/**
+	 * Fires a projectile based on the boss's fire rate.
+	 *
+	 * @return a new {@link ActiveActor} projectile if the fire condition is met; {@code null} otherwise.
+	 */
 	@Override
-	public ActiveActor fireProjectileWhenActive() {{
-			return Math.random() < BOSS_FIRE_RATE
-					? ProjectileFactory.createProjectile("BOSS_PROJECTILE",0, getProjectileInitialPosition(), levelParent)
-					: null;
-		}
+	public ActiveActor fireProjectileWhenActive() {
+		return Math.random() < BOSS_FIRE_RATE
+				? ProjectileFactory.createProjectile("BOSS_PROJECTILE", 0, getProjectileInitialPosition(), levelParent)
+				: null;
 	}
 
+	/**
+	 * Calculates the initial Y-coordinate for the projectile based on the boss's current position and offset.
+	 *
+	 * @return the Y-coordinate for the projectile's starting position.
+	 */
 	private double getProjectileInitialPosition() {
 		return getLayoutY() + getTranslateY() + PROJECTILE_Y_POSITION_OFFSET;
 	}
 
+	/**
+	 * Updates the shield status of the boss. Handles the activation and deactivation of the shield
+	 * based on predefined probabilities and time constraints.
+	 */
 	private void updateShield() {
 		if (isShielded) {
 			framesWithShieldActivated++;
@@ -94,17 +143,27 @@ public class Boss extends EnemyParent {
 		} else if (Math.random() < BOSS_SHIELD_PROBABILITY) activateShield();
 	}
 
+	/**
+	 * Activates the shield for the boss, preventing damage. Logs the shield activation for debugging.
+	 */
 	private void activateShield() {
 		isShielded = true;
 		framesWithShieldActivated = 0;
 		System.out.println("Boss Shield Activated");
 	}
 
+	/**
+	 * Deactivates the boss's shield and resets the activation counter. Logs the shield deactivation for debugging.
+	 */
 	private void deactivateShield() {
 		isShielded = false;
 		System.out.println("Boss Shield Deactivated");
 	}
 
+	/**
+	 * Initializes the movement pattern for the boss. The pattern consists of alternating vertical movements
+	 * and is randomized to create unpredictable movement behavior.
+	 */
 	private void initializeMovePattern() {
 		for (int i = 0; i < MOVE_FREQUENCY_PER_CYCLE; i++) {
 			movePattern.add(8);
@@ -114,6 +173,12 @@ public class Boss extends EnemyParent {
 		Collections.shuffle(movePattern);
 	}
 
+	/**
+	 * Retrieves the next move in the boss's movement pattern. Shuffles the pattern after a defined number
+	 * of consecutive moves in the same direction to maintain unpredictability.
+	 *
+	 * @return the next movement increment for the boss.
+	 */
 	private int getNextMove() {
 		int currentMove = movePattern.get(indexOfCurrentMove);
 		consecutiveMovesInSameDirection++;
@@ -128,6 +193,4 @@ public class Boss extends EnemyParent {
 		return currentMove;
 	}
 }
-
-
 

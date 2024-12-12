@@ -1,0 +1,936 @@
+# Sky Strike Saga
+
+## GitHub Repository
+[Link to Repository](<repository-URL>)
+
+---
+
+## Compilation Instructions
+
+1. Ensure you have Java Development Kit (JDK 17 or higher) installed.
+2. Use IntelliJ IDEA (Community Edition) or any IDE supporting Gradle/Maven projects.
+3. Clone the repository using:
+   ```bash
+   git clone <repository-URL>
+   ```
+4. Navigate to the project directory and build the project using:
+   ```bash
+   ./gradlew build
+   ```
+5. Run the application with:
+   ```bash
+   ./gradlew run
+   ```
+6. Ensure dependencies such as JavaFX are properly configured in your environment.
+
+---
+
+## Implemented and Working Properly
+
+### *Gameplay Features*
+
+### <u>Level Progression</u>
+
+**Level 1: Introduction**
+- Introduces the basic gameplay mechanics for players.
+- Features standard enemy planes with straightforward movement patterns.
+- Players familiarize themselves with controls, firing mechanics, and navigating the game environment.
+
+**Level 2: The Boss Encounter**
+- Introduces a boss enemy with a shield and unpredictable movement, creating the first significant challenge.
+- Players must deplete the boss's health while avoiding its projectiles.
+- Shields are visually represented and can regenerate, demanding strategic attacks.
+
+**Level 3: Enhanced Gameplay with Formations**
+- Adds a new layer of complexity with V-shaped enemy formations led by a tougher leader enemy, destroying the leader scatters the whole enemy formation, forcing players to adapt their strategy.
+- Introduces slower-moving planes with higher life that shoot homing missiles.
+- Improves player maneuverability with left-right movement, allowing greater control.
+
+**Level 4: Stealth and Hazard Mechanics**
+- Introduces stealth enemies that remain hidden until they enter the player’s radius. Their health is high, and they inflict greater damage upon collision.
+- Bomb projectiles fall from random positions at the top of the screen, adding navigation challenges.
+- "Flare" power-ups provide a tactical advantage by revealing stealth enemies temporarily.
+- Gameplay revolves around collecting power-ups to safeguard against bomb collisions and eliminate stealth enemies.
+- Dedicated collision handling ensures smooth integration of these new mechanics.
+
+**Level 5: The Climactic Showdown**
+- Starts with a dramatic "SHOWDOWN!!" text, creating a cinematic transition into the level.
+- A final battle requires players to navigate through enemies from all previous levels during rain and meteor shower.
+- While the "SHOWDOWN!!" text and kill counter are functional, the meteor storm mechanic and rain effects require debugging for consistent diagonal movement.
+
+### <u>Coin System</u>
+
+The in-game currency mechanism allows players to collect and use coins strategically during gameplay:
+
+- **Persistence Across Levels:** Coins collected in one level carry over to subsequent levels using a singleton `CoinSystemManager` class.
+- **Dynamic Updates:** The coin count dynamically updates in the UI whenever coins are collected or spent.
+- **Integration with Power-Ups:** Coins are spent on purchasing power-ups that provide critical gameplay advantages. Power-ups include extra lives, shields, and additional bullets, offering players strategic choices to enhance their survivability and effectiveness.
+
+**Gameplay Impact:**
+The Coin System encourages players to balance offensive actions with coin collection, rewarding those who prioritize gathering resources for future challenges.
+
+### <u>Power-Up Management</u>
+
+Managed by the `PowerUpManager` class, the system allows players to spend their collected coins on valuable upgrades during gameplay.
+
+**Available Power-Ups:**
+
+1. **Extra Life:**
+    - **Cost:** A fixed number of coins.
+    - **Effect:** Grants an additional heart to the player’s health bar, improving survivability during challenging encounters.
+    - **Integration:** Purchased via the Power-Up Menu.
+
+2. **User Shield:**
+    - **Cost:** A fixed number of coins.
+    - **Effect:** Temporarily makes the player's plane invulnerable, absorbing all incoming damage for a limited duration of 20 seconds.
+    - **Integration:**
+        - Activates immediately upon purchase and provides visual feedback to indicate invulnerability.
+        - Automatically deactivates after the set duration, reintroducing vulnerability.
+
+3. **Extra Bullets:**
+    - **Cost:** A fixed number of coins.
+    - **Effect:** Restocks the player's bullet count, ensuring they can continue firing in prolonged battles or resource-intensive levels.
+    - **Integration:** Dynamic bullet tracking in the UI ensures players are aware of their remaining ammunition.
+
+**Gameplay Impact:**
+The Power-Up System enhances player strategy by offering upgrades tailored to their immediate needs. Whether increasing health for endurance, activating a shield for safety, or replenishing bullets for offense, these power-ups allow players to adapt their approach to the game's challenges effectively.
+
+### <u>Star System</u>
+
+Evaluates player performance in each level by rewarding stars based on efficiency, particularly focusing on bullet usage. It serves as a measure of skill and provides an incentive for players to optimize their gameplay.
+
+1. **Performance Tracking:**
+    - Tracks the number of bullets used by the player in each level through the `BulletSystemManager`.
+    - Calculates stars based on the player’s bullet usage compared to an optimal threshold. Efficient gameplay earns more stars.
+
+2. **Star Calculation:**
+    - **Level Stars:**
+        - Stars are calculated at the end of each level.
+        - Levels have predefined criteria for achieving one to five stars, rewarding players who complete levels with fewer bullets.
+    - **Final Stars:**
+        - At the end of the game, stars earned in all levels aggregate, applying a slight penalty for inefficiencies.
+
+3. **Integration:**
+    - The `StarDisplay` class visually represents stars during level completion and the game’s win screen.
+    - Features animated stars and a label displaying the number of stars earned for each level.
+    - Final stars are prominently displayed on the game completion screen, giving players a sense of accomplishment.
+
+**Gameplay Impact:**
+The Star System encourages players to adopt a more strategic approach to gameplay, minimizing bullet usage while maximizing efficiency. It serves as a reward mechanism, motivating players to replay levels to achieve higher star ratings and perfect their performance.
+
+---
+
+## *UI and Interactivity*
+
+### <u>Main Menu</u>
+
+- **Functionality:**
+    - The Main Menu serves as the entry point to the game, offering options to:
+        - Start a new game.
+        - Quit the application.
+        - Customize user’s plane.
+        - Instruction Manual telling user about the game.
+        - Toggle sound button.
+
+- **Visual Enhancements:**
+    - Features dynamic button styling, including hover effects and animations, to create an interactive and visually appealing experience.
+    - Includes a title banner with stylized text, setting the tone for the game.
+
+---
+
+### <u>Pause and Power-Up Menus</u>
+
+1. **Pause Menu:**
+    - **Functionality:**
+        - Allows players to pause gameplay with options to resume, quit, or return to the main menu.
+        - Accessible via a pause button.
+        - When user resumes game, the game starts with a 3,2,1 timer giving user time to buckle up.
+
+    - **Design:**
+        - Overlays the gameplay screen with a semi-transparent background to maintain context.
+        - Features large, clearly labelled buttons contained in a box for ease of navigation during intense moments.
+<br><br>
+2. **Power-Up Menu:**
+    - **Functionality:**
+        - Allows players to spend coins on valuable power-ups like extra lives, bullets and shields.
+        - Features clickable buttons for each power-up, dynamically updating based on the player's coin count.
+        - If a user tries to buy a powerup that they don’t have enough coins for, an alert message shows saying ‘not enough coins for that specific powerup’. User can use back option to resume the game.
+        - If a user buys a powerup, game automatically resumes and a message show up to confirm that power up has successfully been bought.
+
+    - **Design:**
+        - Includes icons for each power-up to explain their effects.
+        - Displays the price of powerups and coin balance to assist in decision-making.
+
+---
+
+### <u>Instruction Screen</u>
+
+- **Functionality:**
+    - Provides new players with a step-by-step guide to the game mechanics, controls, and objectives.
+    - Includes a slide show of game screens with instructions, navigation arrows to move through slides, and a close button to exit the screen at any time.
+
+- **Design:**
+    - A blurred background ensures the instructions stand out without entirely disconnecting the player from the game’s context.
+    - Features clear, concise text paired with visuals (e.g., icons and images) to enhance understanding.
+
+---
+
+### <u>Level Introduction Screen</u>
+
+- **Functionality:**
+    - Displays each level’s objectives and specific gameplay mechanics before the level begins.
+    - Informs players of unique challenges and win conditions for the level.
+    - To continue, player can press enter key and kickstart the level.
+
+- **Design:**
+    - Incorporates a glowing bubble effect for highlighting objectives.
+    - Typing animation simulates dynamic text entry, drawing the player’s attention to critical details.
+
+---
+
+### <u>Customization Screen</u>
+
+- **Functionality:**
+    - Allows players to choose their plane, unlocking new designs and new types of planes.
+
+- **Visual Design:**
+    - Includes a gallery-style layout for planes with preview animations, enabling players to see their selection in action.
+    - When a player chooses a plane, the plane glows bright showcasing that it has been chosen. By clicking the CONFIRM Button player can proceed with their customised plane, and user is taken back to main menu page.
+
+---
+
+### <u> Level Completed Screen </u>
+
+- **Functionality:**
+    - Displays a congratulatory overlay upon completing a level.
+    - Highlights the player's achievements for the level, such as:
+        - Stars earned based on performance.
+    - Includes navigation options to proceed to the next level or return to the main menu.
+
+- **Design:**
+    - Features animated star icons to showcase the earned stars dynamically.
+    - Displays an eye-catching Level Complete Banner.
+    - Interactive buttons:
+        - **NEXT LEVEL:** Proceeds to the next level in the game.
+        - **PLAY AGAIN:** Returns to the same level player was playing, allowing players to play the level again if they want to without taking them all the way to the first level.
+
+---
+
+### <u>Win Page</u>
+
+- **Functionality:**
+    - Appears after the player successfully completes the final level of the game.
+    - Celebrates the player’s victory with dramatic sound effects.
+    - Displays cumulative stats:
+        - Total stars earned throughout the game.
+    - Offers replayability with options to restart the game or quit the game.
+
+- **Design:**
+    - Features a vibrant "You Win” banner with a ‘Winner Winner Chicken Dinner’ Victory motto.
+    - Includes buttons:
+        - **PLAY AGAIN:** Restarts the game from Level One.
+        - **QUIT:** To quit the game if user wants to.
+
+---
+
+### <u> Game Over Page</u>
+
+- **Functionality:**
+    - Displays after the player loses all lives and fails to meet the level objectives.
+    - Provides options for players to restart or quit the game.
+
+- **Design:**
+    - Includes a prominent "YOU LOSE" message with a voiceover tone.
+    - Features interactive buttons:
+        - **PLAY AGAIN:** Restarts the current level, allowing players to attempt it again.
+        - **QUIT:** To quit the game if user wants to.
+    - Visual cues, such as a dimmed background reinforce the game-over theme.
+
+---
+
+## *Audio and Visual Features*
+
+### <u>Dynamic Music</u>
+
+- **Background Music:**
+    - Each level features background music that complements game theme, enhancing the immersive experience.
+    - Music dynamically adjusts based on gameplay context:
+        - Fades during menus to maintain focus on the interface.
+    - Volume adjustments are smoothly managed through the `SoundManager` class, ensuring seamless transitions.
+
+- **Sound Effects:**
+    - High-quality sound effects for various in-game actions:
+        - **Firing:** Distinct sounds for player and enemy projectiles.
+        - **Coin Collection:** A rewarding chime that accompanies the "+1" animation.
+        - **Winning Levels:** A celebratory tune that plays during level completion and the final victory screen.
+        - **Game Over screen:** A Game Over voiceover when user loses.
+
+## *Level Aesthetics*
+
+### Interactive Backgrounds:
+      Backgrounds in later levels feature subtle animations like moving clouds.
+
+### <u> Alerts and Animations</u>
+
+- **Informational Alerts:**
+    - In-game alerts provide real-time information about new mechanics or gameplay changes:
+        - Examples include "LEFT-RIGHT MOVEMENT ENABLED" or "SHIELD ACTIVATED”.
+        - Alerts are displayed prominently but fade out after a few seconds to avoid obstructing gameplay.
+    - Managed through the `Alert Manager` class for consistency across levels.
+
+- **Dynamic Animations:**
+    - **Coin Collection:**
+        - A "+1" animation appears whenever a coin is collected, accompanied by sound and visual effects.
+        - Coins disappear and animation fades, creating a rewarding visual loop.
+    - **Power-Up Usage:**
+        - Shields activate with an actual shield on the top of players plane, that follows the player’s movement and shield’s player from any damage. It is accompanied by a timer of 20 seconds.
+        - Extra lives visually add hearts to the health bar, with a smooth scaling animation.
+
+---
+## *Features Implemented but Not Working Properly*
+
+### <u>Meteor Behaviour in Level Five</u>
+
+- **Current Status:** Meteors were introduced as a dynamic obstacle in Level Five. They are designed to spawn from the top-right corner of the screen and travel diagonally across the battlefield.
+- **Issue:** The meteors do not consistently follow the intended diagonal trajectory. Although according to debugging, they are being created properly. Instead, their movement appears erratic at times, always moving out of screen, which detracts from the gameplay experience.
+- **Possible Causes:**
+    - Improper velocity calculation or direction assignment during meteor initialization.
+    - Collision detection or boundary handling interfering with smooth movement.
+
+---
+
+### <u>Rain Effect in Level Five</u>
+
+- **Implementation:** A rain effect was planned to enhance the visual aesthetic and create a dynamic environment. It included falling raindrops animated to descend from random positions on the screen.
+- **Current Status:** The code for spawning and animating raindrops exists but is commented out due to rendering issues. Specifically, raindrops are not visually appearing on the screen despite being logged as active.
+- **Challenges Faced:**
+    - **Visibility:** Raindrops may not be rendering correctly within the game’s scene graph.
+    - **Layering:** The rain container might be positioned incorrectly, rendering raindrops behind other elements.
+
+---
+
+## *Features Not Implemented*
+
+### <u>Online Profiles</u>
+
+- **Description:**
+    - Online profiles were planned to allow players to log in and save their progress, such as stars, coins, unlocked planes, and other customizations, across sessions and devices.
+    - This feature would have supported a personalized and persistent gameplay experience.
+- **Reason for Omission:**
+    - **Technical Complexity:** Implementing a login system and saving data securely requires a backend or database integration, which was outside the current scope.
+    - **Dependency on Other Features:** The absence of online profiles directly impacted features like customization options for planes, as tracking unlocked planes would have required persistent storage.
+    - **Time and Resource Constraints:** Developing a secure, fully functional system for user profiles would have significantly delayed the project timeline.
+
+---
+
+### <u>Stealth Enemy Enhancements</u>
+
+- **Description:**
+    - Stealth enemies were introduced in Level Four, but their functionality was kept basic. Planned enhancements included dynamic AI behaviour, such as adaptive movement, more intelligent hiding mechanisms, and reactive attacks based on the player’s strategy.
+- **Reason for Omission:**
+    - **Advanced AI Requirements:** Developing stealth AI with these features required complex algorithms and extensive testing to maintain balance.
+    - **Focus on Core Features:** Limited time and resources were allocated to finalize core gameplay elements like coin system, power-ups, level transitions, and the star system, which took priority over advanced enemy AI.
+    - **Bug Risks:** Other complex features with stealth mechanics, such as visibility toggling and collision handling, required attention, leaving insufficient bandwidth for further enhancements.
+
+---
+
+### <u>Paid Customization Planes</u>
+
+- **Description:**
+    - The plan was to make new planes unlockable using stars earned in the game. Players would need to collect coins, spend them on power-ups, and optimize their gameplay to minimize bullet usage and maximize star earnings. These stars would then be used to purchase planes in the Customization Screen.
+- **Reason for Omission:**
+    - **Star System Dependency:** This feature required the star system to be fully integrated, which is tied to the player's performance in completing levels efficiently.
+    - **Persistent Storage:** To track which planes players had unlocked, data persistence across sessions was necessary, requiring a login system or local storage, neither of which was implemented due to project scope limitations.
+    - **Time Constraints:** Balancing gameplay, designing new plane models, and integrating the star-to-customization workflow were all time-intensive tasks that couldn't be completed within the given timeframe.
+
+---
+## *New Java Classes*
+
+---
+
+### <u>Level-Related</u>
+
+- **LevelManager:** Located at `com.example.demo.Managers.LevelManager`. Handles game progression and transitions between levels, ensuring smooth navigation.
+- **LevelIntroScreen:** Located at `com.example.demo.UI.screens.LevelIntroScreen`. Displays objectives and instructions for each level with animations, enhancing user engagement.
+- **LevelFive, LevelFour, LevelThree:** Located in `com.example.demo.Levels`. Contain specific logic, unique mechanics, and enemy types for each level.
+- **LevelViewLevelFive, LevelViewLevelFour, LevelViewLevelThree:** Located in `com.example.demo.Levels.view`. Provide UI layouts customized for their respective levels.
+- **LevelCompletedScreen:** Located at `com.example.demo.UI.screens.LevelCompletedScreen`. Displays a congratulatory overlay after completing a level with options to proceed.
+
+---
+
+### <u>Factories</u>
+
+- **ProjectileFactory:** Located at `com.example.demo.actors.active.Factories.ProjectileFactory`. Provides a standardized mechanism for creating projectiles, simplifying instantiation and management.
+- **EnemyFactory:** Located at `com.example.demo.actors.active.Factories.EnemyFactory`. Dynamically creates different enemy types using the factory pattern.
+- **UserPlaneFactory:** Located at `com.example.demo.actors.active.Factories.UserPlaneFactory`. Dynamically creates user planes based on customization choices.
+
+---
+
+### <u>Buttons</u>
+
+- **ButtonParent:** Located in `com.example.demo.UI.buttons.ButtonsParent`. Simplifies button creation with centralized styling and behavior.
+- **MainMenuButton:** Located in `com.example.demo.UI.buttons`. Takes the user to the main menu screen from pause screen.
+- **PauseMenu:** Located in `com.example.demo.UI.buttons`. Provides a visually attractive pause overlay with resume, quit, and main menu options.
+- **PlayAgainButton:** Located in `com.example.demo.UI.buttons`. Restarts the game differently at different locations. Takes user back to Level One from Game Over and Win page. Takes user back to the previous level from the Level Complete page.
+- **PowerUpButton:** Located in `com.example.demo.UI.buttons`. Opens the Power-Up Menu for purchasing upgrades and power-ups.
+- **QuitButton:** Located in `com.example.demo.UI.buttons`. Exits the game and allows user to leave whenever.
+- **ResumeButton:** Located in `com.example.demo.UI.buttons`. Resumes gameplay after pausing. The gameplay after resumed in a 3, 2, 1 countdown to give user time to buckle up.
+- **SoundButton:** Located in `com.example.demo.UI.buttons`. Adjusts audio settings. Helps user toggle background music on/off.
+- **StartGameButton:** Located in `com.example.demo.UI.buttons`. Initiates gameplay from the main menu and starts the first level.
+- **NextButton:** Located in `com.example.demo.UI.buttons`. Navigates to the level introduction of the next upcoming level.
+- **CustomizeButton:** Located in `com.example.demo.UI.buttons`. Opens the Customization Screen.
+- **InstructionButton:** Located in `com.example.demo.UI.buttons`. Opens the instruction manual for the user to learn about the gameplay.
+
+---
+
+### <u>Game Mechanics</u>
+
+- **StageManager:** Located at `com.example.demo.core.StageManager`. Manages transitions between game stages and keeps a singleton stage. The stage can be retrieved at any time and in any class without changing constructors.
+- **GameConfig:** Located at `com.example.demo.core.GameConfig`. Centralized configuration for global game settings like screen size and key bindings. Adheres to the Single Responsibility Principle.
+- **GameLoop:** Located at `com.example.demo.core.GameLoop`. Handles the game timeline and the updatable components of the game separately. Adheres to the Single Responsibility Principle.
+- **GameStateManager:** Located at `com.example.demo.core.GameStateManager`. Manages game states like paused and resumed states, and handles game over logic. Uses a flag to switch between paused and resumed states.
+- **CollisionManager:** Located at `com.example.demo.Managers.CollisionManager`. Handles collision detection and response. Encapsulates collision-related logic, improving modularity.
+- **ActorManager:** Located at `com.example.demo.Managers.ActorManager`. Centralized management of all actors (friendly units, enemy units, projectiles, coins). Adheres to the Single Responsibility Principle.
+- **InputHandlerManager:** Located at `com.example.demo.Managers.InputHandlerManager`. Manages player input, such as movement and firing. Centralized input handling ensures maintainability.
+- **Updatable Interface:** Located at `com.example.demo.core.Updatable`. Standardizes update logic for updatable components across the game.
+- **MyObserver:** Located at `com.example.demo.MyObserver`. Custom observer interface for game state updates.
+- **Enemy Interface:** Located at `com.example.demo.actors.active.enemies.Enemy`. Provides a base structure and methods for all enemy planes.
+- **ControllableLevel Interface:** Located at `com.example.demo.levels.ControllableLevel`. Facilitates flexible level management and interactions, adhering to encapsulation principles.
+
+---
+
+### <u>Gameplay-Related</u>
+
+**Projectiles:**
+- **BombProjectile:** Located in `com.example.demo.actors.active.projectiles`. Introduced in Level Four.
+- **EnemyProjectileLevelThree:** Located in `com.example.demo.actors.active.projectiles`. Specialized projectiles for Level Three enemies.
+- **HomingMissile:** Located in `com.example.demo.actors.active.projectiles`. Tracks the player's position dynamically.
+- **Meteor:** Located in `com.example.demo.actors.active.projectiles`. Obstacles in Level Five's meteor storm phase.
+
+**Enemy:**
+- **EnemyParent:** Located at `com.example.demo.actors.active.enemies`. Abstract base class for enemy types.
+- **EnemyPlaneTypeA & EnemyPlaneTypeB:** Located in `com.example.demo.actors.active.enemies`. Represent unique enemy variants with specific mechanics.
+- **StealthEnemyPlane:** Located in `com.example.demo.actors.active.enemies`. Features invisibility mechanics and high health.
+
+**Coin System:**
+- **Coin:** Located in `com.example.demo.actors.collectibles.Coin`. Increases player's coin count upon collection.
+- **CoinSystemManager:** Located at `com.example.demo.Managers.CoinSystemManager`. Manages the global coin count.
+
+**Power-Ups:**
+- **FlarePowerUp:** Located at `com.example.demo.actors.collectibles.FlarePowerUp`. Temporarily reveals stealth enemies.
+- **PowerUpManager:** Located in `com.example.demo.Managers.PowerUpManager`. Handles logic for purchasing and activating power-ups.
+
+**Star System:**
+- **BulletSystemManager:** Located at `com.example.demo.Managers.BulletSystemManager`. Tracks and manages bullets.
+- **StarManager:** Located in `com.example.demo.Managers.StarManager`. Tracks stars earned during gameplay.
+- **StarDisplay:** Located in `com.example.demo.actors.active.collectibles.StarDisplay`. Visually represents stars.
+
+---
+
+### <u>Auxiliary</u>
+
+- **Formation:** Located at `com.example.demo.actors.active.Formation`. Manages enemy formations.
+- **AlertManager:** Located at `com.example.demo.Managers.AlertManager`. Displays informational alerts dynamically.
+- **Title:** Located at `com.example.demo.UI.screens.Title`. Represents the main menu title.
+- **SoundManager:** Located in `com.example.demo.Managers.SoundManager`. Manages game audio dynamically.
+- **Cloud:** Located at `com.example.demo.Levels.effects.Cloud`. Adds cloud effects to Level Five.
+- **RainEffect:** Located in `com.example.demo.Levels.effects.RainEffect`. Handles rain animations (currently not fully functional).
+
+**UI Screens:**
+- **MainMenu:** Located at `com.example.demo.UI.screens.MainMenu`. Allows navigation to start, customize, or quit the game.
+- **CustomizationScreen:** Located in `com.example.demo.UI.screens.CustomizationScreen`. Helps users customize planes.
+- **InGameMenuParent:** Located in `com.example.demo.UI.screens.InGameMenuParent`. Parent class for pause and power-up menus.
+- **InstructionScreen:** Located in `com.example.demo.UI.screens.InstructionScreen`. Provides gameplay instructions.
+- **PauseMenu:** Located in `com.example.demo.UI.menu.PauseMenu`. Overlays gameplay with pause options.
+- **PowerUpMenu:** Located in `com.example.demo.UI.menu.PowerUpMenu`. Displays power-up options dynamically.
+
+---
+## *Modified Java Classes*
+
+---
+
+### <u>LevelParent.java</u>
+
+The `LevelParent` class underwent significant modifications to improve maintainability, scalability, and modularity.
+
+#### Refactor Highlights
+
+1. **Actor Management Refactor**
+    - **Before:** Actor-related operations (adding, updating, and removing) were handled directly within `LevelParent` using separate lists for friendly units, enemies, projectiles, and coins.
+    - **Changes:**
+        - Replaced individual fields like `friendlyUnits`, `enemyUnits`, `userProjectiles`, etc., with calls to `ActorManager`.
+        - Delegated actor updates and cleanup to `ActorManager` via its `updateActors()` and `removeDestroyedActors()` methods.
+        - Introduced the `handleAllActors()` method in `ActorManager` to streamline operations for all actors.
+        - Resulted in cleaner `LevelParent` code, encapsulation, adherence to the Single Responsibility Principle, and improved scalability and maintainability.
+
+2. **Collision Management Refactor**
+    - **Before:** Collision handling logic (e.g., plane-to-plane, projectiles-to-enemies) was embedded within `LevelParent`, leading to cluttered code.
+    - **Changes:**
+        - Added a `CollisionManager` instance to `LevelParent` and delegated all collision-related logic to it via `handleAllCollisions()`.
+        - Unified handling of plane, projectile, and coin collisions within `CollisionManager`.
+
+3. **Input Handling Refactor**
+    - **Before:** Input handling (key presses and releases) was defined directly in `initializeBackground()` in `LevelParent` and overridden in certain levels.
+    - **Changes:**
+        - Added an `InputHandlingManager` instance to `LevelParent` to manage user inputs.
+        - Introduced a `MovementMode` enum:
+            - `VERTICAL_ONLY`: Supports only UP, DOWN, and SPACE keys.
+            - `FULL`: Adds LEFT and RIGHT movement for specific levels.
+        - Configured movement modes for each level, reducing redundant logic.
+        - Leveraged the Strategy Pattern for flexible input behavior per level by setting the appropriate movement mode.
+        - Resulted in cleaner and reusable input logic.
+
+4. **Game Loop Refactor**
+    - **Before:** The game update loop was managed using `Timeline` directly in `LevelParent`.
+    - **Changes:**
+        - `GameLoop` now manages the timeline and frame updates, invoking `update()` for all registered `Updatable` instances.
+        - `LevelParent` implements the `Updatable` interface and registers itself with `GameLoop`.
+        - Actor and collision updates are handled through `ActorManager` and `CollisionManager`, which are also registered as `Updatable` instances.
+        - Decoupled logic separates timing mechanisms from game logic, enabling a reusable `GameLoop` for other levels or future projects.
+
+5. **Game State Management**
+    - **Centralization with `GameStateManager`:**
+        - **Before:** `LevelParent` contained game-over logic, directly checking conditions for losing or completing a level.
+        - **Changes:**
+            - Added a `GameStateManager` instance to `LevelParent`.
+            - Replaced direct game-over logic in `checkIfGameOver()` with calls to `GameStateManager`.
+
+6. **Controllable Level Interface**
+    - Added a new interface, `ControllableLevel`, to standardize level behavior.
+    - **Methods:**
+        - `initializeScenario()`: Initializes the level’s scene.
+        - `fireProjectile()`: Handles user projectile firing logic.
+        - `getRoot()`: Provides the root node of the level for external access.
+    - Ensures each level adheres to a defined contract for controlling gameplay elements and helps decouple logic.
+
+7. **Additional Enhancements**
+    - **Star System Integration:** Added calls to `StarManager` for calculating and tracking stars based on bullets used and optimal thresholds.
+    - **Spawn Coins Logic Added**
+
+---
+
+### <u>Controller.java</u>
+
+The `Controller` class was refactored to simplify level transitions and adhere to modern design principles.
+
+1. **Removal of Reflection-Based Level Initialization**
+    - **Before:**
+        - Levels were initialized using reflection with the `goToLevel` method, which dynamically instantiated level classes.
+        - Relied on `Class.forName` and constructor invocation, making the code prone to runtime errors and hard to maintain.
+    - **After:**
+        - Introduced a `LevelManager` to handle level transitions and initialization.
+        - Replaced `goToLevel` with direct calls to `LevelManager.startFirstLevel()` or `LevelManager.goToNextLevel()` for managing levels.
+
+2. **Transition from Observable and Observer to MyObserver**
+    - **Before:**
+        - Used Java’s deprecated `Observable` and `Observer` for notifying the `Controller` when a level was completed.
+    - **After:**
+        - `Controller` now implements a custom observer pattern using `MyObserver` and listens for level-completion notifications via `onLevelWin`.
+        - `"NEXT"` triggers `LevelManager.goToNextLevel()` for progressing through levels.
+        - Removed reliance on deprecated APIs, adhering to modern Java practices.
+
+3. **Integration with StageManager**
+    - **Before:**
+        - `Controller` directly accessed and managed the `Stage` instance, creating tight coupling.
+    - **After:**
+        - The `Stage` instance is now retrieved via `StageManager`, ensuring consistency and decoupling the `Controller` from direct stage management. This adheres to the Single Responsibility Principle.
+
+---
+
+### <u>Main.java</u>
+
+1. **Integration with StageManager**
+    - **Before:**
+        - The `Main` class directly managed the `Stage` instance and passed it to the `Controller`.
+    - **After:**
+        - The `Stage` is now set centrally in the `StageManager`, which handles stage-related operations across the game.
+
+2. **Main Menu Integration**
+    - **Before:**
+        - The game launched directly into gameplay through the `Controller`.
+    - **After:**
+        - Added a `MainMenu` class to provide a user-friendly entry point.
+        - The game now starts at the main menu, allowing navigation to gameplay, customization, and instructions.
+
+3. **SoundManager Integration**
+    - **Before:**
+        - Background music was not initialized at the start of the game.
+    - **After:**
+        - Integrated `SoundManager` to play background music upon application launch.
+
+---
+
+### <u>ActiveActor.java</u>
+
+The `ActiveActor` and `ActiveActorDestructible` classes were merged into a single class to simplify the hierarchy, reduce redundancy, and eliminate unnecessary abstraction.
+
+1. **Consolidation of Classes**
+    - **Before:**
+        - `ActiveActor` was a base class managing image rendering and movement logic.
+        - `ActiveActorDestructible` extended `ActiveActor` and added destructible behavior with the `Destructible` interface.
+    - **After:**
+        - Merged `ActiveActor` and `ActiveActorDestructible` into a single `ActiveActor` class consolidating all logic in one class.
+        - Implemented the `Destructible` interface directly in `ActiveActor`.
+
+2. **Enhanced Resource Handling**
+    - **Image Resource Management:**
+        - Added a `String imageName` field to store the image name for better traceability and debugging.
+        - Introduced robust error handling:
+            - Throws an `IllegalArgumentException` if the image resource cannot be found.
+---
+
+### <u>EnemyPlane.java and Boss.java</u>
+
+The `EnemyPlane` and `Boss` classes were significantly refactored to improve code reuse, maintainability, and flexibility by introducing a shared `EnemyParent` base class.
+
+1. **Introduction of EnemyParent Base Class**
+    - **Before:**
+        - `EnemyPlane` and `Boss` had redundant code for shared behaviors like movement, firing projectiles, and health management.
+    - **After:**
+        - Both classes now inherit from the new `EnemyParent` class, which encapsulates shared functionality such as:
+            - Managing projectile creation through the `ProjectileFactory`.
+            - Streamlining movement and destruction logic.
+
+2. **Use of ProjectileFactory**
+    - **Before:**
+        - Projectiles were created directly in each class with hardcoded logic.
+    - **After:**
+        - Leveraged the `ProjectileFactory` for standardized projectile creation, reducing duplication and ensuring consistency.
+
+3. **Refined Movement Patterns**
+    - **Before:**
+        - Movement logic for `Boss` was tightly coupled to its class, making it hard to extend.
+    - **After:**
+        - Introduced flexible movement patterns in `EnemyParent` for vertical and horizontal movements.
+        - `Boss` overrides `updatePositionWhenActive` to implement unique move patterns while leveraging shared bounds-checking logic.
+
+4. **Integration with LevelParent**
+    - Both `EnemyPlane` and `Boss` now interact with their parent level (`LevelParent`) for tasks like projectile instantiation and boundary calculations.
+    - **Benefits:**
+        - Improved decoupling by delegating level-specific tasks to `LevelParent`.
+
+---
+
+### <u>ProjectileParent.java, BossProjectile.java, UserProjectile.java</u>
+
+1. **Name Change of Parent Class**
+    - **Before:** The parent class was named `Projectile`.
+    - **After:** Renamed to `ProjectileParent` for clarity and to align with naming conventions used across the project (e.g., `EnemyParent`).
+
+2. **Standardization of updatePosition**
+    - Unified projectile position updates in `ProjectileParent`:
+        - `ProjectileParent.updatePosition()` now includes a pause condition using `GameStateManager` to halt updates when the game is paused.
+        - Removed individual `updatePosition` implementations from `UserProjectile` and `BossProjectile`, as the logic is now centralized in `ProjectileParent`.
+
+3. **Consistency in Constructors**
+    - Updated constructors for both projectiles to utilize the shared velocity parameter in `ProjectileParent`, ensuring consistency across all projectile types.
+
+---
+
+### <u>LevelView.java and LevelViewLevelTwo.java</u>
+
+The `LevelView` and `LevelViewLevelTwo` classes were significantly refactored and replaced by the `LevelViewParent` and its specialized subclasses.
+
+1. **Introduction of LevelViewParent**
+    - **Before:**
+        - `LevelView` contained all UI-related logic, including heart displays, win/loss screens, and shield mechanics.
+        - Specialized behavior for specific levels was hardcoded in subclasses like `LevelViewLevelTwo`.
+    - **After:**
+        - Introduced `LevelViewParent` as an abstract base class.
+        - Encapsulates common UI elements and shared functionality (e.g., heart display, coin and bullet counters, pause/power-up menus).
+        - Subclasses like `LevelViewLevelTwo` override specific methods for level-specific behavior, enhancing Separation of Concerns.
+
+2. **Enhanced UI Elements**
+    - **Added Dynamic UI Components:**
+        - Coin Counter: Displays coins dynamically with updates from `CoinSystemManager`.
+        - Bullet Counter: Tracks remaining bullets using `BulletSystemManager`.
+        - Shield Timer: Provides a visual countdown for shield duration.
+        - Pause and Power-Up Menus: Integrated buttons for pausing gameplay and accessing power-ups.
+    - **Improved Styling:**
+        - Enhanced visual appeal with gradient effects, drop shadows, and positioning tweaks for all UI elements.
+
+3. **Modularization with LevelViewParent**
+    - **Abstract Methods:**
+        - Introduced `initializeWinningParameter()` and `updateWinningParameter()` to allow levels to define win conditions and progress indicators independently.
+    - **Root Node Management:**
+        - Common UI elements (e.g., heart display, coin and bullet counters) are now managed centrally in `LevelViewParent` and automatically added to the root group.
+
+4. **Refactoring of LevelViewLevelTwo**
+    - **Before:**
+        - `LevelViewLevelTwo` hardcoded shield mechanics and position updates.
+    - **After:**
+        - Delegated shield mechanics to a specialized `ShieldImage` class and integrated it with the parent level through `LevelViewParent`.
+        - Added alert messages for shield activation using `AlertManager`.
+
+5. **Improved Integration with Managers**
+    - **System Managers:**
+        - Integrated `CoinSystemManager`, `BulletSystemManager`, and `SoundManager` for dynamic updates to UI elements and audio feedback.
+    - **Stage Management:**
+        - Utilized `StageManager` for consistent stage handling across all levels and menus.
+
+---
+
+### <u>WinImage.java</u>
+
+The `WinImage` class has undergone significant refactoring to provide enhanced functionality, modularity, and a better user experience.
+
+1. **Transition from ImageView to Pane**
+    - **Before:**
+        - `WinImage` extended `ImageView`, limiting its functionality to simply displaying an image.
+        - Relied on external classes to manage additional elements.
+    - **After:**
+        - `WinImage` now extends `Pane`, allowing it to act as a container for multiple UI elements, including images, buttons, and star displays.
+        - Using `Pane` provides the flexibility to add and organize various UI components in a single cohesive layout.
+
+2. **Addition of Gameplay Elements**
+    - **Final Stars Display:**
+        - Introduced a `StarDisplay` that shows the player's final star count, calculated using `StarManager`.
+        - Positioned dynamically on the screen for a polished presentation.
+    - **Play Again and Quit Buttons:**
+        - Play Again: Restarts the game, resetting the state and playing background music.
+        - Quit: Exits the game cleanly.
+
+3. **Improved Positioning and Styling**
+    - **Dynamic Positioning:**
+        - The win image is centered dynamically based on screen width and height, ensuring consistent alignment across different devices.
+        - Refined image scaling with `PreserveRatio` for consistent aspect ratios.
+        - Buttons and star displays are positioned with precise calculations to align with the overall aesthetic.
+
+4. **Integration with Sound Manager**
+    - Plays a celebratory background track and sound effects upon winning.
+    - Resets the music if the player chooses to play again.
+
+---
+
+### <u>GameOverImage.java</u>
+
+The `GameOverImage` class was refactored to improve interactivity, design, and maintainability.
+
+1. **Transition from ImageView to Pane**
+    - **Before:**
+        - The `GameOverImage` class was a simple `ImageView` displaying a static image.
+        - No interactive or dynamic functionality was included.
+    - **After:**
+        - `GameOverImage` now extends `Pane`, allowing it to contain multiple UI elements such as images, buttons, and a dimmed background overlay.
+        - Extending `Pane` provides the flexibility to manage additional UI components and interactions within the game over screen.
+
+2. **Addition of Interactive Elements**
+    - **Play Again Button:**
+        - A `PlayAgainButton` allows players to restart the game, resetting the bullet count using `BulletSystemManager`.
+        - On click, it launches the game from Level 1 dynamically using the `Controller` class.
+    - **Quit Button:**
+        - A `QuitButton` lets players exit the game.
+        - Dynamically retrieves the stage and closes the application cleanly.
+
+3. **Dimmed Background Overlay**
+    - **Before:**
+        - No background was provided, which could make the game over image appear less polished.
+    - **After:**
+        - A dimmed black background using a `Rectangle` overlay was added, with transparency (`opacity = 0.7`) for a visually appealing effect.
+
+4. **Dynamic Positioning and Styling**
+    - **Before:**
+        - Hardcoded positioning for the game over image.
+    - **After:**
+        - The game over image is dynamically centered based on screen width and height.
+        - Buttons are precisely positioned relative to the screen for a balanced layout.
+
+
+---
+
+### <u>LevelOne.java</u>
+
+1. **Enemy Spawning:**
+    - Replaced direct instantiation of enemies with `EnemyFactory`, improving modularity using the Factory design pattern.
+
+2. **Level View:**
+    - Switched from generic `LevelView` to specific `LevelViewLevelOne` for tailored UI enhancements.
+
+3. **Kill Tracking:**
+    - Refactored to use centralized `numberOfKills` in `LevelParent`, reducing redundancy.
+
+4. **Optimal Bullets:**
+    - Added `calculateOptimalBullets()` to align with the star system.
+
+5. **Improved Modularity:**
+    - Centralized spawning constraints (e.g., toolbar height), dynamic file paths for the background, and reusable logic.
+
+**Core Gameplay:**
+- No changes to gameplay mechanics—enhancements focused on maintainability and modularity.
+
+---
+
+### <u>LevelTwo.java</u>
+
+1. **Boss Initialization:**
+    - **Old:**
+        - The boss was directly instantiated as `new Boss()` within the constructor.
+    - **New:**
+        - Uses `EnemyFactory` to create the boss dynamically with parameters like position and health, aligning with the Factory Design Pattern.
+
+2. **Boss Health Tracking:**
+    - **Old:**
+        - No UI to track or display boss health.
+    - **New:**
+        - Added a `Label` to display the boss's health dynamically, styled with custom fonts and gradients.
+        - `initializeWinningParameter()` sets up the boss health label.
+        - `updateWinningParameter()` dynamically updates the health label in real time using `Platform.runLater()` for thread safety.
+
+3. **Level View:**
+    - **Old:**
+        - Used `LevelViewLevelTwo` directly, without additional configuration or references to shields.
+    - **New:**
+        - Enhanced `LevelViewLevelTwo` for shield tracking. Added methods in the view to show, hide, and update the shield based on the boss's state.
+        - `updateShieldImage()` handles shield visuals and ensures proper synchronization with the boss's position.
+
+4. **Game Flow Enhancements:**
+    - **Old:**
+        - The win condition was hardcoded directly in `checkIfGameOver()`.
+    - **New:**
+        - Refactored win condition into `userHasReachedKillTarget()`, centralizing logic in `LevelParent` for better maintainability.
+        - `checkIfGameOver()` is simplified to rely on the refactored logic.
+
+5. **Bullet Efficiency:**
+    - **New Addition:**
+        - Introduced `calculateOptimalBullets()` to define an optimal bullet count for the level, used for star evaluations.
+
+6. **Scene Updates:**
+    - **Old:**
+        - No explicit handling for shield or boss-specific updates in the game loop.
+    - **New:**
+        - `updateSceneFurther()` now manages boss-specific updates like shield visuals and health tracking, decoupling these details from generic logic.
+
+7. **UI Styling:**
+    - **New:**
+        - Custom styles and layout for boss health tracking, improving user experience and visual engagement.
+
+---
+
+### <u>ShieldImage.java</u>
+
+The updated `ShieldImage` introduces minor enhancements, such as dynamic position updates, improved visibility handling, and a smaller, more polished image. These changes improve gameplay immersion and compatibility with other elements in the game.
+
+1. **Position Updates:**
+    - **New:** Added `updatePosition()` method to dynamically update the shield's position, aligning it with its corresponding actor (e.g., user plane or boss).
+
+2. **Improved Visibility Management:**
+    - **Old:** Shield visibility changes were limited to basic methods like `showShield()` and `hideShield()`.
+    - **New:** Added `toFront()` in `showShield()` to ensure the shield is rendered above other elements when visible.
+
+---
+
+### <u>HeartDisplay.java</u>
+
+The new `HeartDisplay` remains mostly unchanged, with the `addHeart()` method as the primary enhancement, allowing dynamic updates to the heart count during gameplay. This aligns with improved user experience and health mechanics.
+
+1. **New Method:**
+    - Added `addHeart()`:
+        - Dynamically adds a heart to the container.
+        - Increases `numberOfHeartsToDisplay`.
+
+2. **Improved Robustness:**
+    - Used `Objects.requireNonNull()` in `initializeHearts()` and `addHeart()` to prevent null pointer exceptions when loading the heart image.
+
+## *Overall Changes*
+
+---
+
+1. **Image Updates and Resizing**  
+    - **Image Cropping:** Adjusted bounding boxes for user planes, enemies, and projectiles to resolve oversized collision issues.
+    - **Visual Updates:**
+        - User planes, hearts, shields, and backgrounds were replaced with modern, high-quality assets.
+        - All image sizes were standardized for consistent visuals.
+
+2. **Bug Fixes**
+    - Fixed critical issues:
+        - **Boss Health Tracking:** Resolved null pointer exceptions in boss health label updates.
+        - **Shield Logic:** Corrected shield activation and deactivation behavior.
+        - **Collision Bugs:** Addressed issues causing false collisions due to improperly sized images.
+        - **Enemy Penetration:** Prevented the user from taking damage when penetrating the left side of the screen, making the game more plausible and playable.
+        - **Collision Handling:** Fixed numerous collision-related issues between planes and their relation to the kill count, making the game logical, playable, and winnable.
+
+3. **Package Organization**
+    - Classes reorganized into structured packages (e.g., actors, managers, UI, levels), improving maintainability.
+
+4. **Encapsulation and Maintenance**
+    - Renamed and refactored classes for clarity and functionality.
+    - Encapsulated fields across various classes to ensure data integrity.
+    - Removed unused resources to streamline the codebase.
+
+---
+
+## *Unexpected Problems*
+
+---
+
+### <u>Shield Activation Issues</u>
+- **Description:**
+    - During the implementation of the shield power-up, repeated activation warnings were logged in the console. This occurred because the shield activation logic was inadvertently triggered multiple times for a single activation.
+- **Resolution:**
+    - Debugging flags were introduced to track whether the shield was already active, preventing redundant activations.
+    - The logic now checks the flag before activating the shield, ensuring smooth gameplay without unnecessary warnings.
+
+---
+
+### <u>Boss Health Label Null Exception</u>
+- **Description:**
+    - In Level Two, a null pointer exception occurred when attempting to display the boss’s health bar. The health label was not properly initialized, leading to runtime crashes.
+- **Resolution:**
+    - The issue was resolved by initializing the health label within the level-specific setup methods. The boss health label was placed directly inside the Level Two class, where the retrieval of boss health generated by the enemy factory is not null.
+    - Additional safeguards were added to ensure the health logic is only accessed after initialization, preventing similar issues in future levels.
+
+---
+
+### <u>Cloud Rendering Issue</u>
+- **Description:**
+    - Clouds designed to enhance the aesthetic of Level Five were not appearing during gameplay. The rendering logic failed to properly add the cloud objects to the scene graph.
+- **Resolution:**
+    - The root cause was a layering issue where the clouds were being added behind other elements, rendering them invisible to the player.
+    - Adjustments were made to the rendering order, ensuring the clouds were placed in the correct layer of the scene.
+
+---
+
+### <u>Meteor Behaviour Issues</u>
+- **Description:**
+    - Meteors introduced in the showdown phase of Level Five were intended to spawn diagonally from the top-right corner. However, their trajectories were inconsistent, often appearing stationary or moving in unexpected directions.
+- **Resolution:**
+    - Debugging revealed a problem with the velocity vectors assigned to the meteors. Updates were made to the spawn logic, recalculating the velocity for diagonal movement.
+    - While some improvements were implemented, further refinements are still required to achieve the intended behavior.
+
+---
+
+### <u>Rain Effect Issue</u>
+- **Description:**
+    - A rain effect designed to add dynamic visuals to Level Five was commented out due to rendering problems. Raindrops were not appearing on the screen despite being active in the game logic.
+- **Resolution:**
+    - The issue stemmed from incorrect positioning and layering of the rain container in the scene graph.
+    - While debugging was in progress, the feature was temporarily disabled. The feature remains commented out in the code.
+---
+## *Design Patterns Followed in the Game*
+
+---
+
+1. **Strategy Pattern**
+    - Utilized in input handling (`MovementMode`) for flexible, level-specific controls.
+
+2. **Observer Pattern**
+    - Integrated into the Level Winning mechanism, `BulletSystemManager`, and `CoinSystemManager` to notify UI components dynamically about updates in bullet and coin counts.
+
+3. **Factory Pattern**
+    - Used for creating user planes, enemy planes, and projectiles (`UserPlaneFactory`, `EnemyFactory`, `ProjectileFactory`), ensuring consistency in initialization. This ensures objects are instantiated only when needed.
+
+4. **Singleton Pattern**
+    - Applied in classes like `BulletSystemManager`, `CoinSystemManager`, `GameStateManager`, and `StageManager` to ensure only one instance manages global game data and operations.
+    - Simplifies access and ensures consistency throughout the game.
+
+5. **Single-Spot Mechanism**
+    - Centralized alert displays (`AlertManager`) and power-up purchases (`PowerUpManager`) to provide a unified point of control for related operations, enhancing maintainability.
+
+6. **Single Responsibility Principle**
+    - Delegated tasks to dedicated classes:
+        - **`CollisionManager`:** Handles all collision logic.
+        - **`ActorManager`:** Manages game actors like coins, enemies, and projectiles.
+        - **`GameStateManager`:** Manages game states (e.g., paused, running).
+
+7. **Updatable Interface**
+    - Standardized update logic across `LevelParent`, `ActorManager`, and `CollisionManager` to streamline game loop operations.
