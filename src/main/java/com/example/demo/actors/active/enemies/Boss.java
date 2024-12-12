@@ -213,7 +213,6 @@ public class Boss extends EnemyParent {
 	private void activateShield() {
 		isShielded = true;
 		framesWithShieldActivated = 0;
-		System.out.println("Boss Shield Activated");
 	}
 
 	/**
@@ -221,7 +220,6 @@ public class Boss extends EnemyParent {
 	 */
 	private void deactivateShield() {
 		isShielded = false;
-		System.out.println("Boss Shield Deactivated");
 	}
 
 	/**

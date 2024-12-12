@@ -48,9 +48,8 @@ public class UserPlaneFactory {
      */
     private static final Map<String, Integer> planePrices = Map.of(
             "userplane1.png", 0,  // Default plane
-            "userplane2.png", 5,
-            "userplane3.png", 6
-    );
+            "userplane2.png", 10,
+            "userplane3.png", 15 );
 
     /**
      * A map containing the attributes of each plane.

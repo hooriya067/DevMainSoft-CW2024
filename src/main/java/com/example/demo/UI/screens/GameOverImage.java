@@ -79,7 +79,7 @@ public class GameOverImage extends Pane {
 		// Set action for Play Again button
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
-				BulletSystemManager.getInstance().setBullets(100); // Reset bullet count
+				BulletSystemManager.getInstance().setBullets(120); // Reset bullet count
 				Stage stage = StageManager.getStage();
 				Controller gameController = new Controller(stage);
 				gameController.launchGame(); // Launch the game from Level 1

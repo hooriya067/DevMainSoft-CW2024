@@ -1,28 +1,26 @@
 # Sky Strike Saga
 
 ## GitHub Repository
-[Link to Repository](<repository-URL>)
+[Link to Repository](<https://github.com/hooriya067/DevMainSoft-CW2024>)
 
 ---
 
 ## Compilation Instructions
-
+---
 1. Ensure you have Java Development Kit (JDK 17 or higher) installed.
-2. Use IntelliJ IDEA (Community Edition) or any IDE supporting Gradle/Maven projects.
+2. Use IntelliJ IDEA (Community Edition) .
 3. Clone the repository using:
    ```bash
-   git clone <repository-URL>
+   git clone <https://github.com/hooriya067/DevMainSoft-CW2024.git>
+   
    ```
-4. Navigate to the project directory and build the project using:
-   ```bash
-   ./gradlew build
-   ```
-5. Run the application with:
-   ```bash
-   ./gradlew run
-   ```
-6. Ensure dependencies such as JavaFX are properly configured in your environment.
-
+   Open Project in IntelliJ via File > Open....
+4. *Load Maven Dependencies*: IntelliJ auto-loads dependencies. If not, click the Maven tool window and refresh.
+5. *Build Project*: Select Build > Build Project.
+6. *Run Application*: Click the green Run button or press Shift + F10.
+7. *Play the Game*: The game window will open. Enjoy!
+8. Ensure dependencies such as JavaFX are properly configured in your environment.
+   *Dependencies*: Maven for dependencies, JavaFX for UI.
 ---
 
 ## Implemented and Working Properly
@@ -752,11 +750,12 @@ The `Controller` class was refactored to simplify level transitions and adhere t
 
 2. **Transition from Observable and Observer to MyObserver**
     - **Before:**
-        - Used Java’s deprecated `Observable` and `Observer` for notifying the `Controller` when a level was completed.
+        - Used Java’s deprecated `Observable` and `Observer` APIs to notify the `Controller` of level completion events.
     - **After:**
-        - `Controller` now implements a custom observer pattern using `MyObserver` and listens for level-completion notifications via `onLevelWin`.
-        - `"NEXT"` triggers `LevelManager.goToNextLevel()` for progressing through levels.
-        - Removed reliance on deprecated APIs, adhering to modern Java practices.
+        - Replaced the deprecated APIs with a custom observer pattern using `MyObserver`. This modern approach avoids reliance on deprecated classes, ensuring forward compatibility.
+        - The `Controller` now implements the `MyObserver` interface, which defines a simple and reusable mechanism for receiving level-completion notifications.
+        - The `onLevelWin(String nextLevel)` method listens for events and delegates the transition logic to the `LevelManager` (`goToNextLevel` for "NEXT").
+        - The updated approach decouples the `Controller` from legacy Java classes, making the code more maintainable and adhering to modern Java practices.
 
 3. **Integration with StageManager**
     - **Before:**
@@ -1116,6 +1115,37 @@ The new `HeartDisplay` remains mostly unchanged, with the `addHeart()` method as
 - **Resolution:**
     - The root cause was a layering issue where the clouds were being added behind other elements, rendering them invisible to the player.
     - Adjustments were made to the rendering order, ensuring the clouds were placed in the correct layer of the scene.
+
+---
+### <u> The Java Heap Error  in Level Four Development </u>
+
+- **Error Description**
+While developing **Level Four**, an issue was encountered where the game would crash with a **Java heap space error**. This occurred due to the excessive accumulation of `BombProjectile` and `FlarePowerUp` instances, as these objects were continuously spawned but not properly removed after they were destroyed or left the screen.
+
+-**Symptoms**
+- The game slowed down significantly after prolonged gameplay.
+
+#### **Cause** 
+- Objects like `BombProjectile` and `FlarePowerUp` were continuously added to the game but were never properly removed from memory after being destroyed or leaving the visible game area.
+- This led to memory overflow, as these objects remained in the `Group` node and in the internal `List` structures within the `LevelParent` or `ActorManager`.
+
+#### **Solution**
+The issue was resolved by implementing proper cleanup logic for the `BombProjectile` and `FlarePowerUp` objects, ensuring they were removed from memory when they were no longer needed.
+
+#### **Steps Taken**
+
+#### 1. **Tracked Objects with `ActorManager`**
+
+#### 2. **Implemented Cleanup Logic**
+- Modified the `ActorManager` to include a `removeDestroyedActors()` method that:
+
+#### 3. **Removed Objects When Off-Screen**
+- Updated the `updateActor()` method in `BombProjectile` and `FlarePowerUp` to check their positions.
+- If an object moved off-screen, it flagged itself as "destroyed" using a boolean property.
+
+#### 5. **Verified with Testing**
+- Stress-tested the game by increasing the spawn rate of bombs and flares.
+- Monitored memory usage to confirm that it remained stable over time, even with heavy object creation and destruction.
 
 ---
 

@@ -1,6 +1,7 @@
 
 package com.example.demo.UI.screens;
 
+import com.example.demo.Levels.LevelParent;
 import com.example.demo.core.GameConfig;
 import com.example.demo.Managers.LevelManager;
 import javafx.animation.Timeline;
@@ -10,7 +11,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.BoxBlur;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -23,6 +27,9 @@ import javafx.util.Duration;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+
+import java.util.Objects;
+
 /**
  * The {@link  LevelIntroScreen} class provides an introductory screen for each game level.
  * It includes visual animations, a background gradient, level objectives, and a prompt to start the level.
@@ -74,15 +81,19 @@ public class LevelIntroScreen {
     public Scene getScene() {
         Group root = new Group();
 
-        // Background gradient
-        Rectangle gradientBackground = new Rectangle(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        gradientBackground.setFill(new LinearGradient(0, 0, 0, 1, true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.web("#8793eb")), new Stop(1, Color.web("#87CEEB"))));
-
-        // Dim overlay
-        Rectangle dimOverlay = new Rectangle(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
-        dimOverlay.setFill(Color.BLACK);
-        dimOverlay.setOpacity(0.3);
+        // Blurred Background Image
+        ImageView backgroundImage = new ImageView(new Image(
+                Objects.requireNonNull(getClass().getResource("/com/example/demo/images/background0.png")).toExternalForm()
+        ));
+        backgroundImage.setFitWidth(GameConfig.SCREEN_WIDTH);
+        backgroundImage.setFitHeight(GameConfig.SCREEN_HEIGHT);
+        backgroundImage.setPreserveRatio(false);
+        BoxBlur blur = new BoxBlur();
+        blur.setWidth(15);
+        blur.setHeight(15);
+        blur.setIterations(3);
+        backgroundImage.setEffect(blur);
+        root.getChildren().add(backgroundImage);
 
         // Quit button
         Text quitButton = new Text("Quit");
@@ -100,7 +111,7 @@ public class LevelIntroScreen {
         bubbleBackground.setStroke(Color.WHITE);
         bubbleBackground.setStrokeType(StrokeType.INSIDE);
         bubbleBackground.setStrokeWidth(3);
-        bubbleBackground.setEffect(new DropShadow(15, Color.AQUA));
+        bubbleBackground.setEffect(new DropShadow(15, Color.GOLD));
 
         VBox bubbleContent = new VBox(20);
         bubbleContent.setAlignment(Pos.CENTER);
@@ -117,7 +128,7 @@ public class LevelIntroScreen {
         textBubble.setLayoutX((GameConfig.SCREEN_WIDTH - bubbleBackground.getWidth()) / 2);
         textBubble.setLayoutY(-bubbleBackground.getHeight());
 
-        root.getChildren().addAll(gradientBackground, dimOverlay, quitButton, textBubble);
+        root.getChildren().addAll(quitButton, textBubble);
 
         // Animate the bubble
         TranslateTransition dropdown = new TranslateTransition(Duration.seconds(1), textBubble);
@@ -135,7 +146,6 @@ public class LevelIntroScreen {
 
         return scene;
     }
-
     /**
      * Proceeds to start the level by calling the {@link LevelManager}.
      */
@@ -152,29 +162,30 @@ public class LevelIntroScreen {
     private String getLevelObjective(String levelName) {
         switch (levelName) {
             case "LEVEL_ONE":
-                return "Destroy the enemy planes to advance in this Battle!!\n" +
-                        "Shoot at least 10 planes to proceed to the next level of the Battle.\n" +
+                return "TARGET\uD83C\uDFAF\uD83C\uDFAF:10\n Destroy the enemy planes to advance in this Battle!!\n" +
+                        "Shoot the planes to proceed to the next level of the Battle.\n" +
                         "BEWARE OF ENEMY FIRES";
             case "LEVEL_TWO":
-                return "In this Step, Defeat the Boss plane.\n" +
+                return "TARGET\uD83C\uDFAF\uD83C\uDFAF:15 \n In this Step, Defeat the Boss plane.\n" +
                         "The boss plane is stronger and bigger!!\n" +
-                        "Boss has 20 lives so beware!!\n" +
+                        "Boss has High life so beware!!\n" +
                         "BOSS'S SHIELD PROTECTS HIM!!";
             case "LEVEL_THREE":
-                return "Two types of enemies are attacking you.\n" +
+                return "\uD83C\uDFAF\uD83C\uDFAF:10\n Two types of enemies are attacking you.\n" +
                         "One comes in groups, and other comes with homing missiles\n" +
-                        "HOMING MISSILES FOLLOW & KILL YOU AS THEY TOUCH.\n" +
-                        "Kill 10 Enemies before a homing missile finds you!\n" +
-                        "LEFT RIGHT movement is allowed from this level";
+                        "HOMING MISSILES FOLLOW WHEREVER U GO.\n" +
+                        "If you kill Helicopter Leader,a lot of them will fall apart!\n" +
+                        "LEFT RIGHT movement is allowed from this level" +
+                        "LIFE:- Heli enemy:- 2 ,  Bigger Enemy:- 3";
             case "LEVEL_FOUR":
-                return "DARK NIGHT HAS FALLEN!!\n" +
+                return "TARGET\uD83C\uDFAF\uD83C\uDFAF:15\n DARK NIGHT HAS FALLEN!!\n" +
                         "Enemies are hidden under their sheaths!!\n" +
                         "But don't worry, Flare Power-ups coming\n" +
                         "from the sky can help you see them.\n" +
                         "But BEWARE the flare you catch might\n" +
                         " just be a bomb!";
             case "LEVEL_FIVE":
-                return "SHOWDOWNNNNNNNN\n" +
+                return "TARGET\uD83C\uDFAF\uD83C\uDFAF:15\n SHOWDOWNNNNNNNN\n" +
                         "ALL Enemies are attacking youuu\n" +
                         "Meteors are coming downnn\n" +
                         "BEWARE\n";
@@ -182,6 +193,8 @@ public class LevelIntroScreen {
                 return "Objective: Unknown level.";
         }
     }
+
+
 
     /**
      * Starts a typing effect to display the level objective text.

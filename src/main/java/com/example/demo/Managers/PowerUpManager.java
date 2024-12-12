@@ -70,7 +70,7 @@ public class PowerUpManager {
      * @return true if the purchase was successful, false otherwise
      */
     public boolean purchaseExtraLife() {
-        if (CoinSystemManager.getInstance().subtractCoins(15)) {
+        if (CoinSystemManager.getInstance().subtractCoins(5)) {
             levelParent.getUser().addHealth(1);
             levelParent.getLevelView().addHeart();
             return true;
@@ -87,7 +87,7 @@ public class PowerUpManager {
         if (levelParent.isShieldActive()) {
             return false;
         }
-        if (CoinSystemManager.getInstance().subtractCoins(10)) {
+        if (CoinSystemManager.getInstance().subtractCoins(7)) {
             activateShield();
             return true;
         }
@@ -124,7 +124,7 @@ public class PowerUpManager {
      * @return true if the purchase was successful, false otherwise
      */
     public boolean purchaseBullets() {
-        int bulletCost = 10;
+        int bulletCost = 8;
         int bulletsToAdd = 10;
 
         if (CoinSystemManager.getInstance().subtractCoins(bulletCost)) {

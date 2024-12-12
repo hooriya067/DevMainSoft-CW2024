@@ -132,7 +132,7 @@ public class LevelTwo extends LevelParent {
 	 */
 	@Override
 	public int calculateOptimalBullets() {
-		return 20;
+		return 15;
 	}
 
 	/**
@@ -154,4 +154,5 @@ public class LevelTwo extends LevelParent {
 		updateWinningParameter();
 		updateShieldImage();
 	}
+
 }

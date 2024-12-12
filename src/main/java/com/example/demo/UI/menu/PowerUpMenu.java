@@ -74,7 +74,7 @@ public class PowerUpMenu extends InGameMenuParent {
         powerUpBox.setAlignment(Pos.CENTER);
 
         // Health Power-Up
-        VBox healthBox = createPowerUpButtonWithLabels("heart.png", "EXTRA LIFE", "10 Coins", () -> {
+        VBox healthBox = createPowerUpButtonWithLabels("heart.png", "EXTRA LIFE", "5 Coins", () -> {
             if (PowerUpManager.getInstance().purchaseExtraLife()) {
                 removeOverlay();
                 GameStateManager.getInstance().resumeGame();
@@ -85,7 +85,7 @@ public class PowerUpMenu extends InGameMenuParent {
         });
 
         // Shield Power-Up
-        VBox shieldBox = createPowerUpButtonWithLabels("shield2.png", "SHIELD", "20 Coins", () -> {
+        VBox shieldBox = createPowerUpButtonWithLabels("shield2.png", "SHIELD", "7 Coins", () -> {
             if (PowerUpManager.getInstance().purchaseShield()) {
                 removeOverlay();
                 GameStateManager.getInstance().resumeGame();
@@ -96,7 +96,7 @@ public class PowerUpMenu extends InGameMenuParent {
         });
 
         // Bullets Power-Up
-        VBox bulletsBox = createPowerUpButtonWithLabels("bulletbelt.png", "10 BULLETS", "30 Coins", () -> {
+        VBox bulletsBox = createPowerUpButtonWithLabels("bulletbelt.png", "10 BULLETS", "8 Coins", () -> {
             if (PowerUpManager.getInstance().purchaseBullets()) {
                 removeOverlay();
                 GameStateManager.getInstance().resumeGame();

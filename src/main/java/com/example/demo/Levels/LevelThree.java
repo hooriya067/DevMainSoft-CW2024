@@ -156,6 +156,6 @@ public class LevelThree extends LevelParent {
      */
     @Override
     public int calculateOptimalBullets() {
-        return (KILLS_TO_ADVANCE / 2) * 2 + KILLS_TO_ADVANCE / 2;
+        return (KILLS_TO_ADVANCE / 2) * 2 + (KILLS_TO_ADVANCE / 2) * 3;
     }
 }

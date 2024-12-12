@@ -36,6 +36,7 @@ import java.util.Objects;
  *     <li>Dynamic background and UI initialization through {@link LevelViewParent}.</li>
  *     <li>Enhanced encapsulation of actor behaviors through {@link ActorManager}.</li>
  *     <li>New shield mechanics added via {@link ShieldImage}.</li>
+ *     <li> 'Observable' removed and functionality replaced by custom-made MyObserver.</li>
  * </ul>
  *
  * <h3>References to Older Code</h3>
@@ -516,4 +517,6 @@ public abstract class LevelParent implements ControllableLevel, Updatable {
 	public ShieldImage getUserShield() {
 		return userShield;
 	}
+
+
 }

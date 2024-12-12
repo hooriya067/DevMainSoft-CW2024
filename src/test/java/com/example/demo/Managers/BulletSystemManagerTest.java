@@ -13,7 +13,7 @@ class BulletSystemManagerTest {
     void resetInstance() {
         // Reset the singleton instance for testing purposes
         BulletSystemManager bulletSystemManager = BulletSystemManager.getInstance();
-        bulletSystemManager.setBullets(100); // Reset to default bullets
+        bulletSystemManager.setBullets(120); // Reset to default bullets
         bulletSystemManager.setBulletsUsed(0); // Reset used bullets
     }
 

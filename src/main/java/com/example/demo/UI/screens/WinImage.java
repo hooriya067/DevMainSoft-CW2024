@@ -1,6 +1,7 @@
 
 package com.example.demo.UI.screens;
 
+import com.example.demo.Managers.BulletSystemManager;
 import com.example.demo.Managers.SoundManager;
 import com.example.demo.Managers.StarManager;
 import com.example.demo.UI.buttons.PlayAgainButton;
@@ -103,7 +104,7 @@ import java.util.Objects;
 		// Define actions for the buttons
 		playAgainButton.setOnPlayAgain(() -> {
 			try {
-				SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
+				BulletSystemManager.getInstance().setBullets(120); // Reset bullet count
 				Controller gameController = new Controller(stage);
 				gameController.launchGame();
 			} catch (Exception e) {
