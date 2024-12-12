@@ -94,7 +94,41 @@ Managed by the `PowerUpManager` class, the system allows players to spend their 
 
 **Gameplay Impact:**
 The Power-Up System enhances player strategy by offering upgrades tailored to their immediate needs. Whether increasing health for endurance, activating a shield for safety, or replenishing bullets for offense, these power-ups allow players to adapt their approach to the game's challenges effectively.
+### <u>Customization System</u>
 
+The Customization System provides players with the opportunity to personalize their gameplay experience by selecting unique planes with varying attributes. This system integrates seamlessly with the game's mechanics, encouraging players to earn and spend coins strategically.
+
+1.<u> **Plane Selection:**</u>
+    - Players can choose from multiple plane designs displayed in a visually appealing gallery.
+    - Each plane has unique attributes:<br><br>
+        - **1) Default Plane:** Free and balanced, ideal for starting gameplay.
+        - <br>**2) Advanced Planes:** Cost coins but provide significant advantages in speed, health, and maneuverability.
+
+2. <u>**Pricing and Coin Integration:**</u>
+    - Each plane has a specific price:
+        - **Default Plane:** Free.
+        - **Plane 2:** 10 coins.
+        - **Plane 3:** 15 coins.
+    - Coins collected during gameplay are spent on unlocking advanced planes.
+    - The `CoinSystemManager` dynamically updates the coin count in real-time, ensuring players can track their purchasing power.
+
+3. <u>**Customization Process:**</u>
+    - Planes are displayed with prices and attributes such as health, speed, and size.
+    - Players click on a plane to select it, with the selected plane glowing to confirm the choice.
+    - A **CONFIRM** button finalizes the selection, deducting coins and applying the customization.
+
+4. **Performance and Attributes:**
+    - Each plane offers tailored gameplay benefits:
+        - **Plane 1:** Balanced attributes for standard gameplay.
+        - **Plane 2:** Higher speed and moderate health, ideal for quick maneuvering.
+        - **Plane 3:** Maximum durability and speed for challenging levels.
+
+5. **Integration with Other Systems:**
+    - The Customization System interacts with the `UserPlaneFactory` to update the player's selected plane dynamically.
+    - Purchased planes persist across levels, ensuring the player's choice is impactful throughout the game.
+    - The Customization System also takes use of `AlertManager` to alert the player if enough coins are not present.
+**Gameplay Impact:**
+The Customization System incentivizes players to collect coins and make strategic decisions about plane selection. By offering tangible gameplay benefits like enhanced speed and health, it enriches the player's experience and adds depth to the game's progression system.
 ### <u>Star System</u>
 
 Evaluates player performance in each level by rewarding stars based on efficiency, particularly focusing on bullet usage. It serves as a measure of skill and provides an incentive for players to optimize their gameplay.
@@ -194,7 +228,7 @@ The Star System encourages players to adopt a more strategic approach to gamepla
     - Allows players to choose their plane, unlocking new designs and new types of planes.
 
 - **Visual Design:**
-    - Includes a gallery-style layout for planes with preview animations, enabling players to see their selection in action.
+    - Includes a gallery-style layout for planes with preview animations, enabling players to see their selection in action with their prices.
     - When a player chooses a plane, the plane glows bright showcasing that it has been chosen. By clicking the CONFIRM Button player can proceed with their customised plane, and user is taken back to main menu page.
 
 ---
@@ -285,7 +319,22 @@ The Star System encourages players to adopt a more strategic approach to gamepla
     - **Power-Up Usage:**
         - Shields activate with an actual shield on the top of players plane, that follows the player’s movement and shield’s player from any damage. It is accompanied by a timer of 20 seconds.
         - Extra lives visually add hearts to the health bar, with a smooth scaling animation.
+  ### <u>Collision Visualization</u>
 
+#### **Impact Animation**
+- **Explosion Effect**:
+    - On any plane collision, a visually striking explosion image appears at the collision point.
+    - The image is displayed for 1 second and gradually fades out, adding a dynamic feedback element for the player.
+
+#### **Technical Implementation**
+- **Collision Detection**:
+    - The `CollisionManager` detects collisions between planes and triggers the explosion animation.
+
+- **Dynamic Placement**:
+    - The explosion image is dynamically added to the scene at the exact point of intersection between the two colliding objects.
+
+- **Timed Animation**:
+    - A fade-out effect is applied to the explosion image, ensuring it smoothly disappears after 1 second, blending seamlessly into the gameplay.
 ---
 ## *Features Implemented but Not Working Properly*
 
@@ -347,102 +396,279 @@ The Star System encourages players to adopt a more strategic approach to gamepla
 ## *New Java Classes*
 
 ---
-
 ### <u>Level-Related</u>
 
-- **LevelManager:** Located at `com.example.demo.Managers.LevelManager`. Handles game progression and transitions between levels, ensuring smooth navigation.
-- **LevelIntroScreen:** Located at `com.example.demo.UI.screens.LevelIntroScreen`. Displays objectives and instructions for each level with animations, enhancing user engagement.
-- **LevelFive, LevelFour, LevelThree:** Located in `com.example.demo.Levels`. Contain specific logic, unique mechanics, and enemy types for each level.
-- **LevelViewLevelFive, LevelViewLevelFour, LevelViewLevelThree:** Located in `com.example.demo.Levels.view`. Provide UI layouts customized for their respective levels.
-- **LevelCompletedScreen:** Located at `com.example.demo.UI.screens.LevelCompletedScreen`. Displays a congratulatory overlay after completing a level with options to proceed.
+- **LevelManager:**  
+  **Location:** `com.example.demo.Managers.LevelManager`  
+  **Description:** Manages the flow of the game by handling level progression, loading necessary assets, and ensuring smooth transitions between levels. Encapsulates logic for moving between levels, loading Level Introduction Pages, Level Complete pages, and Win Pages.
+
+- **LevelIntroScreen:**  
+  **Location:** `com.example.demo.UI.screens.LevelIntroScreen`  
+  **Description:** Displays level-specific objectives and instructions to the player before each level begins. Uses animations and dynamic content to enhance user experience and engagement, providing a clear understanding of the gameplay goals.
+
+- **LevelFive, LevelFour, LevelThree:**  
+  **Location:** `com.example.demo.Levels`  
+  **Description:** These classes define unique gameplay mechanics, specific objectives, and tailored enemy behaviors for each level. They include methods for spawning enemies, handling level progression, and implementing distinct challenges to provide varied gameplay experiences.
+
+- **LevelViewLevelFive, LevelViewLevelFour, LevelViewLevelThree:**  
+  **Location:** `com.example.demo.Levels.view`  
+  **Description:** Responsible for defining the visual layout and user interface of their respective levels. Handle the positioning of UI components and overlays, ensuring the player's experience matches the unique theme of each level.
+
+- **LevelCompletedScreen:**  
+  **Location:** `com.example.demo.UI.screens.LevelCompletedScreen`  
+  **Description:** Displays a congratulatory message and relevant statistics after successfully completing a level. Includes options for the player to proceed to the next level or replay the same level, providing seamless transition.
 
 ---
 
 ### <u>Factories</u>
 
-- **ProjectileFactory:** Located at `com.example.demo.actors.active.Factories.ProjectileFactory`. Provides a standardized mechanism for creating projectiles, simplifying instantiation and management.
-- **EnemyFactory:** Located at `com.example.demo.actors.active.Factories.EnemyFactory`. Dynamically creates different enemy types using the factory pattern.
-- **UserPlaneFactory:** Located at `com.example.demo.actors.active.Factories.UserPlaneFactory`. Dynamically creates user planes based on customization choices.
+- **ProjectileFactory:**  
+  **Location:** `com.example.demo.actors.active.Factories.ProjectileFactory`  
+  **Description:** Implements a standardized and centralized way to create various types of projectiles. Simplifies the instantiation of user and enemy projectiles while ensuring consistency in behavior and attributes across the game.
 
----
+- **EnemyFactory:**  
+  **Location:** `com.example.demo.actors.active.Factories.EnemyFactory`  
+  **Description:** Dynamically generates different types of enemy units using the factory pattern. Allows the game to spawn enemies with diverse characteristics and behaviors efficiently, enabling easier addition of new enemy types without altering existing code.
 
+- **UserPlaneFactory:**  
+  **Location:** `com.example.demo.actors.active.Factories.UserPlaneFactory`  
+  **Description:** Handles the dynamic creation of user-controlled planes, allowing for customization based on user preferences. Ensures user planes are initialized with the correct attributes and configurations for consistent gameplay.
 ### <u>Buttons</u>
 
-- **ButtonParent:** Located in `com.example.demo.UI.buttons.ButtonsParent`. Simplifies button creation with centralized styling and behavior.
-- **MainMenuButton:** Located in `com.example.demo.UI.buttons`. Takes the user to the main menu screen from pause screen.
-- **PauseMenu:** Located in `com.example.demo.UI.buttons`. Provides a visually attractive pause overlay with resume, quit, and main menu options.
-- **PlayAgainButton:** Located in `com.example.demo.UI.buttons`. Restarts the game differently at different locations. Takes user back to Level One from Game Over and Win page. Takes user back to the previous level from the Level Complete page.
-- **PowerUpButton:** Located in `com.example.demo.UI.buttons`. Opens the Power-Up Menu for purchasing upgrades and power-ups.
-- **QuitButton:** Located in `com.example.demo.UI.buttons`. Exits the game and allows user to leave whenever.
-- **ResumeButton:** Located in `com.example.demo.UI.buttons`. Resumes gameplay after pausing. The gameplay after resumed in a 3, 2, 1 countdown to give user time to buckle up.
-- **SoundButton:** Located in `com.example.demo.UI.buttons`. Adjusts audio settings. Helps user toggle background music on/off.
-- **StartGameButton:** Located in `com.example.demo.UI.buttons`. Initiates gameplay from the main menu and starts the first level.
-- **NextButton:** Located in `com.example.demo.UI.buttons`. Navigates to the level introduction of the next upcoming level.
-- **CustomizeButton:** Located in `com.example.demo.UI.buttons`. Opens the Customization Screen.
-- **InstructionButton:** Located in `com.example.demo.UI.buttons`. Opens the instruction manual for the user to learn about the gameplay.
+- **ButtonParent:**  
+  **Location:** `com.example.demo.UI.buttons.ButtonsParent`  
+  **Description:** Simplifies button creation with centralized styling and behavior.
+
+- **MainMenuButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Takes the user to the main menu screen from the pause screen.
+
+- **PauseMenu:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Provides a visually attractive pause overlay with resume, quit, and main menu options.
+
+- **PlayAgainButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Restarts the game differently based on location. Takes the user back to Level One from the Game Over and Win page. Takes the user back to the previous level from the Level Complete page.
+
+- **PowerUpButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Opens the Power-Up Menu for purchasing upgrades and power-ups.
+
+- **QuitButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Exits the game and allows the user to leave at any time.
+
+- **ResumeButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Resumes gameplay after pausing. The gameplay resumes with a 3, 2, 1 countdown to give the user time to prepare.
+
+- **SoundButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Adjusts audio settings, allowing the user to toggle background music on/off.
+
+- **StartGameButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Initiates gameplay from the main menu and starts the first level.
+
+- **NextButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Navigates to the level introduction of the next upcoming level.
+
+- **CustomizeButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Opens the Customization Screen for modifying the user plane.
+
+- **InstructionButton:**  
+  **Location:** `com.example.demo.UI.buttons`  
+  **Description:** Opens the instruction manual for the user to learn about the gameplay.
+### <u>Game Mechanics</u>
 
 ---
 
-### <u>Game Mechanics</u>
+- **StageManager:**
+    - **Location:** `com.example.demo.core.StageManager`
+    - **Description:** Manages transitions between game stages and keeps a singleton stage. The stage can be retrieved at any time and in any class without changing constructors.
 
-- **StageManager:** Located at `com.example.demo.core.StageManager`. Manages transitions between game stages and keeps a singleton stage. The stage can be retrieved at any time and in any class without changing constructors.
-- **GameConfig:** Located at `com.example.demo.core.GameConfig`. Centralized configuration for global game settings like screen size and key bindings. Adheres to the Single Responsibility Principle.
-- **GameLoop:** Located at `com.example.demo.core.GameLoop`. Handles the game timeline and the updatable components of the game separately. Adheres to the Single Responsibility Principle.
-- **GameStateManager:** Located at `com.example.demo.core.GameStateManager`. Manages game states like paused and resumed states, and handles game over logic. Uses a flag to switch between paused and resumed states.
-- **CollisionManager:** Located at `com.example.demo.Managers.CollisionManager`. Handles collision detection and response. Encapsulates collision-related logic, improving modularity.
-- **ActorManager:** Located at `com.example.demo.Managers.ActorManager`. Centralized management of all actors (friendly units, enemy units, projectiles, coins). Adheres to the Single Responsibility Principle.
-- **InputHandlerManager:** Located at `com.example.demo.Managers.InputHandlerManager`. Manages player input, such as movement and firing. Centralized input handling ensures maintainability.
-- **Updatable Interface:** Located at `com.example.demo.core.Updatable`. Standardizes update logic for updatable components across the game.
-- **MyObserver:** Located at `com.example.demo.MyObserver`. Custom observer interface for game state updates.
-- **Enemy Interface:** Located at `com.example.demo.actors.active.enemies.Enemy`. Provides a base structure and methods for all enemy planes.
-- **ControllableLevel Interface:** Located at `com.example.demo.levels.ControllableLevel`. Facilitates flexible level management and interactions, adhering to encapsulation principles.
+- **GameConfig:**
+    - **Location:** `com.example.demo.core.GameConfig`
+    - **Description:** Centralized configuration for global game settings like screen size and key bindings. Adheres to the Single Responsibility Principle.
+
+- **GameLoop:**
+    - **Location:** `com.example.demo.core.GameLoop`
+    - **Description:** Handles the game timeline and the updatable components of the game separately. Adheres to the Single Responsibility Principle.
+
+- **GameStateManager:**
+    - **Location:** `com.example.demo.core.GameStateManager`
+    - **Description:** Manages game states like paused and resumed states, and handles game-over logic. Uses a flag to switch between paused and resumed states.
+
+- **CollisionManager:**
+    - **Location:** `com.example.demo.Managers.CollisionManager`
+    - **Description:** Handles collision detection and response. Encapsulates collision-related logic, improving modularity.Independently handling collisons with the help of cator manager and using updatable to update them.
+
+- **ActorManager:**
+    - **Location:** `com.example.demo.Managers.ActorManager`
+    - **Description:** Centralized management of all actors (friendly units, enemy units, projectiles, coins). Adheres to the Single Responsibility Principle.
+
+- **InputHandlingManager:**
+    - **Location:** `com.example.demo.Managers.InputHandlingManager`
+    - **Description:** Manages player input, such as movement and firing. Centralized input handling ensures maintainability.
+
+- **Updatable Interface:**
+    - **Location:** `com.example.demo.core.Updatable`
+    - **Description:** Standardizes update logic for updatable components across the game.Makes Level Parent free of all these logics.
+
+- **MyObserver:**
+    - **Location:** `com.example.demo.MyObserver`
+    - **Description:** Custom observer interface for game state updates.
+
+- **Enemy Interface:**
+    - **Location:** `com.example.demo.actors.active.enemies.Enemy`
+    - **Description:** Provides a base structure and methods for all enemy planes.
+
+- **ControllableLevel Interface:**
+    - **Location:** `com.example.demo.Levels.ControllableLevel`
+    - **Description:** Facilitates flexible level management and interactions, adhering to encapsulation principles.
 
 ---
 
 ### <u>Gameplay-Related</u>
 
-**Projectiles:**
-- **BombProjectile:** Located in `com.example.demo.actors.active.projectiles`. Introduced in Level Four.
-- **EnemyProjectileLevelThree:** Located in `com.example.demo.actors.active.projectiles`. Specialized projectiles for Level Three enemies.
-- **HomingMissile:** Located in `com.example.demo.actors.active.projectiles`. Tracks the player's position dynamically.
-- **Meteor:** Located in `com.example.demo.actors.active.projectiles`. Obstacles in Level Five's meteor storm phase.
 
-**Enemy:**
-- **EnemyParent:** Located at `com.example.demo.actors.active.enemies`. Abstract base class for enemy types.
-- **EnemyPlaneTypeA & EnemyPlaneTypeB:** Located in `com.example.demo.actors.active.enemies`. Represent unique enemy variants with specific mechanics.
-- **StealthEnemyPlane:** Located in `com.example.demo.actors.active.enemies`. Features invisibility mechanics and high health.
+#### **Projectiles**
 
-**Coin System:**
-- **Coin:** Located in `com.example.demo.actors.collectibles.Coin`. Increases player's coin count upon collection.
-- **CoinSystemManager:** Located at `com.example.demo.Managers.CoinSystemManager`. Manages the global coin count.
+- **BombProjectile:**
+    - **Location:** `com.example.demo.actors.active.projectiles`
+    - **Description:** Introduced in Level Four, this projectile moves downward and causes significant area damage. It adds an extra layer of challenge for the player by requiring precise avoidance.
 
-**Power-Ups:**
-- **FlarePowerUp:** Located at `com.example.demo.actors.collectibles.FlarePowerUp`. Temporarily reveals stealth enemies.
-- **PowerUpManager:** Located in `com.example.demo.Managers.PowerUpManager`. Handles logic for purchasing and activating power-ups.
+- **EnemyProjectileLevelThree:**
+    - **Location:** `com.example.demo.actors.active.projectiles`
+    - **Description:** Specialized for Level Three, these projectiles are fired by advanced enemy planes and feature increased speed or modified trajectories to challenge players further.
 
-**Star System:**
-- **BulletSystemManager:** Located at `com.example.demo.Managers.BulletSystemManager`. Tracks and manages bullets.
-- **StarManager:** Located in `com.example.demo.Managers.StarManager`. Tracks stars earned during gameplay.
-- **StarDisplay:** Located in `com.example.demo.actors.active.collectibles.StarDisplay`. Visually represents stars.
+- **HomingMissile:**
+    - **Location:** `com.example.demo.actors.active.projectiles`
+    - **Description:** A dynamic projectile that tracks the player’s movement in real time, adding tension and requiring skillful evasion.
+
+- **Meteor:**
+    - **Location:** `com.example.demo.actors.active.projectiles`
+    - **Description:** Appears during Level Five's meteor storm phase. These environmental hazards introduce randomness and unpredictability to the gameplay, forcing players to adapt.(Supposed to work but it isnt)
 
 ---
 
-### <u>Auxiliary</u>
+#### **Enemy System**
 
-- **Formation:** Located at `com.example.demo.actors.active.Formation`. Manages enemy formations.
-- **AlertManager:** Located at `com.example.demo.Managers.AlertManager`. Displays informational alerts dynamically.
-- **Title:** Located at `com.example.demo.UI.screens.Title`. Represents the main menu title.
-- **SoundManager:** Located in `com.example.demo.Managers.SoundManager`. Manages game audio dynamically.
-- **Cloud:** Located at `com.example.demo.Levels.effects.Cloud`. Adds cloud effects to Level Five.
-- **RainEffect:** Located in `com.example.demo.Levels.effects.RainEffect`. Handles rain animations (currently not fully functional).
+- **EnemyParent:**
+    - **Location:** `com.example.demo.actors.active.enemies`
+    - **Description:** Serves as an abstract base class for all enemy types, encapsulating shared behaviors such as health management, movement logic, and projectile firing.
 
-**UI Screens:**
-- **MainMenu:** Located at `com.example.demo.UI.screens.MainMenu`. Allows navigation to start, customize, or quit the game.
-- **CustomizationScreen:** Located in `com.example.demo.UI.screens.CustomizationScreen`. Helps users customize planes.
-- **InGameMenuParent:** Located in `com.example.demo.UI.screens.InGameMenuParent`. Parent class for pause and power-up menus.
-- **InstructionScreen:** Located in `com.example.demo.UI.screens.InstructionScreen`. Provides gameplay instructions.
-- **PauseMenu:** Located in `com.example.demo.UI.menu.PauseMenu`. Overlays gameplay with pause options.
-- **PowerUpMenu:** Located in `com.example.demo.UI.menu.PowerUpMenu`. Displays power-up options dynamically.
+- **EnemyPlaneTypeA & EnemyPlaneTypeB:**
+    - **Location:** `com.example.demo.actors.active.enemies`
+    - **Description:**
+        - **Type A:** Features sinusoidal movement, making them more challenging to hit.
+        - **Type B:** Fires homing missiles, introducing an advanced threat to the gameplay.This plane is slower moving but with higher life
+
+- **StealthEnemyPlane:**
+    - **Location:** `com.example.demo.actors.active.enemies`
+    - **Description:** Boasts invisibility mechanics that require the player to use power-ups like FlarePowerUp to detect and destroy them. This adds a strategic element to the gameplay.
+
+---
+
+#### **Coin System**
+
+- **Coin:**
+    - **Location:** `com.example.demo.actors.collectibles.Coin`
+    - **Description:** When collected, increases the player's coin count, allowing them to purchase power-ups or additional bullets.
+
+- **CoinSystemManager:**
+    - **Location:** `com.example.demo.Managers.CoinSystemManager`
+    - **Description:** Handles the global coin count, ensuring consistency across levels and UI updates.
+
+---
+
+#### **Power-Ups**
+
+- **FlarePowerUp:**
+    - **Location:** `com.example.demo.actors.collectibles.FlarePowerUp`
+    - **Description:** Temporarily reveals stealth enemies, allowing players to target and destroy them. Its strategic use is critical in levels featuring invisible threats.
+
+- **PowerUpManager:**
+    - **Location:** `com.example.demo.Managers.PowerUpManager`
+    - **Description:** Facilitates the logic for purchasing and activating power-ups. Works seamlessly with the coin system and enhances the player's strategic choices during gameplay.
+
+---
+
+#### **Star System**
+
+- **BulletSystemManager:**
+    - **Location:** `com.example.demo.Managers.BulletSystemManager`
+    - **Description:** Tracks and manages the player’s bullet count, ensuring that firing and purchasing mechanisms are consistent. It also provides feedback on bullet usage for determining stars earned.
+
+- **StarManager:**
+    - **Location:** `com.example.demo.Managers.StarManager`
+    - **Description:** Manages the calculation and tracking of stars earned during gameplay based on performance metrics like bullet usage and objectives achieved.Calculates stars at the end og each level and at winpage.
+
+- **StarDisplay:**
+    - **Location:** `com.example.demo.actors.active.collectibles.StarDisplay`
+    - **Description:** Provides a visual representation of the stars earned, reinforcing the player’s accomplishments and progression.
+
+---
+### <u>Auxiliary Components</u>
+
+---
+
+#### **Effects and Utilities**
+
+- **Formation:**
+    - **Location:** `com.example.demo.actors.active.Formation`
+    - **Description:** Manages complex enemy formations, ensuring coordinated movements and behavior patterns among grouped enemy units.
+
+- **AlertManager:**
+    - **Location:** `com.example.demo.Managers.AlertManager`
+    - **Description:** Dynamically displays informational and warning alerts during gameplay, improving user feedback.
+
+- **SoundManager:**
+    - **Location:** `com.example.demo.Managers.SoundManager`
+    - **Description:** Handles game audio, including background music and sound effects. Provides dynamic controls for managing sound states.
+
+- **Cloud:**
+    - **Location:** `com.example.demo.Levels.effects.Cloud`
+    - **Description:** Adds cloud effects to levels, particularly Level Five, to enhance visual appeal. Features smooth directional movement with customizable boundaries.
+
+- **RainEffect:**
+    - **Location:** `com.example.demo.Levels.effects.RainEffect`
+    - **Description:** Animates rain in the background for aesthetic enhancement. This feature is currently in development and not fully functional.
+
+---
+
+#### **UI Screens**
+
+- **MainMenu:**
+    - **Location:** `com.example.demo.UI.screens.MainMenu`
+    - **Description:** Serves as the primary entry point, allowing players to start the game, customize options, or exit the application.
+
+- **CustomizationScreen:**
+    - **Location:** `com.example.demo.UI.screens.CustomizationScreen`
+    - **Description:** Allows players to customize planes, offering options for visuals and initial attributes like health.Has a confirm button for user to confirm the plane and move forward.
+
+- **InstructionScreen:**
+    - **Location:** `com.example.demo.UI.screens.InstructionScreen`
+    - **Description:** Provides comprehensive gameplay instructions, detailing controls and mechanics.It takes user to a slideshow of instructions which are visually appealing, for user to understand game mechanics and rules.
+
+---
+
+#### **In-Game Menus**
+
+- **InGameMenuParent:**
+    - **Location:** `com.example.demo.UI.screens.InGameMenuParent`
+    - **Description:** Abstract parent class for in-game overlays such as the pause menu and power-up menu, ensuring consistent UI behavior.
+
+- **PauseMenu:**
+    - **Location:** `com.example.demo.UI.menu.PauseMenu`
+    - **Description:** Pauses gameplay and overlays a menu with options to resume, restart, or quit, providing players flexibility during gameplay.
+
+- **PowerUpMenu:**
+    - **Location:** `com.example.demo.UI.menu.PowerUpMenu`
+    - **Description:** Displays available power-up options in real-time, allowing players to activate them during gameplay dynamically.It also showcases the price for each Power Up for user to plan their moves.
 
 ---
 ## *Modified Java Classes*
@@ -481,12 +707,15 @@ The `LevelParent` class underwent significant modifications to improve maintaina
         - Resulted in cleaner and reusable input logic.
 
 4. **Game Loop Refactor**
-    - **Before:** The game update loop was managed using `Timeline` directly in `LevelParent`.
-    - **Changes:**
-        - `GameLoop` now manages the timeline and frame updates, invoking `update()` for all registered `Updatable` instances.
-        - `LevelParent` implements the `Updatable` interface and registers itself with `GameLoop`.
-        - Actor and collision updates are handled through `ActorManager` and `CollisionManager`, which are also registered as `Updatable` instances.
-        - Decoupled logic separates timing mechanisms from game logic, enabling a reusable `GameLoop` for other levels or future projects.
+- **Before:** The game update loop was managed using `Timeline` directly in `LevelParent`.
+- **Changes:**
+    - Introduced the `GameLoop` class to handle the timeline and frame updates, invoking the `update()` method for all registered `Updatable` instances.
+    - `LevelParent` implements the `Updatable` interface and registers itself with the `GameLoop`.
+    - **Decoupling Logic:**
+        - **ActorManager** and **CollisionManager** now implement the `Updatable` interface and are registered directly with the `GameLoop`.
+        - As a result, `LevelParent` no longer manages actor and collision updates directly. This ensures that `LevelParent` is independent of these specific logics, improving modularity and maintainability.
+    - Decoupled timing mechanisms from game logic, enabling a reusable `GameLoop` for other levels or future projects.
+
 
 5. **Game State Management**
     - **Centralization with `GameStateManager`:**
