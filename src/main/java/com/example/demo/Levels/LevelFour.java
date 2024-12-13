@@ -55,7 +55,7 @@ public class LevelFour extends LevelParent {
     /**
      * Number of kills required to advance to the next level.
      */
-    private static final int KILLS_TO_ADVANCE = 15;
+    private static final int KILLS_TO_ADVANCE = 10;
 
     /**
      * List to hold stealth enemies currently in the level.

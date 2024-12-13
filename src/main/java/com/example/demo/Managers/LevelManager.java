@@ -137,8 +137,8 @@ public class LevelManager {
         try {
             switch (levelName) {
                 case "LEVEL_ONE":
-                    currentLevel = new LevelFive(stage.getHeight(), stage.getWidth());
-                  //  currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+                  //  currentLevel = new LevelFive(stage.getHeight(), stage.getWidth());
+                    currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_TWO":
 
