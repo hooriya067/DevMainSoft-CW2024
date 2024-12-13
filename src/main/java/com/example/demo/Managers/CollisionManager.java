@@ -154,7 +154,6 @@ public class CollisionManager implements Updatable {
             }
         }
     }
-
     /**
      * Handles a collision where a shield absorbs the damage.
      *

@@ -1,10 +1,10 @@
 package com.example.demo.Managers;
 
 
-import com.example.demo.UI.screens.GameOverImage;
+import com.example.demo.UI.screens.GameOverScreen;
 import com.example.demo.UI.screens.LevelCompletedScreen;
 import com.example.demo.UI.screens.LevelIntroScreen;
-import com.example.demo.UI.screens.WinImage;
+import com.example.demo.UI.screens.WinScreen;
 import com.example.demo.controller.Controller;
 import com.example.demo.core.StageManager;
 import javafx.application.Platform;
@@ -141,7 +141,7 @@ class LevelProgressionTest {
         StageManager.setStage(mockStage);
         Runnable onQuit = () -> mockStage.close();
 
-        GameOverImage gameOverPage = new GameOverImage(800, 600);
+        GameOverScreen gameOverPage = new GameOverScreen(800, 600);
         onQuit.run();
 
         // Verify that the Stage's `close()` method is called
@@ -156,7 +156,7 @@ class LevelProgressionTest {
 
 
         Runnable onQuit = mock(Runnable.class);
-        WinImage winPage = new WinImage(800, 600);
+        WinScreen winPage = new WinScreen(800, 600);
         onQuit.run();
 
         // Verify that the Quit action is executed

@@ -76,30 +76,13 @@ public class SoundManager {
     }
 
     /**
-     * Stops the currently playing background music.
+     * Stops the currently playing background music.Ensures it’s completely cleared.
      */
     public void stopBackgroundMusic() {
         if (backgroundMusicPlayer != null) {
             backgroundMusicPlayer.stop();
+            backgroundMusicPlayer.dispose(); // Ensure it’s completely cleared
             backgroundMusicPlayer = null;
-        }
-    }
-
-    /**
-     * Pauses the currently playing background music.
-     */
-    public void pauseBackgroundMusic() {
-        if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.pause();
-        }
-    }
-
-    /**
-     * Resumes the paused background music.
-     */
-    public void resumeBackgroundMusic() {
-        if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.play();
         }
     }
 
@@ -120,62 +103,6 @@ public class SoundManager {
             e.printStackTrace();
         }
     }
-
-    /**
-     * Adds a reusable sound effect to the sound manager.
-     *
-     * @param key           the key to identify the sound effect
-     * @param soundFilePath the file path of the sound effect
-     */
-    public void addSoundEffect(String key, String soundFilePath) {
-        try {
-            Media sound = new Media(getClass().getResource(soundFilePath).toExternalForm());
-            MediaPlayer soundPlayer = new MediaPlayer(sound);
-            soundPlayers.put(key, soundPlayer);
-        } catch (Exception e) {
-            System.err.println("Error loading reusable sound effect: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Plays a reusable sound effect.
-     *
-     * @param key the key identifying the sound effect to play
-     */
-    public void playReusableSoundEffect(String key) {
-        MediaPlayer soundPlayer = soundPlayers.get(key);
-        if (soundPlayer != null) {
-            soundPlayer.stop();
-            soundPlayer.seek(javafx.util.Duration.ZERO);
-            soundPlayer.play();
-        }
-    }
-
-    /**
-     * Sets the volume for the background music.
-     *
-     * @param volume the desired volume level (0.0 to 1.0)
-     */
-    public void setBackgroundMusicVolume(double volume) {
-        if (backgroundMusicPlayer != null) {
-            backgroundMusicPlayer.setVolume(volume);
-        }
-    }
-
-    /**
-     * Sets the volume for a reusable sound effect.
-     *
-     * @param key    the key identifying the sound effect
-     * @param volume the desired volume level (0.0 to 1.0)
-     */
-    public void setSoundEffectVolume(String key, double volume) {
-        MediaPlayer soundPlayer = soundPlayers.get(key);
-        if (soundPlayer != null) {
-            soundPlayer.setVolume(volume);
-        }
-    }
-
     /**
      * Temporarily lowers the background music volume.
      *

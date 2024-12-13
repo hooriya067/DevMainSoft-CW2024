@@ -8,7 +8,7 @@ import com.example.demo.UI.buttons.PauseButtonDisplay;
 import com.example.demo.UI.buttons.PowerUpButton;
 import com.example.demo.UI.menu.PauseMenu;
 import com.example.demo.UI.menu.PowerUpMenu;
-import com.example.demo.UI.screens.GameOverImage;
+import com.example.demo.UI.screens.GameOverScreen;
 import com.example.demo.actors.collectibles.HeartDisplay;
 import com.example.demo.core.GameConfig;
 import com.example.demo.core.StageManager;
@@ -34,7 +34,7 @@ import javafx.util.Duration;
  *     <li>{@link PowerUpButton}: Manages the display and interaction of the power-up button.</li>
  *     <li>{@link CoinSystemManager}: Updates and tracks the coin count displayed to the player.</li>
  *     <li>{@link BulletSystemManager}: Tracks and updates the bullet count for the player.</li>
- *     <li>{@link GameOverImage}: Displays the game over image when the player loses.</li>
+ *     <li>{@link GameOverScreen}: Displays the game over image when the player loses.</li>
  *     <li>{@link StageManager}: Provides access to the primary stage for UI overlays like pause or power-up menus.</li>
  * </ul>
  */
@@ -128,7 +128,7 @@ public abstract class LevelViewParent {
 	/**
 	 * Image displayed when the game is over.
 	 */
-	private final GameOverImage gameOverImage;
+	private final GameOverScreen gameOverScreen;
 
 	/**
 	 * Display for player's health as hearts.
@@ -162,7 +162,7 @@ public abstract class LevelViewParent {
 		this.levelParent = levelParent;
 
 		this.heartDisplay = new HeartDisplay(HEART_DISPLAY_X_POSITION, HEART_DISPLAY_Y_POSITION, heartsToDisplay);
-		this.gameOverImage = new GameOverImage(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
+		this.gameOverScreen = new GameOverScreen(GameConfig.SCREEN_WIDTH, GameConfig.SCREEN_HEIGHT);
 		this.pauseButtonDisplay = new PauseButtonDisplay();
 		this.pauseButtonDisplay.setPosition(PAUSE_BUTTON_X_POSITION, PAUSE_BUTTON_Y_POSITION);
 
@@ -333,7 +333,7 @@ public abstract class LevelViewParent {
 		SoundManager.getInstance().stopBackgroundMusic();
 		SoundManager.getInstance().playSoundEffect("/com/example/demo/sound/gameover.mp3");
 		SoundManager.getInstance().playBackgroundMusic("/com/example/demo/sound/background2.mp3");
-		root.getChildren().add(gameOverImage);
+		root.getChildren().add(gameOverScreen);
 	}
 
 	/**

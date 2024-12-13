@@ -171,14 +171,14 @@ public class LevelIntroScreen {
                         "Boss has High life so beware!!\n" +
                         "BOSS'S SHIELD PROTECTS HIM!!";
             case "LEVEL_THREE":
-                return "\uD83C\uDFAF\uD83C\uDFAF:10\n Two types of enemies are attacking you.\n" +
+                return "TARGET\uD83C\uDFAF\uD83C\uDFAF:10\n Two types of enemies are attacking you.\n" +
                         "One comes in groups, and other comes with homing missiles\n" +
                         "HOMING MISSILES FOLLOW WHEREVER U GO.\n" +
                         "If you kill Helicopter Leader,a lot of them will fall apart!\n" +
                         "LEFT RIGHT movement is allowed from this level" +
                         "LIFE:- Heli enemy:- 2 ,  Bigger Enemy:- 3";
             case "LEVEL_FOUR":
-                return "TARGET\uD83C\uDFAF\uD83C\uDFAF:15\n DARK NIGHT HAS FALLEN!!\n" +
+                return "TARGET\uD83C\uDFAF\uD83C\uDFAF:10\n DARK NIGHT HAS FALLEN!!\n" +
                         "Enemies are hidden under their sheaths!!\n" +
                         "But don't worry, Flare Power-ups coming\n" +
                         "from the sky can help you see them.\n" +

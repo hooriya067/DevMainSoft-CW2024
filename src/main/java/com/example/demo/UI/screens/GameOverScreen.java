@@ -34,7 +34,7 @@ import java.util.Objects;
  *     <li>{@link StageManager}: Provides the {@link javafx.stage.Stage} for the game window.</li>
  * </ul>
  */
-public class GameOverImage extends Pane {
+public class GameOverScreen extends Pane {
 
 	/**
 	 * Path to the "Game Over" image resource.
@@ -52,7 +52,7 @@ public class GameOverImage extends Pane {
 	 * @param screenWidth  the width of the screen
 	 * @param screenHeight the height of the screen
 	 */
-	public GameOverImage(double screenWidth, double screenHeight) {
+	public GameOverScreen(double screenWidth, double screenHeight) {
 
 		// Create a dimmed background
 		Rectangle dimBackground = new Rectangle(screenWidth, screenHeight, Color.BLACK);

@@ -87,7 +87,7 @@ public class PowerUpManager {
         if (levelParent.isShieldActive()) {
             return false;
         }
-        if (CoinSystemManager.getInstance().subtractCoins(1)) {
+        if (CoinSystemManager.getInstance().subtractCoins(7)) {
             activateShield();
             return true;
         }

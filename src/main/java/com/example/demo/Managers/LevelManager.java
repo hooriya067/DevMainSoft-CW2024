@@ -19,7 +19,7 @@ package com.example.demo.Managers;
 
 import com.example.demo.UI.screens.LevelCompletedScreen;
 import com.example.demo.UI.screens.LevelIntroScreen;
-import com.example.demo.UI.screens.WinImage;
+import com.example.demo.UI.screens.WinScreen;
 import com.example.demo.controller.Controller;
 import com.example.demo.core.StageManager;
 import com.example.demo.Levels.*;
@@ -137,9 +137,11 @@ public class LevelManager {
         try {
             switch (levelName) {
                 case "LEVEL_ONE":
-                    currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
+                    currentLevel = new LevelFive(stage.getHeight(), stage.getWidth());
+                  //  currentLevel = new LevelOne(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_TWO":
+
                     currentLevel = new LevelTwo(stage.getHeight(), stage.getWidth());
                     break;
                 case "LEVEL_THREE":
@@ -186,10 +188,10 @@ public class LevelManager {
         dimBackground.setFill(javafx.scene.paint.Color.BLACK);
         dimBackground.setOpacity(0.5);
 
-        WinImage winImage = new WinImage(stage.getWidth(), stage.getHeight());
-        winImage.setVisible(true);
+        WinScreen winScreen = new WinScreen(stage.getWidth(), stage.getHeight());
+        winScreen.setVisible(true);
 
-        Group winScreenRoot = new Group(dimBackground, winImage);
+        Group winScreenRoot = new Group(dimBackground, winScreen);
         Scene currentScene = stage.getScene();
 
         if (currentScene.getRoot() instanceof Group) {

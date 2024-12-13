@@ -412,89 +412,89 @@ The Star System encourages players to adopt a more strategic approach to gamepla
 ### <u>Level-Related</u>
 
 - **LevelManager:**  
-  **Location:** `com.example.demo.Managers.LevelManager`  
-  **Description:** Manages the flow of the game by handling level progression, loading necessary assets, and ensuring smooth transitions between levels. Encapsulates logic for moving between levels, loading Level Introduction Pages, Level Complete pages, and Win Pages.
+    - **Location:** `com.example.demo.Managers.LevelManager`  
+    - **Description:** Manages the flow of the game by handling level progression, loading necessary assets, and ensuring smooth transitions between levels. Encapsulates logic for moving between levels, loading Level Introduction Pages, Level Complete pages, and Win Pages.
 
 - **LevelIntroScreen:**  
-  **Location:** `com.example.demo.UI.screens.LevelIntroScreen`  
-  **Description:** Displays level-specific objectives and instructions to the player before each level begins. Uses animations and dynamic content to enhance user experience and engagement, providing a clear understanding of the gameplay goals.
+    - **Location:** `com.example.demo.UI.screens.LevelIntroScreen`  
+   -  **Description:** Displays level-specific objectives and instructions to the player before each level begins. Uses animations and dynamic content to enhance user experience and engagement, providing a clear understanding of the gameplay goals.
 
 - **LevelFive, LevelFour, LevelThree:**  
-  **Location:** `com.example.demo.Levels`  
-  **Description:** These classes define unique gameplay mechanics, specific objectives, and tailored enemy behaviors for each level. They include methods for spawning enemies, handling level progression, and implementing distinct challenges to provide varied gameplay experiences.
+    - **Location:** `com.example.demo.Levels`  
+   -  **Description:** These classes define unique gameplay mechanics, specific objectives, and tailored enemy behaviors for each level. They include methods for spawning enemies, handling level progression, and implementing distinct challenges to provide varied gameplay experiences.
 
 - **LevelViewLevelFive, LevelViewLevelFour, LevelViewLevelThree:**  
-  **Location:** `com.example.demo.Levels.view`  
-  **Description:** Responsible for defining the visual layout and user interface of their respective levels. Handle the positioning of UI components and overlays, ensuring the player's experience matches the unique theme of each level.
+    - **Location:** `com.example.demo.Levels.view`  
+    - **Description:** Responsible for defining the visual layout and user interface of their respective levels. Handle the positioning of UI components and overlays, ensuring the player's experience matches the unique theme of each level.
 
 - **LevelCompletedScreen:**  
-  **Location:** `com.example.demo.UI.screens.LevelCompletedScreen`  
-  **Description:** Displays a congratulatory message and relevant statistics after successfully completing a level. Includes options for the player to proceed to the next level or replay the same level, providing seamless transition.
+    - **Location:** `com.example.demo.UI.screens.LevelCompletedScreen`  
+   -  **Description:** Displays a congratulatory message and relevant statistics after successfully completing a level. Includes options for the player to proceed to the next level or replay the same level, providing seamless transition.
 
 ---
 
 ### <u>Factories</u>
 
 - **ProjectileFactory:**  
-  **Location:** `com.example.demo.actors.active.Factories.ProjectileFactory`  
-  **Description:** Implements a standardized and centralized way to create various types of projectiles. Simplifies the instantiation of user and enemy projectiles while ensuring consistency in behavior and attributes across the game.
+    - **Location:** `com.example.demo.actors.active.Factories.ProjectileFactory`  
+    - **Description:** Implements a standardized and centralized way to create various types of projectiles. Simplifies the instantiation of user and enemy projectiles while ensuring consistency in behavior and attributes across the game.
 
 - **EnemyFactory:**  
-  **Location:** `com.example.demo.actors.active.Factories.EnemyFactory`  
-  **Description:** Dynamically generates different types of enemy units using the factory pattern. Allows the game to spawn enemies with diverse characteristics and behaviors efficiently, enabling easier addition of new enemy types without altering existing code.
+   -  **Location:** `com.example.demo.actors.active.Factories.EnemyFactory`  
+   -  **Description:** Dynamically generates different types of enemy units using the factory pattern. Allows the game to spawn enemies with diverse characteristics and behaviors efficiently, enabling easier addition of new enemy types without altering existing code.
 
 - **UserPlaneFactory:**  
-  **Location:** `com.example.demo.actors.active.Factories.UserPlaneFactory`  
-  **Description:** Handles the dynamic creation of user-controlled planes, allowing for customization based on user preferences. Ensures user planes are initialized with the correct attributes and configurations for consistent gameplay.
+  - **Location:** `com.example.demo.actors.active.Factories.UserPlaneFactory`  
+   -  **Description:** Handles the dynamic creation of user-controlled planes, allowing for customization based on user preferences. Ensures user planes are initialized with the correct attributes and configurations for consistent gameplay.
 ### <u>Buttons</u>
 
 - **ButtonParent:**  
-  **Location:** `com.example.demo.UI.buttons.ButtonsParent`  
-  **Description:** Simplifies button creation with centralized styling and behavior.
+   -  **Location:** `com.example.demo.UI.buttons.ButtonsParent`  
+   -   **Description:** Simplifies button creation with centralized styling and behavior.
 
 - **MainMenuButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Takes the user to the main menu screen from the pause screen.
+   -  **Location:** `com.example.demo.UI.buttons`  
+   -  **Description:** Takes the user to the main menu screen from the pause screen.
 
 - **PauseMenu:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Provides a visually attractive pause overlay with resume, quit, and main menu options.
+   -  **Location:** `com.example.demo.UI.buttons`  
+   -  **Description:** Provides a visually attractive pause overlay with resume, quit, and main menu options.
 
 - **PlayAgainButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Restarts the game differently based on location. Takes the user back to Level One from the Game Over and Win page. Takes the user back to the previous level from the Level Complete page.
+    - **Location:** `com.example.demo.UI.buttons`  
+    - **Description:** Restarts the game differently based on location. Takes the user back to Level One from the Game Over and Win page. Takes the user back to the previous level from the Level Complete page.
 
 - **PowerUpButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Opens the Power-Up Menu for purchasing upgrades and power-ups.
+    - **Location:** `com.example.demo.UI.buttons`  
+    - **Description:** Opens the Power-Up Menu for purchasing upgrades and power-ups.
 
 - **QuitButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Exits the game and allows the user to leave at any time.
+    - **Location:** `com.example.demo.UI.buttons`  
+    - **Description:** Exits the game and allows the user to leave at any time.
 
 - **ResumeButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Resumes gameplay after pausing. The gameplay resumes with a 3, 2, 1 countdown to give the user time to prepare.
+    - **Location:** `com.example.demo.UI.buttons`  
+  - **Description:** Resumes gameplay after pausing. The gameplay resumes with a 3, 2, 1 countdown to give the user time to prepare.
 
 - **SoundButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Adjusts audio settings, allowing the user to toggle background music on/off.
+    - **Location:** `com.example.demo.UI.buttons`  
+   -  **Description:** Adjusts audio settings, allowing the user to toggle background music on/off.
 
 - **StartGameButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Initiates gameplay from the main menu and starts the first level.
+    - **Location:** `com.example.demo.UI.buttons`  
+   -  **Description:** Initiates gameplay from the main menu and starts the first level.
 
 - **NextButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Navigates to the level introduction of the next upcoming level.
+    - **Location:** `com.example.demo.UI.buttons`  
+   -  **Description:** Navigates to the level introduction of the next upcoming level.
 
 - **CustomizeButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Opens the Customization Screen for modifying the user plane.
+   -  **Location:** `com.example.demo.UI.buttons`  
+   -  **Description:** Opens the Customization Screen for modifying the user plane.
 
 - **InstructionButton:**  
-  **Location:** `com.example.demo.UI.buttons`  
-  **Description:** Opens the instruction manual for the user to learn about the gameplay.
+   -  **Location:** `com.example.demo.UI.buttons`  
+    - **Description:** Opens the instruction manual for the user to learn about the gameplay.
 ### <u>Game Mechanics</u>
 
 ---
@@ -873,7 +873,7 @@ The `EnemyPlane` and `Boss` classes were significantly refactored to improve cod
 ### <u>LevelView.java and LevelViewLevelTwo.java</u>
 
 The `LevelView` and `LevelViewLevelTwo` classes were significantly refactored and replaced by the `LevelViewParent` and its specialized subclasses.
-
+`LevelView` was renamed to `LevelViewParent` to maintain uniformity among Super classes.
 1. **Introduction of LevelViewParent**
     - **Before:**
         - `LevelView` contained all UI-related logic, including heart displays, win/loss screens, and shield mechanics.

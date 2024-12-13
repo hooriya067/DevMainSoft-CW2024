@@ -2,7 +2,6 @@
 package com.example.demo.UI.screens;
 
 import com.example.demo.Managers.BulletSystemManager;
-import com.example.demo.Managers.SoundManager;
 import com.example.demo.Managers.StarManager;
 import com.example.demo.UI.buttons.PlayAgainButton;
 import com.example.demo.UI.buttons.QuitButton;
@@ -38,14 +37,14 @@ import java.util.Objects;
  * <p><b>Usage:</b></p>
  * <pre>{@code
  * Stage stage = StageManager.getStage();
- * WinImage winImage = new WinImage(stage.getWidth(), stage.getHeight());
+ * WinScreen winImage = new WinScreen(stage.getWidth(), stage.getHeight());
  * stage.getScene().setRoot(winImage);
  * }</pre>
  */	/**
-	 * The {@code WinImage} class represents a visual overlay displayed when the player wins the game.
+	 * The {@code WinScreen} class represents a visual overlay displayed when the player wins the game.
 	 * It contains a congratulatory image that is displayed on the screen.
 	 */
-	public class WinImage extends Pane {
+	public class WinScreen extends Pane {
 
 		/**
 		 * The path to the image resource used as the win overlay.
@@ -66,12 +65,12 @@ import java.util.Objects;
 
 
 	/**
-	 * Constructs a {@code WinImage} object and initializes its UI elements.
+	 * Constructs a {@code WinScreen} object and initializes its UI elements.
 	 *
 	 * @param screenWidth  the width of the screen
 	 * @param screenHeight the height of the screen
 	 */
-	public WinImage(double screenWidth, double screenHeight) {
+	public WinScreen(double screenWidth, double screenHeight) {
 		Stage stage = StageManager.getStage();
 
 		// Create and position the win image
